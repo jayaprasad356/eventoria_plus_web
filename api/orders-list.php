@@ -17,15 +17,22 @@ if (empty($_POST['type'])) {
     print_r(json_encode($response));
     return false;
 }
+if (empty($_POST['user_id'])) {
+    $response['success'] = false;
+    $response['message'] = "User Id is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 $type = $db->escapeString($_POST['type']);
-$sql = "SELECT * FROM orders";
+$user_id = $db->escapeString($_POST['user_id']);
+$sql = "SELECT * FROM orders WHERE user_id='$user_id'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num >= 1){
     if($type=='own'){
     
-        $sql = "SELECT *,packages.name AS package_name  FROM orders,packages,address WHERE orders.package_id = packages.id AND orders.address_id = address.id ";
+        $sql = "SELECT *,packages.name AS package_name  FROM orders,packages,address WHERE orders.package_id = packages.id AND orders.address_id = address.id AND orders.user_id='$user_id' ORDER BY orders.id DESC";
         $db->sql($sql);
         $res = $db->getResult();
         $num = $db->numRows($res);

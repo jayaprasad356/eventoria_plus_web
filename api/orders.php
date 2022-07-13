@@ -31,12 +31,21 @@ if (empty($_POST['type'])) {
     print_r(json_encode($response));
     return false;
 }
+if (empty($_POST['user_id'])) {
+    $response['success'] = false;
+    $response['message'] = "User Id is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 $package_id = $db->escapeString($_POST['package_id']);
 $price = $db->escapeString($_POST['price']);
 $type = $db->escapeString($_POST['type']);
+$user_id = $db->escapeString($_POST['user_id']);
+$user_id = $db->escapeString($_POST['user_id']);
 if($type=='own'){
     $address_id = $db->escapeString($_POST['address_id']);
-    $sql = "INSERT INTO orders (`address_id`,`package_id`,`price`,`type`,`status`)VALUES('$address_id','$package_id','$price','$type',1)";
+
+    $sql = "INSERT INTO orders (`user_id`,`address_id`,`package_id`,`price`,`type`,`status`)VALUES('$user_id','$address_id','$package_id','$price','$type',1)";
     $db->sql($sql);
     $res = $db->getResult();
     $response['success'] = true;

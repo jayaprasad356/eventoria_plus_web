@@ -52,6 +52,8 @@ $state = $db->escapeString($_POST['state']);
 
 $sql = "INSERT INTO address (`name`,`address`,`district`,`pincode`,`state`)VALUES('$name','$address','$district','$pincode','$state')";
 $db->sql($sql);
+$sql = "SELECT * FROM address ORDER BY id DESC LIMIT 1";
+$db->sql($sql);
 $res = $db->getResult();
 $response['success'] = true;
 $response['message'] = "Address Added Successfully ";
