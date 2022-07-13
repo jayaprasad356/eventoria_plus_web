@@ -4,7 +4,7 @@
         <small><a href="home.php"><i class="fa fa-home"></i> Home</a></small>
 </h1>
 <ol class="breadcrumb">
-        <a class="btn btn-block btn-default" href="add-category.php"><i class="fa fa-plus-square"></i> Add New Slide</a>
+        <a class="btn btn-block btn-default" href="add-slide.php"><i class="fa fa-plus-square"></i> Add New Slide</a>
     </ol>
     
 </section>

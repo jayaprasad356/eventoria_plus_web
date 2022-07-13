@@ -91,17 +91,17 @@ if (isset($_POST['btnAdd'])) {
                 } else {
                     $timeslots_result = 1;
                 }
-                if($timeslots_result == 1){
+                
                 $error['add_menu'] = "<section class='content-header'>
                                                 <span class='label label-success'>Venue Added Successfully</span>
-                                                <h4><small><a  href='subjects.php'><i class='fa fa-angle-double-left'></i>&nbsp;&nbsp;&nbsp;Back to Subjects</a></small></h4>
+                                                <h4><small><a  href='venues.php'><i class='fa fa-angle-double-left'></i>&nbsp;&nbsp;&nbsp;Back to Venues</a></small></h4>
                                                  </section>";
             } else {
                 $error['add_menu'] = " <span class='label label-danger'>Failed</span>";
             }
 
         }
-    }
+    
 }
 ?>
 <section class="content-header">

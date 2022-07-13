@@ -79,7 +79,7 @@ if (isset($_POST['btnAdd'])) {
             if ($package_result == 1) {
                 $error['add_menu'] = "<section class='content-header'>
                                                 <span class='label label-success'>Package Added Successfully</span>
-                                                <h4><small><a  href='subjects.php'><i class='fa fa-angle-double-left'></i>&nbsp;&nbsp;&nbsp;Back to Subjects</a></small></h4>
+                                                <h4><small><a  href='packages.php'><i class='fa fa-angle-double-left'></i>&nbsp;&nbsp;&nbsp;Back to Packages</a></small></h4>
                                                  </section>";
             } else {
                 $error['add_menu'] = " <span class='label label-danger'>Failed</span>";
