@@ -142,7 +142,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'packages') {
 
         }
         $tempRow['price'] = $row['price'];
-        $tempRow['category'] = $row['category'];
+        $tempRow['category_id'] = $row['category_id'];
         $tempRow['description'] = $row['description'];
         $tempRow['pincode'] = $row['pincode'];
         $tempRow['operate'] = $operate;
@@ -267,20 +267,19 @@ if (isset($_GET['table']) && $_GET['table'] == 'orders') {
         $where .= " Where `id` like '%" . $search . "%' OR `name` like '%" . $search . "%' OR `subtitle` like '%" . $search . "%' OR `image` like '%" . $search . "%'";
     }
 
-    $sql = "SELECT *,packages.name AS package_name  FROM orders,packages WHERE orders.package_id = packages.id ";
+    $sql = "SELECT *,orders.id AS id,packages.name AS package_name FROM orders,packages WHERE orders.package_id = packages.id ";
     $db->sql($sql);
     $res = $db->getResult();
 
     foreach ($res as $row) {
 
-        $operate = ' <a href="delete-slide.php?id=' . $row['id'] . '"><i class="fa fa-trash"></i>Delete</a>';
-
+        $operate = '<a href="view-order.php?id=' . $row['id'] . '" class="label label-primary" title="View">View</a>';
         $tempRow['id'] = $row['id'];
         $tempRow['package_name'] = $row['package_name'];
         $tempRow['price'] = $row['price'];
         $tempRow['type'] = $row['type'];
         $tempRow['status'] = $row['status'];
-        if('status'== '1'){
+        if($row['status']== '1'){
             $tempRow['status'] = '<p class="text text-success">Booked</p>';
         }else{
             $tempRow['status'] = '<p class="text text-danger">Not Booked</p>';

@@ -73,6 +73,25 @@ if (isset($_POST['btnAdd'])) {
                 $venue_result = 1;
             }
             if ($venue_result == 1) {
+                $sql = "SELECT id FROM venues ORDER BY id DESC LIMIT 1";
+                $db->sql($sql);
+                $res = $db->getResult();
+                $venue_id = $res[0]['id'];
+                for ($i = 0; $i < count($_POST['start_time']); $i++) {
+    
+                    $start_time = $db->escapeString($fn->xss_clean($_POST['start_time'][$i]));
+                    $end_time = $db->escapeString($fn->xss_clean($_POST['end_time'][$i]));
+                    $prices = $db->escapeString($fn->xss_clean($_POST['prices'][$i]));
+                    $sql = "INSERT INTO timeslots (venue_id,start_time,end_time,prices) VALUES('$venue_id','$start_time','$end_time','$prices')";
+                    $db->sql($sql);
+                    $timeslots_result = $db->getResult();
+                }
+                if (!empty($timeslots_result)) {
+                    $timeslots_result = 0;
+                } else {
+                    $timeslots_result = 1;
+                }
+                if($timeslots_result == 1){
                 $error['add_menu'] = "<section class='content-header'>
                                                 <span class='label label-success'>Venue Added Successfully</span>
                                                 <h4><small><a  href='subjects.php'><i class='fa fa-angle-double-left'></i>&nbsp;&nbsp;&nbsp;Back to Subjects</a></small></h4>
@@ -83,6 +102,7 @@ if (isset($_POST['btnAdd'])) {
 
         }
     }
+}
 ?>
 <section class="content-header">
     <h1>Add Venue</h1>
@@ -148,6 +168,38 @@ if (isset($_POST['btnAdd'])) {
                                 </div>
                             </div>
                         </div>
+                        <hr>
+                        <div id="packate_div"  >
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group packate_div">
+                                        <label for="exampleInputEmail1">Start Time</label> <i class="text-danger asterik">*</i>
+                                        <input type="time" class="form-control" name="start_time[]" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group packate_div">
+                                        <label for="exampleInputEmail1">End Time</label> <i class="text-danger asterik">*</i>
+                                        <input type="time" class="form-control" name="end_time[]" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group packate_div">
+                                        <label for="exampleInputEmail1">Price</label> <i class="text-danger asterik">*</i>
+                                        <input type="text" class="form-control" name="prices[]" id="packate_price" required />
+                                    </div>
+                                </div>
+                               
+                                <div class="col-md-1">
+                                    <label>Variation</label>
+                                    <a class="add_packate_variation" title="Add variation of product" style="cursor: pointer;"><i class="fa fa-plus-square-o fa-2x"></i></a>
+                                </div>
+                                <div id="variations">
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr>
                     </div>
                        
                     <!-- /.box-body -->
@@ -199,5 +251,30 @@ if (isset($_POST['btnAdd'])) {
                 reader.readAsDataURL(input.files[0]);
             }
         }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var max_fields = 8;
+        var wrapper = $("#packate_div");
+        var add_button = $(".add_packate_variation");
+
+        var x = 1;
+        $(add_button).click(function (e) {
+            e.preventDefault();
+            if (x < max_fields) {
+                x++;
+                $(wrapper).append('<div class="row"><div class="col-md-3"><div class="form-group"><label for="start_time">Start Time</label>' + '<input type="time" class="form-control" name="start_time[]" required="" ></div></div>'+'<div class="col-md-3"><div class="form-group"><label for="end_time">End Time</label>' + '<input type="time" class="form-control" name="end_time[]" required="" ></div></div>'+'<div class="col-md-3"><div class="form-group"><label for="price">Price</label>' + '<input type="text" class="form-control" name="prices[]" required="" ></div></div>' + '<div class="col-md-1" style="display: grid;"><label>Remove</label><a class="remove text-danger" style="cursor: pointer;"><i class="fa fa-times fa-2x"></i></a></div>'+'</div>'); //add input box
+            } else {
+                alert('You Reached the limits')
+            }
+        });
+
+        $(wrapper).on("click", ".remove", function (e) {
+            e.preventDefault();
+            $(this).closest('.row').remove();
+            x--;
+        })
+    });
 </script>
 <?php $db->disconnect(); ?>

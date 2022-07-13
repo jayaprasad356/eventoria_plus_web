@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 10, 2022 at 03:54 AM
+-- Generation Time: Jul 13, 2022 at 08:41 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -41,7 +41,8 @@ CREATE TABLE `address` (
 --
 
 INSERT INTO `address` (`id`, `name`, `address`, `district`, `pincode`, `state`) VALUES
-(1, 'Divakar', '2/42,Azhagapuri', 'KARUR', '735883', 'TAMILNADU');
+(1, 'Divakar', '2/42,Azhagapuri', 'KARUR', '735883', 'TAMILNADU'),
+(3, 'zenci', 'Cauvery college,Annamalai Nagar', 'Trichy', '600028', 'Andhra Pradesh');
 
 -- --------------------------------------------------------
 
@@ -86,8 +87,7 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `address_id`, `venue_id`, `package_id`, `price`, `type`, `status`) VALUES
 (1, 1, NULL, 1, '500', 'own', 1),
-(2, NULL, 1, 2, '400', 'venue', 0),
-(3, NULL, 1, 2, '600', 'venue', 1);
+(6, NULL, 8, 3, '800', 'venue', 1);
 
 -- --------------------------------------------------------
 
@@ -114,7 +114,28 @@ CREATE TABLE `packages` (
 INSERT INTO `packages` (`id`, `name`, `cover_photo`, `recommend`, `price`, `category_id`, `description`, `pincode`, `status`) VALUES
 (1, 'premium', 'upload/images/1657387351.604.jpg', 1, '500', 1, 'hello', '621313', 1),
 (2, 'Divakjar', 'upload/images/3730-2022-07-09.jpg', 0, '100', 0, 'hshcsc', '837474', 1),
-(3, 'Divakar', 'upload/images/6754-2022-07-09.jpg', 0, '899', 1, 'ire', '3411', 1);
+(3, 'Divakar', 'upload/images/6754-2022-07-09.jpg', 0, '899', 1, 'ire', '3411', 1),
+(4, 'Divakar A', 'upload/images/1165-2022-07-12.jpg', 0, '500', 1, 'it is journey', '621313', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int(11) NOT NULL,
+  `whatsapp` text DEFAULT NULL,
+  `telegram` text DEFAULT NULL,
+  `instagram` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `whatsapp`, `telegram`, `instagram`) VALUES
+(1, 'https;//whatsapp.com', 'https;//telegram.divakar.com', 'instagram.ns_riandivakar.com');
 
 -- --------------------------------------------------------
 
@@ -135,6 +156,30 @@ CREATE TABLE `slides` (
 
 INSERT INTO `slides` (`id`, `name`, `image`, `status`) VALUES
 (10, 'hello Divakar', 'upload/images/4397-2022-07-09.jpg', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `timeslots`
+--
+
+CREATE TABLE `timeslots` (
+  `id` int(11) NOT NULL,
+  `venue_id` int(11) DEFAULT NULL,
+  `start_time` text DEFAULT NULL,
+  `end_time` text DEFAULT NULL,
+  `prices` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `timeslots`
+--
+
+INSERT INTO `timeslots` (`id`, `venue_id`, `start_time`, `end_time`, `prices`) VALUES
+(4, 7, '17:00', '17:00', '890'),
+(26, 8, '20:09', '20:10', '1200'),
+(88, 8, '00:54', '00:54', '577'),
+(89, 8, '15.00', '16.00', '999');
 
 -- --------------------------------------------------------
 
@@ -176,9 +221,11 @@ CREATE TABLE `venues` (
 --
 
 INSERT INTO `venues` (`id`, `name`, `address`, `cover_image`, `price`, `pincode`) VALUES
-(1, 'Dinavakar', 'Trichy', 'upload/images/1657303179.9587.jpg', '600', '621313'),
+(1, 'Dinavakar', 'Trichy', 'upload/images/1657596445.1.jpg', '600', '621313'),
 (2, 'jaya', 'karur', NULL, '4000', '643448'),
-(4, 'Divaka', 'Karu', 'upload/images/1657303154.4563.jpg', 'Rs.100', '62131');
+(4, 'Divaka', 'Karu', 'upload/images/1657303154.4563.jpg', 'Rs.100', '62131'),
+(7, 'Divakar A', '2/42, Azhagapuri,R.T.Malai(Po)', 'upload/images/1657600961.2993.jpg', '678', '621313'),
+(8, 'divAJAJA', 'AEFEG', 'upload/images/0496-2022-07-12.jpg', '600', 'FF');
 
 --
 -- Indexes for dumped tables
@@ -209,9 +256,21 @@ ALTER TABLE `packages`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `slides`
 --
 ALTER TABLE `slides`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `timeslots`
+--
+ALTER TABLE `timeslots`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -234,7 +293,7 @@ ALTER TABLE `venues`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -246,19 +305,31 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `packages`
 --
 ALTER TABLE `packages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `slides`
 --
 ALTER TABLE `slides`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `timeslots`
+--
+ALTER TABLE `timeslots`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -270,7 +341,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `venues`
 --
 ALTER TABLE `venues`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

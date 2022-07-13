@@ -220,6 +220,11 @@ $db->sql("SET NAMES 'utf8'");
                         <li><a href="orders.php"><i class="fa fa-sliders"></i> Manage Orders</a></li>
                     </ul>
                 </li>
+                <li class="treeview">
+                    <a href="settings.php">
+                        <i class="fa fa-gear"></i><span>Settings</span>  
+                    </a>
+                </li>
                 
                
      

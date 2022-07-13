@@ -19,11 +19,12 @@ if (empty($_POST['pincode'])) {
 }
 $pincode = $db->escapeString($_POST['pincode']);
 
-$sql = "SELECT * FROM venues WHERE pincode='$pincode'";
+$sql = "SELECT * FROM  venues WHERE pincode='$pincode'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num >= 1) {
+    $data = array();
     foreach ($res as $row) {
         $temp['id'] = $row['id'];
         $temp['name'] = $row['name'];
@@ -31,9 +32,16 @@ if ($num >= 1) {
         $temp['cover_image'] = DOMAIN_URL . $row['cover_image'];
         $temp['price'] = $row['price'];
         $temp['pincode'] = $row['pincode'];
+        $temp['timeslots'] = array();
+
+        $sql="SELECT * FROM timeslots WHERE venue_id='$row[id]'";
+        $db->sql($sql);
+        $res = $db->getResult();
+        $temp['timeslots'] = $res;
         $rows[] = $temp;
         
     }
+
 
     $response['success'] = true;
     $response['message'] = "Venues listed Successfully";

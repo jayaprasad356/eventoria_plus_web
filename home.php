@@ -74,8 +74,44 @@ include "header.php";
                             
                             <p>Categories</p>
                         </div>
-                        <div class="icon"><i class="fa fa-users"></i></div>
+                        <div class="icon"><i class="fa fa-cube"></i></div>
                         <a href="categories.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                
+                <div class="col-lg-4 col-xs-6">
+                    <div class="small-box bg-red">
+                        <div class="inner">
+                            <h3><?php                           
+                            $sql = "SELECT * FROM packages";
+                            $db->sql($sql);
+                            $res = $db->getResult();
+                            $num = $db->numRows($res);
+                            echo $num; ?></h3>
+                            
+                            <p>Packages</p>
+                        </div>
+                        <div class="icon"><i class="fa fa-money"></i></div>
+                        <a href="packages.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xs-6">
+                    <div class="small-box bg-blue">
+                        <div class="inner">
+                            <h3><?php                           
+                            $sql = "SELECT * FROM venues";
+                            $db->sql($sql);
+                            $res = $db->getResult();
+                            $num = $db->numRows($res);
+                            echo $num; ?></h3>
+                            
+                            <p>Venues</p>
+                        </div>
+                        <div class="icon"><i class="fa fa-globe"></i></div>
+                        <a href="venues.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 
