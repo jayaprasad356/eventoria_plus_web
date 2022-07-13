@@ -70,7 +70,7 @@ if (isset($_POST['btnAdd'])) {
         }
 ?>
 <section class="content-header">
-    <h1>Add Slide<small><a href='categories.php'> <i class='fa fa-angle-double-left'></i>&nbsp;&nbsp;&nbsp;Back to Categories</a></small></h1>
+    <h1>Add Slide<small><a href='slides.php'> <i class='fa fa-angle-double-left'></i>&nbsp;&nbsp;&nbsp;Back to Slides</a></small></h1>
 
     <?php echo isset($error['add_slide']) ? $error['add_slide'] : ''; ?>
     <ol class="breadcrumb">
