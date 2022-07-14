@@ -21,6 +21,7 @@ if (isset($_POST['btnEdit'])) {
         $description = $db->escapeString($fn->xss_clean($_POST['description']));
         $pincode = $db->escapeString($fn->xss_clean($_POST['pincode']));
         $status = $db->escapeString($fn->xss_clean($_POST['status']));
+        $recommend = $db->escapeString($fn->xss_clean($_POST['recommend']));
         $error = array();
 
        
@@ -41,12 +42,17 @@ if (isset($_POST['btnEdit'])) {
             $error['pincode'] = " <span class='label label-danger'>Required!</span>";
         }
 
+
         if (!empty($name) && !empty($price) && !empty($category) && !empty($description)&& !empty($pincode))
          {
+
+    //cover_image
             if ($_FILES['image']['size'] != 0 && $_FILES['image']['error'] == 0 && !empty($_FILES['image']))
             {
 				$old_image = $db->escapeString($_POST['old_image']);
 				$extension = pathinfo($_FILES["image"]["name"])['extension'];
+                $new_image = $ID . "." . $extension;
+                
 		
 				$result = $fn->validate_image($_FILES["image"]);
 				$target_path = 'upload/images/';
@@ -65,8 +71,112 @@ if (isset($_POST['btnEdit'])) {
                 $sql = "UPDATE packages SET cover_photo='$upload_image' WHERE id =  $ID";
                 $db->sql($sql);
 			}
+//image1
+            if ($_FILES['image1']['size'] != 0 && $_FILES['image1']['error'] == 0 && !empty($_FILES['image1']))
+            {
+				$old_image = $db->escapeString($_POST['old_image']);
+				$extension = pathinfo($_FILES["image1"]["name"])['extension'];
+                $new_image = $ID . "." . $extension;
+                
+		
+				$result = $fn->validate_image($_FILES["image1"]);
+				$target_path = 'upload/images/';
+				
+				$filename = microtime(true) . '.' . strtolower($extension);
+				$full_path = $target_path . "" . $filename;
+				if (!move_uploaded_file($_FILES["image1"]["tmp_name"], $full_path)) {
+					echo '<p class="alert alert-danger">Can not upload image.</p>';
+					return false;
+					exit();
+				}
+				if (!empty($old_image1)) {
+					unlink( $old_image1);
+				}
+                $upload_image1 = 'upload/images/' . $filename;
+                $sql = "UPDATE packages SET image1='$upload_image1' WHERE id =  $ID";
+                $db->sql($sql);
+			}
+
+//image2
+            if ($_FILES['image2']['size'] != 0 && $_FILES['image2']['error'] == 0 && !empty($_FILES['image2']))
+            {
+				$old_image = $db->escapeString($_POST['old_image']);
+				$extension = pathinfo($_FILES["image2"]["name"])['extension'];
+                $new_image = $ID . "." . $extension;
+                
+		
+				$result = $fn->validate_image($_FILES["image2"]);
+				$target_path = 'upload/images/';
+				
+				$filename = microtime(true) . '.' . strtolower($extension);
+				$full_path = $target_path . "" . $filename;
+				if (!move_uploaded_file($_FILES["image2"]["tmp_name"], $full_path)) {
+					echo '<p class="alert alert-danger">Can not upload image.</p>';
+					return false;
+					exit();
+				}
+				if (!empty($old_image2)) {
+					unlink( $old_image2);
+				}
+                $upload_image2 = 'upload/images/' . $filename;
+                $sql = "UPDATE packages SET image2='$upload_image2' WHERE id =  $ID";
+                $db->sql($sql);
+			}
+//image3
+
+            if ($_FILES['image3']['size'] != 0 && $_FILES['image3']['error'] == 0 && !empty($_FILES['image3']))
+            {
+				$old_image = $db->escapeString($_POST['old_image']);
+				$extension = pathinfo($_FILES["image3"]["name"])['extension'];
+                $new_image = $ID . "." . $extension;
+                
+		
+				$result = $fn->validate_image($_FILES["image3"]);
+				$target_path = 'upload/images/';
+				
+				$filename = microtime(true) . '.' . strtolower($extension);
+				$full_path = $target_path . "" . $filename;
+				if (!move_uploaded_file($_FILES["image3"]["tmp_name"], $full_path)) {
+					echo '<p class="alert alert-danger">Can not upload image.</p>';
+					return false;
+					exit();
+				}
+				if (!empty($old_image3)) {
+					unlink( $old_image3);
+				}
+                $upload_image3 = 'upload/images/' . $filename;
+                $sql = "UPDATE packages SET image3='$upload_image3' WHERE id =  $ID";
+                $db->sql($sql);
+			}
+
+//image4
+            if ($_FILES['image4']['size'] != 0 && $_FILES['image4']['error'] == 0 && !empty($_FILES['image4']))
+            {
+				$old_image = $db->escapeString($_POST['old_image']);
+				$extension = pathinfo($_FILES["image4"]["name"])['extension'];
+                $new_image = $ID . "." . $extension;
+                
+		
+				$result = $fn->validate_image($_FILES["image4"]);
+				$target_path = 'upload/images/';
+				
+				$filename = microtime(true) . '.' . strtolower($extension);
+				$full_path = $target_path . "" . $filename;
+				if (!move_uploaded_file($_FILES["image4"]["tmp_name"], $full_path)) {
+					echo '<p class="alert alert-danger">Can not upload image.</p>';
+					return false;
+					exit();
+				}
+				if (!empty($old_image4)) {
+					unlink( $old_image4);
+				}
+                $upload_image4 = 'upload/images/' . $filename;
+                $sql = "UPDATE packages SET image4='$upload_image4' WHERE id =  $ID";
+                $db->sql($sql);
+			}
+
 			
-            $sql = "UPDATE packages SET name='$name',price='$price',category_id='$category',description='$description',pincode='$pincode',status='$status' WHERE id =  $ID";
+            $sql = "UPDATE packages SET name='$name',price='$price',category_id='$category',description='$description',pincode='$pincode',status='$status',recommend= $recommend WHERE id =  $ID";
             $db->sql($sql);
             $update_result = $db->getResult();
             if (!empty($update_result)) {
@@ -115,11 +225,20 @@ $res = $db->getResult();
                 <form id='edit_package_form' method="post" enctype="multipart/form-data">
                     <div class="box-body">
                     <input type="hidden" id="old_image" name="old_image"  value="<?= $res[0]['cover_photo']; ?>">
+                    <input type="hidden" id="old_image1" name="old_image"  value="<?= $res[0]['image1']; ?>">
+                    <input type="hidden" id="old_image2" name="old_image"  value="<?= $res[0]['image2']; ?>">
+                    <input type="hidden" id="old_image3" name="old_image"  value="<?= $res[0]['image3']; ?>">
+                    <input type="hidden" id="old_image4" name="old_image"  value="<?= $res[0]['image4']; ?>">
+
                         <div class="row">
                             <div class="form-group">
                                <div class='col-md-4'>
                                     <label for="exampleInputEmail1">Name</label><?php echo isset($error['name']) ? $error['name'] : ''; ?>
                                     <input type="text" class="form-control" name="name" value="<?php echo $res[0]['name']; ?>">
+                                </div>
+                                <div class='col-md-4'>
+                                    <label for="exampleInputEmail1">Pincode</label><?php echo isset($error['pincode']) ? $error['pincode'] : ''; ?>
+                                    <input type="text" class="form-control" name="pincode" value="<?php echo $res[0]['pincode']; ?>">
                                 </div>
                             </div>
                         </div>
@@ -127,10 +246,40 @@ $res = $db->getResult();
                         <div class="row">
                             <div class="form-group">
                                <div class='col-md-4'>
-                                       <label for="exampleInputFile">Image</label>
+                                       <label for="exampleInputFile">Cover Image</label>
                                         
                                         <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image" id="image">
                                         <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['cover_photo']; ?>" style="max-width:100%" /></p>
+                                </div>
+                                <div class='col-md-4'>
+                                       <label for="exampleInputFile">Image1</label>
+                                        
+                                        <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image1" id="image1">
+                                        <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['image1']; ?>" style="max-width:100%" /></p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="form-group">
+                               <div class='col-md-4'>
+                                       <label for="exampleInputFile">Image2</label>
+                                        
+                                        <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image2" id="image2">
+                                        <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['image2']; ?>" style="max-width:100%" /></p>
+                                </div>
+                                <div class='col-md-4'>
+                                       <label for="exampleInputFile">Image3</label>
+                                        
+                                        <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image3" id="image3">
+                                        <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['image3']; ?>" style="max-width:100%" /></p>
+                                </div>
+                                <div class='col-md-4'>
+                                       <label for="exampleInputFile">Image4</label>
+                                        
+                                        <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image4" id="image4">
+                                        <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['image4']; ?>" style="max-width:100%" /></p>
                                 </div>
                             </div>
 
@@ -166,9 +315,17 @@ $res = $db->getResult();
                                     <input type="text" class="form-control" name="description" value="<?php echo $res[0]['description']; ?>">
                                 </div>
                                 <div class='col-md-4'>
-                                    <label for="exampleInputEmail1">Pincode</label><?php echo isset($error['pincode']) ? $error['pincode'] : ''; ?>
-                                    <input type="text" class="form-control" name="pincode" value="<?php echo $res[0]['pincode']; ?>">
-                                </div>
+                                        <label class="control-label">Recommend</label>
+                                        <div id="recommend" class="form-group">
+                                            <label class="btn btn-default" data-toggle-class="btn-default" data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="recommend" value="1" <?= ($res[0]['recommend'] == 1) ? 'checked' : ''; ?>> Yes
+                                            </label>
+                                            <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="recommend" value="0" <?= ($res[0]['recommend'] == 0) ? 'checked' : ''; ?>> No
+                                            </label>
+                                        </div>
+						        </div>
+                              
                                
                             </div>
 
@@ -206,11 +363,3 @@ $res = $db->getResult();
 <div class="separator"> </div>
 <?php $db->disconnect(); ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script>
-	$('#edit_package_form').validate({
-		rules: {
-			
-
-		}
-	});
-</script>
