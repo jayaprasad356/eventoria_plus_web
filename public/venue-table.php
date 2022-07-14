@@ -28,7 +28,6 @@
                                     <th data-field="name" data-sortable="true">Name</th>
                                     <th data-field="address" data-sortable="true">Address</th>
                                     <th data-field="cover_image" >Cover Image</th>
-                                    <th data-field="price" data-sortable="true">Price</th>
                                     <th data-field="pincode" data-sortable="true">Pincode</th>
                                     <th data-field="operate">Action</th>
                     

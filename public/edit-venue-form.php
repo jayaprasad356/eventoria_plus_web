@@ -17,7 +17,6 @@ if (isset($_POST['btnEdit'])) {
         
         $name = $db->escapeString($fn->xss_clean($_POST['name']));
         $address = $db->escapeString($fn->xss_clean($_POST['address']));
-        $price = $db->escapeString($fn->xss_clean($_POST['price']));
         $pincode = $db->escapeString($fn->xss_clean($_POST['pincode']));
         $error = array();
 
@@ -28,15 +27,14 @@ if (isset($_POST['btnEdit'])) {
         if (empty($address)) {
             $error['address'] = " <span class='label label-danger'>Required!</span>";
         }
-        if (empty($price)) {
-            $error['price'] = " <span class='label label-danger'>Required!</span>";
-        }
         if (empty($pincode)) {
             $error['pincode'] = " <span class='label label-danger'>Required!</span>";
         }
 
-        if (!empty($name)&& !empty($address) && !empty($price) && !empty($pincode))
+        if (!empty($name)&& !empty($address) && !empty($pincode))
         {
+
+    //cover_photo
             if ($_FILES['image']['size'] != 0 && $_FILES['image']['error'] == 0 && !empty($_FILES['image']))
             {
 				//image isn't empty and update the image
@@ -59,11 +57,112 @@ if (isset($_POST['btnEdit'])) {
                 $upload_image = 'upload/images/' . $filename;
                 $sql = "UPDATE venues SET `cover_image`='" . $upload_image . "' WHERE `id`=" . $ID;
 				$db->sql($sql);
+			}
+    //image1
+            if ($_FILES['image1']['size'] != 0 && $_FILES['image1']['error'] == 0 && !empty($_FILES['image1']))
+            {
+                $old_image = $db->escapeString($_POST['old_image']);
+                $extension = pathinfo($_FILES["image1"]["name"])['extension'];
+                $new_image = $ID . "." . $extension;
                 
 
-			}
+                $result = $fn->validate_image($_FILES["image1"]);
+                $target_path = 'upload/images/';
+                
+                $filename = microtime(true) . '.' . strtolower($extension);
+                $full_path = $target_path . "" . $filename;
+                if (!move_uploaded_file($_FILES["image1"]["tmp_name"], $full_path)) {
+                    echo '<p class="alert alert-danger">Can not upload image.</p>';
+                    return false;
+                    exit();
+                }
+                if (!empty($old_image1)) {
+                    unlink( $old_image1);
+                }
+                $upload_image1 = 'upload/images/' . $filename;
+                $sql = "UPDATE venues SET image1='$upload_image1' WHERE id =  $ID";
+                $db->sql($sql);
+            }
+
+//image2
+            if ($_FILES['image2']['size'] != 0 && $_FILES['image2']['error'] == 0 && !empty($_FILES['image2']))
+            {
+                $old_image = $db->escapeString($_POST['old_image']);
+                $extension = pathinfo($_FILES["image2"]["name"])['extension'];
+                $new_image = $ID . "." . $extension;
+                
+
+                $result = $fn->validate_image($_FILES["image2"]);
+                $target_path = 'upload/images/';
+                
+                $filename = microtime(true) . '.' . strtolower($extension);
+                $full_path = $target_path . "" . $filename;
+                if (!move_uploaded_file($_FILES["image2"]["tmp_name"], $full_path)) {
+                    echo '<p class="alert alert-danger">Can not upload image.</p>';
+                    return false;
+                    exit();
+                }
+                if (!empty($old_image2)) {
+                    unlink( $old_image2);
+                }
+                $upload_image2 = 'upload/images/' . $filename;
+                $sql = "UPDATE venues SET image2='$upload_image2' WHERE id =  $ID";
+                $db->sql($sql);
+            }
+//image3
+
+            if ($_FILES['image3']['size'] != 0 && $_FILES['image3']['error'] == 0 && !empty($_FILES['image3']))
+            {
+                $old_image = $db->escapeString($_POST['old_image']);
+                $extension = pathinfo($_FILES["image3"]["name"])['extension'];
+                $new_image = $ID . "." . $extension;
+                
+
+                $result = $fn->validate_image($_FILES["image3"]);
+                $target_path = 'upload/images/';
+                
+                $filename = microtime(true) . '.' . strtolower($extension);
+                $full_path = $target_path . "" . $filename;
+                if (!move_uploaded_file($_FILES["image3"]["tmp_name"], $full_path)) {
+                    echo '<p class="alert alert-danger">Can not upload image.</p>';
+                    return false;
+                    exit();
+                }
+                if (!empty($old_image3)) {
+                    unlink( $old_image3);
+                }
+                $upload_image3 = 'upload/images/' . $filename;
+                $sql = "UPDATE venues SET image3='$upload_image3' WHERE id =  $ID";
+                $db->sql($sql);
+            }
+
+//image4
+            if ($_FILES['image4']['size'] != 0 && $_FILES['image4']['error'] == 0 && !empty($_FILES['image4']))
+            {
+                $old_image = $db->escapeString($_POST['old_image']);
+                $extension = pathinfo($_FILES["image4"]["name"])['extension'];
+                $new_image = $ID . "." . $extension;
+                
+
+                $result = $fn->validate_image($_FILES["image4"]);
+                $target_path = 'upload/images/';
+                
+                $filename = microtime(true) . '.' . strtolower($extension);
+                $full_path = $target_path . "" . $filename;
+                if (!move_uploaded_file($_FILES["image4"]["tmp_name"], $full_path)) {
+                    echo '<p class="alert alert-danger">Can not upload image.</p>';
+                    return false;
+                    exit();
+                }
+                if (!empty($old_image4)) {
+                    unlink( $old_image4);
+                }
+                $upload_image4 = 'upload/images/' . $filename;
+                $sql = "UPDATE venues SET image4='$upload_image4' WHERE id =  $ID";
+                $db->sql($sql);
+            }
 			
-            $sql = "UPDATE venues SET name='$name',address='$address',price='$price',pincode='$pincode' WHERE id =  $ID";
+            $sql = "UPDATE venues SET name='$name',address='$address',pincode='$pincode' WHERE id =  $ID";
             $db->sql($sql);
             $res = $db->getResult();
             $update_result = $db->getResult();
@@ -147,7 +246,11 @@ if (isset($_POST['btnCancel'])) { ?>
                 <form id='edit_venue_form' method="post" enctype="multipart/form-data">
                     <div class="box-body">
                     <input type="hidden" id="old_image" name="old_image"  value="<?= $res[0]['cover_image']; ?>">
-                        <div class="row">
+                    <input type="hidden" id="old_image1" name="old_image"  value="<?= $res[0]['image1']; ?>">
+                    <input type="hidden" id="old_image2" name="old_image"  value="<?= $res[0]['image2']; ?>">
+                    <input type="hidden" id="old_image3" name="old_image"  value="<?= $res[0]['image3']; ?>">
+                    <input type="hidden" id="old_image4" name="old_image"  value="<?= $res[0]['image4']; ?>">   
+                       <div class="row">
                             <div class="form-group">
                                <div class='col-md-4'>
                                     <label for="exampleInputEmail1">Name</label><?php echo isset($error['name']) ? $error['name'] : ''; ?>
@@ -159,6 +262,13 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <label for="exampleInputEmail1">Address</label><?php echo isset($error['address']) ? $error['address'] : ''; ?>
                                     <input type="text" class="form-control" name="address" value="<?php echo $res[0]['address']; ?>">
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <div class='col-md-4'>
+                                    <label for="exampleInputEmail1">Pincode</label><?php echo isset($error['pincode']) ? $error['pincode'] : ''; ?>
+                                    <input type="text" class="form-control" name="pincode" value="<?php echo $res[0]['pincode']; ?>">
+                                </div>
+                               
                             </div>
 
                         </div>
@@ -177,19 +287,33 @@ if (isset($_POST['btnCancel'])) { ?>
                         <hr>
                         <div class="row">
                             <div class="form-group">
-                                <div class='col-md-4'>
-                                    <label for="exampleInputEmail1">Price</label> <?php echo isset($error['price']) ? $error['price'] : ''; ?>
-                                    <input type="text" class="form-control" name="price" value="<?php echo $res[0]['price']; ?>" >
+                               <div class='col-md-3'>
+                                       <label for="exampleInputFile">Image1</label>
+                                        
+                                        <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image1" id="image1">
+                                        <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['image1']; ?>" style="max-width:50%;padding:4px;" /></p>
                                 </div>
-                                <div class='col-md-4'>
-                                    <label for="exampleInputEmail1">Pincode</label><?php echo isset($error['pincode']) ? $error['pincode'] : ''; ?>
-                                    <input type="text" class="form-control" name="pincode" value="<?php echo $res[0]['pincode']; ?>">
+                               <div class='col-md-3'>
+                                       <label for="exampleInputFile">Image2</label>
+                                        
+                                        <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image2" id="image2">
+                                        <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['image2']; ?>" style="max-width:50%;padding:4px;" /></p>
                                 </div>
-                               
+                                <div class='col-md-3'>
+                                       <label for="exampleInputFile">Image3</label>
+                                        
+                                        <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image3" id="image3">
+                                        <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['image3']; ?>" style="max-width:50%;padding:4px;"/></p>
+                                </div>
+                                <div class='col-md-3'>
+                                       <label for="exampleInputFile">Image4</label>
+                                        
+                                        <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image4" id="image4">
+                                        <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['image4']; ?>" style="max-width:50%;padding:4px;" /></p>
+                                </div>
                             </div>
 
                         </div>
-
                         <hr>
                         <div id="variations">
 
@@ -255,14 +379,6 @@ if (isset($_POST['btnCancel'])) { ?>
 <div class="separator"> </div>
 <?php $db->disconnect(); ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script>
-	$('#edit_venue_form').validate({
-		rules: {
-			
-
-		}
-	});
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {

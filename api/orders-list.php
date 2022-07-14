@@ -58,20 +58,22 @@ if ($num >= 1){
             print_r(json_encode($response));
         }
     else{
-        $sql = "SELECT *,packages.name AS package_name,orders.price AS price FROM orders,packages,venues WHERE orders.package_id = packages.id AND orders.venue_id = venues.id ";
+        $sql = "SELECT *,packages.name AS package_name FROM orders,packages,venues WHERE orders.package_id = packages.id AND orders.venue_id = venues.id AND orders.user_id='$user_id' ORDER BY orders.id DESC";
         $db->sql($sql);
         $res = $db->getResult();
         $num = $db->numRows($res);
-        
+        if ($num >= 1){
             foreach ($res as $row) {
                 $temp['id'] = $row['id'];
                 $temp['package_name'] = $row['package_name'];
-                $temp['price'] =$row['price'];
                 $temp['type'] = $row['type'];
                 $temp['name'] = $row['name'];
                 $temp['address'] = $row['address'];
                 $temp['cover_image'] =DOMAIN_URL . $row['cover_image'];
                 $temp['pincode'] = $row['pincode'];
+                $temp['start_time'] = $row['start_time'];
+                $temp['end_time'] = $row['end_time'];
+                $temp['prices'] = $row['prices'];
                 $rows[] = $temp;
                 
             }
@@ -81,11 +83,18 @@ if ($num >= 1){
             $response['data'] = $rows;
             print_r(json_encode($response));
 
+
+        }
+        else {
+            $response['success'] = false;
+            $response['message'] = "No Orders Found";
+            print_r(json_encode($response));
+        }
+        
+    
     }
-
-
 }
-else{
+else {
     $response['success'] = false;
     $response['message'] = "No Orders Found";
     print_r(json_encode($response));

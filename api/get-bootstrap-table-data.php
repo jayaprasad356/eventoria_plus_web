@@ -243,7 +243,6 @@ if (isset($_GET['table']) && $_GET['table'] == 'venues') {
             $tempRow['cover_image'] = 'No Image';
 
         }
-        $tempRow['price'] = $row['price'];
         $tempRow['pincode'] = $row['pincode'];
        $tempRow['operate'] = $operate;
         $rows[] = $tempRow;

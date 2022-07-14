@@ -30,7 +30,10 @@ if ($num >= 1) {
         $temp['name'] = $row['name'];
         $temp['address'] = $row['address'];
         $temp['cover_image'] = DOMAIN_URL . $row['cover_image'];
-        $temp['price'] = $row['price'];
+        $temp['image1'] = DOMAIN_URL . $row['image1'];
+        $temp['image2'] = DOMAIN_URL . $row['image2'];
+        $temp['image3'] = DOMAIN_URL . $row['image3'];
+        $temp['image4'] = DOMAIN_URL . $row['image4'];
         $temp['pincode'] = $row['pincode'];
         $temp['timeslots'] = array();
 

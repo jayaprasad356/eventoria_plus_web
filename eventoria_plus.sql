@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2022 at 05:47 AM
+-- Generation Time: Jul 15, 2022 at 01:21 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -81,6 +81,9 @@ CREATE TABLE `orders` (
   `package_id` int(11) NOT NULL,
   `price` text DEFAULT NULL,
   `type` text DEFAULT NULL,
+  `start_time` text DEFAULT NULL,
+  `end_time` text DEFAULT NULL,
+  `prices` text DEFAULT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -88,8 +91,9 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `address_id`, `venue_id`, `package_id`, `price`, `type`, `status`) VALUES
-(1, 1, 1, NULL, 1, '3000', 'own', 1);
+INSERT INTO `orders` (`id`, `user_id`, `address_id`, `venue_id`, `package_id`, `price`, `type`, `start_time`, `end_time`, `prices`, `status`) VALUES
+(1, 1, 1, NULL, 1, '3000', 'own', '', '', '', 1),
+(5, 1, NULL, 3, 1, '800', 'venue', '20:00', '20:00', '3000', 1);
 
 -- --------------------------------------------------------
 
@@ -101,6 +105,10 @@ CREATE TABLE `packages` (
   `id` int(11) NOT NULL,
   `name` text DEFAULT NULL,
   `cover_photo` text DEFAULT NULL,
+  `image1` text DEFAULT NULL,
+  `image2` text DEFAULT NULL,
+  `image3` text DEFAULT NULL,
+  `image4` text DEFAULT NULL,
   `recommend` tinyint(4) NOT NULL,
   `price` text DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
@@ -113,8 +121,8 @@ CREATE TABLE `packages` (
 -- Dumping data for table `packages`
 --
 
-INSERT INTO `packages` (`id`, `name`, `cover_photo`, `recommend`, `price`, `category_id`, `description`, `pincode`, `status`) VALUES
-(1, 'Basic Birthday', 'upload/images/0560-2022-07-13.jpeg', 1, '3000', 1, 'Basic Plan for Afforadable Price', '612345', 1);
+INSERT INTO `packages` (`id`, `name`, `cover_photo`, `image1`, `image2`, `image3`, `image4`, `recommend`, `price`, `category_id`, `description`, `pincode`, `status`) VALUES
+(1, 'Basic Birthday', 'upload/images/1657836058.6088.png', 'upload/images/1657836058.6638.png', 'upload/images/1657836058.7648.png', 'upload/images/1657836058.9099.png', 'upload/images/1657836059.2159.png', 1, '3000', 1, 'Basic Plan for Afforadable Price', '612345', 1);
 
 -- --------------------------------------------------------
 
@@ -157,7 +165,8 @@ CREATE TABLE `timeslots` (
 --
 
 INSERT INTO `timeslots` (`id`, `venue_id`, `start_time`, `end_time`, `prices`) VALUES
-(1, 3, '20:00', '20:00', 3000);
+(1, 3, '20:00', '20:00', 3000),
+(2, 4, '03:45', '16:00', 500);
 
 -- --------------------------------------------------------
 
@@ -190,7 +199,10 @@ CREATE TABLE `venues` (
   `name` text DEFAULT NULL,
   `address` text DEFAULT NULL,
   `cover_image` text DEFAULT NULL,
-  `price` text DEFAULT NULL,
+  `image1` text DEFAULT NULL,
+  `image2` text DEFAULT NULL,
+  `image3` text DEFAULT NULL,
+  `image4` text DEFAULT NULL,
   `pincode` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -198,8 +210,8 @@ CREATE TABLE `venues` (
 -- Dumping data for table `venues`
 --
 
-INSERT INTO `venues` (`id`, `name`, `address`, `cover_image`, `price`, `pincode`) VALUES
-(3, 'Violet Park', 'near lasangles', 'upload/images/4059-2022-07-13.jpg', '3000', '612345');
+INSERT INTO `venues` (`id`, `name`, `address`, `cover_image`, `image1`, `image2`, `image3`, `image4`, `pincode`) VALUES
+(3, 'Violet Park', 'near lasangles', 'upload/images/4059-2022-07-13.jpg', 'upload/images/1657837946.8139.png', NULL, 'upload/images/1657837947.0739.jpeg', NULL, '612345');
 
 --
 -- Indexes for dumped tables
@@ -273,13 +285,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `packages`
 --
 ALTER TABLE `packages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `slides`
@@ -291,7 +303,7 @@ ALTER TABLE `slides`
 -- AUTO_INCREMENT for table `timeslots`
 --
 ALTER TABLE `timeslots`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -303,7 +315,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `venues`
 --
 ALTER TABLE `venues`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -18,13 +18,32 @@ if (isset($_POST['btnAdd'])) {
         $error = array();
         $name = $db->escapeString($fn->xss_clean($_POST['name']));
         $address = $db->escapeString($fn->xss_clean($_POST['address']));
-        $price = $db->escapeString($fn->xss_clean($_POST['price']));
         $pincode = $db->escapeString($fn->xss_clean($_POST['pincode']));
         
         // get image info
         $menu_image = $db->escapeString($_FILES['category_image']['name']);
         $image_error = $db->escapeString($_FILES['category_image']['error']);
         $image_type = $db->escapeString($_FILES['category_image']['type']);
+
+        //image1 info
+        $menu_image = $db->escapeString($_FILES['image1']['name']);
+        $image_error = $db->escapeString($_FILES['image1']['error']);
+        $image_type = $db->escapeString($_FILES['image1']['type']);
+
+        //image2 info
+        $menu_image = $db->escapeString($_FILES['image2']['name']);
+        $image_error = $db->escapeString($_FILES['image2']['error']);
+        $image_type = $db->escapeString($_FILES['image2']['type']);
+
+        //image3 info
+        $menu_image = $db->escapeString($_FILES['image3']['name']);
+        $image_error = $db->escapeString($_FILES['image3']['error']);
+        $image_type = $db->escapeString($_FILES['image3']['type']);
+
+        //image4 info
+        $menu_image = $db->escapeString($_FILES['image4']['name']);
+        $image_error = $db->escapeString($_FILES['image4']['error']);
+        $image_type = $db->escapeString($_FILES['image4']['type']);
 
         // create array variable to handle error
         $error = array();
@@ -35,6 +54,23 @@ if (isset($_POST['btnAdd'])) {
         error_reporting(E_ERROR | E_PARSE);
         $extension = end(explode(".", $_FILES["category_image"]["name"]));
 
+         //get image1 file extension
+         error_reporting(E_ERROR | E_PARSE);
+         $extension = end(explode(".", $_FILES["image1"]["name"]));
+ 
+         //get image2 file extension
+         error_reporting(E_ERROR | E_PARSE);
+         $extension = end(explode(".", $_FILES["image2"]["name"]));
+ 
+         //get image3 file extension
+         error_reporting(E_ERROR | E_PARSE);
+         $extension = end(explode(".", $_FILES["image3"]["name"]));
+ 
+         //get image4 file extension
+         error_reporting(E_ERROR | E_PARSE);
+         $extension = end(explode(".", $_FILES["image4"]["name"]));
+ 
+
 
        
         if (empty($name)) {
@@ -43,17 +79,15 @@ if (isset($_POST['btnAdd'])) {
         if (empty($address)) {
             $error['address'] = " <span class='label label-danger'>Required!</span>";
         }
-        if (empty($price)) {
-            $error['price'] = " <span class='label label-danger'>Required!</span>";
-        }
         if (empty($pincode)) {
             $error['pincode'] = " <span class='label label-danger'>Required!</span>";
         }
 
-        if (!empty($name)&& !empty($address) && !empty($price) && !empty($pincode))
+        if (!empty($name)&& !empty($address)&& !empty($pincode))
         {
             $result = $fn->validate_image($_FILES["category_image"]);
-            // create random image file name
+
+// create random image file name
             $string = '0123456789';
             $file = preg_replace("/\s+/", "_", $_FILES['category_image']['name']);
             $menu_image = $function->get_random_string($string, 4) . "-" . date("Y-m-d") . "." . $extension;
@@ -63,8 +97,71 @@ if (isset($_POST['btnAdd'])) {
     
             // insert new data to menu table
             $upload_image = 'upload/images/' . $menu_image;
+            $upload_image1 ='';
+            $upload_image2 ='';
+            $upload_image3 ='';
+            $upload_image4 ='';
+            if ($_FILES['image1']['size'] != 0 && $_FILES['image1']['error'] == 0 && !empty($_FILES['image1'])){
 
-            $sql = "INSERT INTO venues (name,address,cover_image,price,pincode) VALUES('$name','$address','$upload_image','$price','$pincode')";
+ //image1 info
+                // create random image1 file name
+                $string = '0123456789';
+                $file = preg_replace("/\s+/", "_", $_FILES['image1']['name']);
+                $image1 = $function->get_random_string($string, 4) . "-" . date("Y-m-d") . "." . $extension;
+
+                //upload new image1
+                $upload = move_uploaded_file($_FILES['image1']['tmp_name'], 'upload/images/' . $image1);
+
+                // insert new data to menu table
+                $upload_image1 = 'upload/images/' . $image1;
+
+            }
+            if ($_FILES['image2']['size'] != 0 && $_FILES['image2']['error'] == 0 && !empty($_FILES['image2'])){
+                
+//image2 info
+
+            // create random image2 file name
+            $string = '0123456789';
+            $file = preg_replace("/\s+/", "_", $_FILES['image2']['name']);
+            $image2 = $function->get_random_string($string, 4) . "-" . date("Y-m-d") . "." . $extension;
+
+            //upload new image2
+            $upload = move_uploaded_file($_FILES['image2']['tmp_name'], 'upload/images/' . $image2);
+
+            // insert new data to menu table
+            $upload_image2 = 'upload/images/' . $image2;
+
+            }
+            if ($_FILES['image3']['size'] != 0 && $_FILES['image3']['error'] == 0 && !empty($_FILES['image3'])){
+ //image3 info
+            // create random image3 file name
+            $string = '0123456789';
+            $file = preg_replace("/\s+/", "_", $_FILES['image3']['name']);
+            $image3 = $function->get_random_string($string, 4) . "-" . date("Y-m-d") . "." . $extension;
+
+            //upload new image3
+            $upload = move_uploaded_file($_FILES['image3']['tmp_name'], 'upload/images/' . $image3);
+
+            // insert new data to menu table
+            $upload_image3 = 'upload/images/' . $image3;
+
+            }
+            if ($_FILES['image3']['size'] != 0 && $_FILES['image3']['error'] == 0 && !empty($_FILES['image3'])){
+                
+ //image4 info
+            // create random image4 file name
+            $string = '0123456789';
+            $file = preg_replace("/\s+/", "_", $_FILES['image4']['name']);
+            $image4 = $function->get_random_string($string, 4) . "-" . date("Y-m-d") . "." . $extension;
+
+            //upload new image4
+            $upload = move_uploaded_file($_FILES['image4']['tmp_name'], 'upload/images/' . $image4);
+
+            // insert new data to menu table
+            $upload_image4 = 'upload/images/' . $image4;
+            }
+
+            $sql = "INSERT INTO venues (name,address,cover_image,image1,image2,image3,image4,pincode) VALUES('$name','$address','$upload_image','$upload_image1','$upload_image2','$upload_image3','$upload_image4','$pincode')";
             $db->sql($sql);
             $venue_result = $db->getResult();
             if (!empty($venue_result)) {
@@ -141,13 +238,19 @@ if (isset($_POST['btnAdd'])) {
                                     <input type="text" class="form-control" name="address" required>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class='col-md-4'>
+                                    <label for="exampleInputEmail1">Pincode</label> <i class="text-danger asterik">*</i> <?php echo isset($error['pincode']) ? $error['pincode'] : ''; ?><br>
+                                    <input type="text" class="form-control" name="pincode" required>
+                                </div>
+                            </div>
                         </div>
                         <hr>
                         <div class="row">
                                 <div class="form-group">
                                     <div class="col-md-4">
-                                        <label for="exampleInputFile">Image</label><?php echo isset($error['category_image']) ? $error['category_image'] : ''; ?>
-                                        <input type="file" name="category_image" onchange="readURL(this);" accept="image/png,  image/jpeg" id="category_image" />
+                                        <label for="exampleInputFile">Cover Photo</label><i class="text-danger asterik">*</i><?php echo isset($error['category_image']) ? $error['category_image'] : ''; ?>
+                                        <input type="file" name="category_image" onchange="readURL(this);" accept="image/png,  image/jpeg" id="category_image" required/>
                                         <div class="form-group">
                                             <img id="blah" src="#" alt="image" />
 
@@ -157,16 +260,40 @@ if (isset($_POST['btnAdd'])) {
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="form-group">
-                                <div class='col-md-4'>
-                                    <label for="exampleInputEmail1">Price</label> <i class="text-danger asterik">*</i><?php echo isset($error['price']) ? $error['price'] : ''; ?>
-                                    <input type="text" class="form-control" name="price" required>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <label for="exampleInputFile">Image1</label><?php echo isset($error['image1']) ? $error['image1'] : ''; ?>
+                                        <input type="file" name="image1" onchange="readURL(this);" accept="image/png,  image/jpeg" id="image1" />
+                                        <div class="form-group">
+                                            <img id="blah" src="#" alt="image" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="exampleInputFile">Image2</label><?php echo isset($error['image2']) ? $error['image2'] : ''; ?>
+                                        <input type="file" name="image2" onchange="readURL(this);" accept="image/png,  image/jpeg" id="image2"/>
+                                        <div class="form-group">
+                                            <img id="blah" src="#" alt="image" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="exampleInputFile">Image3</label><?php echo isset($error['image3']) ? $error['image3'] : ''; ?>
+                                        <input type="file" name="image3" onchange="readURL(this);" accept="image/png,  image/jpeg" id="image3" />
+                                        <div class="form-group">
+                                            <img id="blah" src="#" alt="image" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="exampleInputFile">Image4</label><?php echo isset($error['image4']) ? $error['image4'] : ''; ?>
+                                        <input type="file" name="image4" onchange="readURL(this);" accept="image/png,  image/jpeg" id="image4" />
+                                        <div class="form-group">
+                                            <img id="blah" src="#" alt="image" />
+
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class='col-md-4'>
-                                    <label for="exampleInputEmail1">Pincode</label> <i class="text-danger asterik">*</i> <?php echo isset($error['pincode']) ? $error['pincode'] : ''; ?><br>
-                                    <input type="text" class="form-control" name="pincode" required>
-                                </div>
-                            </div>
                         </div>
                         <hr>
                         <div id="packate_div"  >
@@ -225,7 +352,6 @@ if (isset($_POST['btnAdd'])) {
         rules: {
             name: "required",
             address: "required",
-            price: "required",
             pincode: "required",
             category_image: "required",
         }
