@@ -32,7 +32,7 @@ $num = $db->numRows($res);
 if ($num >= 1){
     if($type=='own'){
     
-        $sql = "SELECT *,packages.name AS package_name  FROM orders,packages,address WHERE orders.package_id = packages.id AND orders.address_id = address.id AND orders.user_id='$user_id' ORDER BY orders.id DESC";
+        $sql = "SELECT *,orders.id AS id,packages.name AS package_name  FROM orders,packages,address WHERE orders.package_id = packages.id AND orders.address_id = address.id AND orders.user_id='$user_id' ORDER BY orders.id DESC";
         $db->sql($sql);
         $res = $db->getResult();
         $num = $db->numRows($res);
@@ -42,11 +42,9 @@ if ($num >= 1){
                 $temp['package_name'] = $row['package_name'];
                 $temp['price'] =$row['price'];
                 $temp['type'] = $row['type'];
-                $temp['name'] = $row['name'];
-                $temp['address'] = $row['address'];
-                $temp['district'] = $row['district'];
-                $temp['pincode'] = $row['pincode'];
-                $temp['state'] = $row['state'];
+                $temp['address'] = $row['name'].','.$row['address'].','.$row['district'].','.$row['state'].','.$row['pincode'];
+                $temp['start_time'] = NULL;
+                $temp['end_time'] = NULL;
               
                 $rows[] = $temp;
                 
@@ -58,7 +56,7 @@ if ($num >= 1){
             print_r(json_encode($response));
         }
     else{
-        $sql = "SELECT *,packages.name AS package_name FROM orders,packages,venues WHERE orders.package_id = packages.id AND orders.venue_id = venues.id AND orders.user_id='$user_id' ORDER BY orders.id DESC";
+        $sql = "SELECT *,orders.id AS id,packages.name AS package_name FROM orders,packages,venues WHERE orders.package_id = packages.id AND orders.venue_id = venues.id AND orders.user_id='$user_id' ORDER BY orders.id DESC";
         $db->sql($sql);
         $res = $db->getResult();
         $num = $db->numRows($res);
@@ -66,14 +64,12 @@ if ($num >= 1){
             foreach ($res as $row) {
                 $temp['id'] = $row['id'];
                 $temp['package_name'] = $row['package_name'];
+                $temp['price'] = $row['price'];
                 $temp['type'] = $row['type'];
-                $temp['name'] = $row['name'];
-                $temp['address'] = $row['address'];
-                $temp['cover_image'] =DOMAIN_URL . $row['cover_image'];
-                $temp['pincode'] = $row['pincode'];
+                $temp['address'] = $row['name'].','.$row['address'].','.$row['pincode'];
                 $temp['start_time'] = $row['start_time'];
                 $temp['end_time'] = $row['end_time'];
-                $temp['prices'] = $row['prices'];
+                
                 $rows[] = $temp;
                 
             }

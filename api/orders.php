@@ -34,6 +34,7 @@ if (empty($_POST['user_id'])) {
 $package_id = $db->escapeString($_POST['package_id']);
 $type = $db->escapeString($_POST['type']);
 $user_id = $db->escapeString($_POST['user_id']);
+$orderdate = date('Y-m-d H:i:s');
 
 if($type=='own'){
     $address_id = $db->escapeString($_POST['address_id']);
@@ -57,7 +58,7 @@ else{
     $end_time = $res[0]['end_time'];
     $prices = $res[0]['prices'];
     $venue_id = $db->escapeString($_POST['venue_id']);
-    $sql = "INSERT INTO orders (`user_id`,`venue_id`,`package_id`,`type`,`start_time`,`end_time`,`prices`,`status`)VALUES('$user_id','$venue_id','$package_id','$type','$start_time','$end_time','$prices',1)";
+    $sql = "INSERT INTO orders (`user_id`,`venue_id`,`package_id`,`type`,`start_time`,`end_time`,`price`,`status`)VALUES('$user_id','$venue_id','$package_id','$type','$start_time','$end_time','$prices',1)";
     $db->sql($sql);
     $res = $db->getResult();
     $response['success'] = true;
