@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Aug 03, 2022 at 05:40 AM
--- Server version: 10.5.13-MariaDB-cll-lve
--- PHP Version: 7.2.34
+-- Host: 127.0.0.1
+-- Generation Time: Aug 05, 2022 at 12:47 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `u743445510_ep`
+-- Database: `eventoria_plus`
 --
 
 -- --------------------------------------------------------
@@ -72,6 +72,26 @@ INSERT INTO `categories` (`id`, `name`, `image`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `deliver_pincodes`
+--
+
+CREATE TABLE `deliver_pincodes` (
+  `id` int(11) NOT NULL,
+  `pincode` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `deliver_pincodes`
+--
+
+INSERT INTO `deliver_pincodes` (`id`, `pincode`) VALUES
+(1, '620028'),
+(2, '621331'),
+(3, '621313');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `orders`
 --
 
@@ -85,8 +105,6 @@ CREATE TABLE `orders` (
   `package_id` int(11) NOT NULL,
   `price` text DEFAULT NULL,
   `type` text DEFAULT NULL,
-  `start_time` text DEFAULT NULL,
-  `end_time` text DEFAULT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -94,21 +112,21 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `order_date`, `event_date`, `user_id`, `address_id`, `venue_id`, `package_id`, `price`, `type`, `start_time`, `end_time`, `status`) VALUES
-(1, NULL, NULL, 1, 1, NULL, 1, '3000', 'own', '', '', 1),
-(5, NULL, NULL, 1, NULL, 3, 1, '800', 'venue', '20:00', '20:00', 1),
-(7, NULL, NULL, 1, NULL, 3, 1, '3000', 'venue', '20:00', '20:00', 1),
-(8, NULL, NULL, 1, NULL, 3, 1, '', 'venue', NULL, NULL, 1),
-(9, NULL, NULL, 1, NULL, 3, 1, '6000', 'venue', NULL, NULL, 1),
-(10, '2022', NULL, 1, NULL, 3, 1, '6000', 'venue', NULL, NULL, 1),
-(11, '2022-08-02', NULL, 1, NULL, 3, 1, '6000', 'venue', NULL, NULL, 1),
-(12, '2022-08-02', NULL, 1, NULL, 3, 1, '6000', 'venue', NULL, NULL, 1),
-(13, '2022-08-02', NULL, 1, NULL, 3, 1, '6000', 'venue', NULL, NULL, 1),
-(14, '2022-08-02', '2022-08-05', 1, NULL, 3, 1, '6000', 'venue', NULL, NULL, 1),
-(15, '2022-08-02', '2022-08-07', 1, NULL, 3, 1, '6000', 'venue', NULL, NULL, 1),
-(16, '2022-08-02', '2022-08-07', 1, NULL, 3, 1, '3400', 'venue', NULL, NULL, 1),
-(17, '2022-08-03', '2022-08-03', 2, NULL, 3, 1, '6000', 'venue', NULL, NULL, 1),
-(18, '2022-08-03', '2022-08-07', 3, NULL, 3, 1, '3200', 'venue', NULL, NULL, 1);
+INSERT INTO `orders` (`id`, `order_date`, `event_date`, `user_id`, `address_id`, `venue_id`, `package_id`, `price`, `type`, `status`) VALUES
+(1, NULL, NULL, 1, 1, NULL, 1, '3000', 'own', 1),
+(5, NULL, NULL, 1, NULL, 3, 1, '800', 'venue', 1),
+(7, NULL, NULL, 1, NULL, 3, 1, '3000', 'venue', 1),
+(8, NULL, NULL, 1, NULL, 3, 1, '', 'venue', 1),
+(9, NULL, NULL, 1, NULL, 3, 1, '6000', 'venue', 1),
+(10, '2022', NULL, 1, NULL, 3, 1, '6000', 'venue', 1),
+(11, '2022-08-02', NULL, 1, NULL, 3, 1, '6000', 'venue', 1),
+(12, '2022-08-02', NULL, 1, NULL, 3, 1, '6000', 'venue', 1),
+(13, '2022-08-02', NULL, 1, NULL, 3, 1, '6000', 'venue', 1),
+(14, '2022-08-02', '2022-08-05', 1, NULL, 3, 1, '6000', 'venue', 1),
+(15, '2022-08-02', '2022-08-07', 1, NULL, 3, 1, '6000', 'venue', 1),
+(16, '2022-08-02', '2022-08-07', 1, NULL, 3, 1, '3400', 'venue', 1),
+(17, '2022-08-03', '2022-08-03', 2, NULL, 3, 1, '6000', 'venue', 1),
+(18, '2022-08-03', '2022-08-07', 3, NULL, 3, 1, '3200', 'venue', 1);
 
 -- --------------------------------------------------------
 
@@ -140,7 +158,7 @@ INSERT INTO `orders_timeslot` (`id`, `user_id`, `order_id`, `venue_id`, `time_sl
 (6, 1, 14, 3, 1, '20:00', '20:00', 3000),
 (7, 1, 15, 3, 1, '20:00', '20:00', 3000),
 (8, 1, 16, 3, 4, '11:45', '15:40', 400),
-(9, 2, 17, 3, 1, '20:00', '20:00', 3000),
+(9, 3, 18, 3, 1, '20:00', '20:00', 3000),
 (10, 3, 18, 3, 3, '16:19', '20:24', 200);
 
 -- --------------------------------------------------------
@@ -175,12 +193,36 @@ INSERT INTO `packages` (`id`, `name`, `cover_photo`, `image1`, `image2`, `image3
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int(11) NOT NULL,
+  `whatsapp` text DEFAULT NULL,
+  `telegram` text DEFAULT NULL,
+  `instagram` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `whatsapp`, `telegram`, `instagram`) VALUES
+(1, 'https://div.whatsapp.com', 'eventoria.telegram.in', 'eventoria13.instagram.com');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `slides`
 --
 
 CREATE TABLE `slides` (
   `id` int(11) NOT NULL,
   `name` text DEFAULT NULL,
+  `type` varchar(200) NOT NULL,
+  `package_id` int(11) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `link` text DEFAULT NULL,
   `image` text DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -189,10 +231,13 @@ CREATE TABLE `slides` (
 -- Dumping data for table `slides`
 --
 
-INSERT INTO `slides` (`id`, `name`, `image`, `status`) VALUES
-(1, 'Outdoor Decoration', 'upload/images/6592-2022-07-13.jpg', 1),
-(2, 'Birthday Decoration', 'upload/images/7013-2022-07-13.jpg', 1),
-(3, 'Wedding Decoration', 'upload/images/4790-2022-07-13.jpg', 1);
+INSERT INTO `slides` (`id`, `name`, `type`, `package_id`, `category_id`, `link`, `image`, `status`) VALUES
+(1, 'Outdoor Decoration', '', NULL, NULL, NULL, 'upload/images/6592-2022-07-13.jpg', 1),
+(2, 'Birthday Decoration', '', NULL, NULL, NULL, 'upload/images/7013-2022-07-13.jpg', 1),
+(3, 'Wedding Decoration', '', NULL, NULL, NULL, 'upload/images/4790-2022-07-13.jpg', 1),
+(15, 'jalabula', 'External Link', 0, 0, 'https://ncbcugc.in', 'upload/images/0468-2022-08-05.jpeg', 1),
+(16, 'Birthday', 'Package', 1, 0, '', 'upload/images/1148-2022-08-05.jpeg', 1),
+(17, 'Graduation Day Celebration', 'Category', 0, 3, '', 'upload/images/4671-2022-08-05.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -282,6 +327,12 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `deliver_pincodes`
+--
+ALTER TABLE `deliver_pincodes`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -297,6 +348,12 @@ ALTER TABLE `orders_timeslot`
 -- Indexes for table `packages`
 --
 ALTER TABLE `packages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -340,6 +397,12 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `deliver_pincodes`
+--
+ALTER TABLE `deliver_pincodes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
@@ -358,10 +421,16 @@ ALTER TABLE `packages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `slides`
 --
 ALTER TABLE `slides`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `timeslots`

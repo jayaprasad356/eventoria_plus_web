@@ -10,7 +10,11 @@ if (isset($_POST['btnAdd'])) {
 
 
         $name = $db->escapeString($fn->xss_clean($_POST['name']));
-        
+        $type = $db->escapeString($fn->xss_clean($_POST['type']));
+        $link = (isset($_POST['link']) && !empty($_POST['link'])) ? trim($db->escapeString($fn->xss_clean($_POST['link']))) : "";
+        $category = (isset($_POST['category']) && !empty($_POST['category'])) ? trim($db->escapeString($fn->xss_clean($_POST['category']))) : "";
+        $package = (isset($_POST['package']) && !empty($_POST['package'])) ? trim($db->escapeString($fn->xss_clean($_POST['package']))) : "";
+        //$id = ($type != 'none') ? $db->escapeString($fn->xss_clean($_POST[$type])) : "0";
         // get image info
         $menu_image = $db->escapeString($_FILES['category_image']['name']);
         $image_error = $db->escapeString($_FILES['category_image']['error']);
@@ -29,6 +33,9 @@ if (isset($_POST['btnAdd'])) {
         if (empty($name)) {
             $error['name'] = " <span class='label label-danger'>Required!</span>";
         }
+        if (empty($type)) {
+            $error['name'] = " <span class='label label-danger'>Required!</span>";
+        }
         if (empty($status)) {
             $error['status'] = " <span class='label label-danger'>Required!</span>";
         }
@@ -37,7 +44,7 @@ if (isset($_POST['btnAdd'])) {
 
       
 
-        if (!empty($name)) {
+        if (!empty($name) && !empty($type)) {
             $result = $fn->validate_image($_FILES["category_image"]);
                 // create random image file name
                 $string = '0123456789';
@@ -52,7 +59,7 @@ if (isset($_POST['btnAdd'])) {
 
             
            
-            $sql_query = "INSERT INTO slides (name,image,status)VALUES('$name','$upload_image',1)";
+            $sql_query = "INSERT INTO slides (name,image,type,category_id,package_id,link,status)VALUES('$name','$upload_image','$type','$category','$package','$link',1)";
             $db->sql($sql_query);
             $result = $db->getResult();
             if (!empty($result)) {
@@ -95,6 +102,16 @@ if (isset($_POST['btnAdd'])) {
                             <label for="exampleInputEmail1"> Name</label><?php echo isset($error['name']) ? $error['name'] : ''; ?>
                             <input type="text" class="form-control" name="name" required>
                         </div>
+
+                        <div class="form-group">
+                            <label for="type">Type</label>
+                              <select  name="type" id="type" class="form-control" required>
+                                     <option value="none">Select Type</option>
+                                    <option value="Category">Category</option>
+                                    <option value="Package">Package</option>
+                                    <option value="External Link">External Link</option>
+                              </select>
+                        </div>
                         <div class="form-group">
                             <label for="exampleInputFile">Image</label><?php echo isset($error['category_image']) ? $error['category_image'] : ''; ?>
                             <input type="file" name="category_image" onchange="readURL(this);" accept="image/png,  image/jpeg" id="category_image" />
@@ -103,6 +120,40 @@ if (isset($_POST['btnAdd'])) {
                             <img id="blah" src="#" alt="image" />
 
                         </div>
+                        <div class="form-group"id="link" style="display: none">
+                                        <label for="exampleInputEmail1">Link</label><?php echo isset($error['link']) ? $error['link'] : ''; ?>
+                                        <input type="text" class="form-control" name="link" >
+                        </div>
+                        <div class="form-group" id="categories" style="display: none">
+                                        <label for="category">Category</label>
+                                        <select id='category' name="category" class='form-control'>
+                                                 <option value="">Select Category</option>
+                                                    <?php
+                                                    $sql = "SELECT * FROM `categories`";
+                                                    $db->sql($sql);
+                                                    $categories_result = $db->getResult();
+                                                    foreach ($categories_result as $value) {
+                                                    ?>
+                                                        <option value='<?= $value['id'] ?>'><?= $value['name'] ?></option>
+                                                <?php } ?>
+                                        </select>
+                        </div>
+                        <div class="form-group" id="packages" style="display: none">
+                                        <label for="package">Package</label>
+                                        <select id='package' name="package" class='form-control'>
+                                              <option value="">Select Package</option>
+                                                    <?php
+                                                    $sql = "SELECT * FROM `packages`";
+                                                    $db->sql($sql);
+                                                    $packages_result = $db->getResult();
+                                                    foreach ($packages_result as $value) {
+                                                    ?>
+                                                        <option value='<?= $value['id'] ?>'><?= $value['name'] ?></option>
+                                                <?php } ?>
+                                        </select>
+                                    <div>
+                        </div>
+                       
                     </div>
                   
                     <!-- /.box-body -->
@@ -135,5 +186,35 @@ if (isset($_POST['btnAdd'])) {
                 reader.readAsDataURL(input.files[0]);
             }
         }
+</script>
+<script>
+
+$("#type").change(function() {
+        type = $("#type").val();
+        if(type == "none"){
+            $("#categories").hide();
+            $("#packages").hide();
+            $("#link").hide();
+        }
+        if(type == "Category"){
+            $("#categories").show();
+            $("#packages").hide();
+            $("#link").hide();
+
+        }
+        if(type == "Package"){
+            $("#categories").hide();
+            $("#packages").show();
+            $("#link").hide();
+        }
+        if(type == "External Link"){
+            $("#categories").hide();
+            $("#packages").hide();
+            $("#link").show();
+        }
+    });
+
+
+
 </script>
 <?php $db->disconnect(); ?>

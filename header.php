@@ -169,7 +169,7 @@ $db->sql("SET NAMES 'utf8'");
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-bullseye"></i>
+                        <i class="fa fa-cube"></i>
                         <span>Categories</span>
                         <i class="fa fa-angle-right pull-right"></i>
                     </a>
@@ -190,13 +190,23 @@ $db->sql("SET NAMES 'utf8'");
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-bullseye"></i>
+                        <i class="fa fa-globe"></i>
                         <span>Venues</span>
                         <i class="fa fa-angle-right pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="add-venue.php"><i class="fa fa-sliders"></i> Add Venue</a></li>
                         <li><a href="venues.php"><i class="fa fa-sliders"></i> Manage Venues</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-truck"></i>
+                        <span>Deliver Pincodes</span>
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="pincodes.php"><i class="fa fa-sliders"></i> Manage Pincodes</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -212,7 +222,7 @@ $db->sql("SET NAMES 'utf8'");
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-bullseye"></i>
+                        <i class="fa fa-shopping-cart"></i>
                         <span>Orders</span>
                         <i class="fa fa-angle-right pull-right"></i>
                     </a>

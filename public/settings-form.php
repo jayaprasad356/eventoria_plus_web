@@ -25,7 +25,7 @@ if (isset($_POST['btnUpdate'])){
     if ($result == 1) {
         $error['add_settings'] = " <section class='content-header'><span class='label label-success'>Settings Details Updated Successfully</span></section>";
     } else {
-        $error['add_settings'] = " <span class='label label-danger'>Failed add slide</span>";
+        $error['add_settings'] = " <span class='label label-danger'>Failed to update</span>";
     }
 
 }

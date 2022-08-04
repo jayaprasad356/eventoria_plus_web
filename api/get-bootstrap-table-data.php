@@ -66,12 +66,23 @@ if (isset($_GET['table']) && $_GET['table'] == 'users') {
         $order = $db->escapeString($_GET['order']);
 
     }
+    
+    $sql = "SELECT COUNT(`id`) as total FROM `users` ";
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
 
     $sql = "SELECT * FROM users ". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
     $db->sql($sql);
     $res = $db->getResult();
+
+    $bulkData = array();
+    $bulkData['total'] = $total;
+
     $rows = array();
     $tempRow = array();
+
     foreach ($res as $row) {
       
         
@@ -113,10 +124,23 @@ if (isset($_GET['table']) && $_GET['table'] == 'categories') {
         $order = $db->escapeString($_GET['order']);
 
     }
+    
+    $sql = "SELECT COUNT(`id`) as total FROM `categories` ";
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
 
     $sql = "SELECT * FROM `categories`". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
     $db->sql($sql);
     $res = $db->getResult();
+
+    
+    $bulkData = array();
+    $bulkData['total'] = $total;
+    
+    $rows = array();
+    $tempRow = array();
 
     foreach ($res as $row) {
 
@@ -167,10 +191,22 @@ if (isset($_GET['table']) && $_GET['table'] == 'packages') {
         $order = $db->escapeString($_GET['order']);
 
     }
+    $sql = "SELECT COUNT(`id`) as total FROM `packages` ";
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
 
     $sql = "SELECT * FROM `packages`". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
     $db->sql($sql);
     $res = $db->getResult();
+
+    
+    $bulkData = array();
+    $bulkData['total'] = $total;
+    
+    $rows = array();
+    $tempRow = array();
 
     foreach ($res as $row) {
 
@@ -224,10 +260,21 @@ if (isset($_GET['table']) && $_GET['table'] == 'venues') {
         $order = $db->escapeString($_GET['order']);
 
     }
+    $sql = "SELECT COUNT(`id`) as total FROM `venues` ";
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
 
     $sql = "SELECT * FROM `venues`". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
     $db->sql($sql);
     $res = $db->getResult();
+
+    $bulkData = array();
+    $bulkData['total'] = $total;
+    
+    $rows = array();
+    $tempRow = array();
 
     foreach ($res as $row) {
 
@@ -243,6 +290,63 @@ if (isset($_GET['table']) && $_GET['table'] == 'venues') {
             $tempRow['cover_image'] = 'No Image';
 
         }
+        $tempRow['pincode'] = $row['pincode'];
+       $tempRow['operate'] = $operate;
+        $rows[] = $tempRow;
+    }
+    $bulkData['rows'] = $rows;
+    print_r(json_encode($bulkData));
+}
+if (isset($_GET['table']) && $_GET['table'] == 'deliver_pincodes') {
+
+    $offset = 0;
+    $limit = 10;
+    $sort = 'id';
+    $order = 'DESC';
+    $where = '';
+    if (isset($_GET['offset']))
+        $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
+    if (isset($_GET['limit']))
+        $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
+
+    if (isset($_GET['sort']))
+        $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
+    if (isset($_GET['order']))
+        $order = $db->escapeString($fn->xss_clean($_GET['order']));
+
+    if (isset($_GET['search']) && !empty($_GET['search'])) {
+        $search = $db->escapeString($fn->xss_clean($_GET['search']));
+        $where .= "WHERE pincode like '%" . $search . "%'" ;
+    }
+    if (isset($_GET['sort'])){
+        $sort = $db->escapeString($_GET['sort']);
+
+    }
+    if (isset($_GET['order'])){
+        $order = $db->escapeString($_GET['order']);
+
+    }
+    $sql = "SELECT COUNT(`id`) as total FROM `deliver_pincodes` ";
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
+
+    $sql = "SELECT * FROM `deliver_pincodes`". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
+    $db->sql($sql);
+    $res = $db->getResult();
+
+    $bulkData = array();
+    $bulkData['total'] = $total;
+    
+    $rows = array();
+    $tempRow = array();
+
+    foreach ($res as $row) {
+
+        $operate = ' <a href="delete-pincode.php?id=' . $row['id'] .'"  class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>Delete</a>';
+
+        $tempRow['id'] = $row['id'];
         $tempRow['pincode'] = $row['pincode'];
        $tempRow['operate'] = $operate;
         $rows[] = $tempRow;
@@ -269,7 +373,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'slides') {
 
     if (isset($_GET['search']) && !empty($_GET['search'])) {
         $search = $db->escapeString($fn->xss_clean($_GET['search']));
-        $where .= "WHERE name like '%" . $search . "%' OR status like '%" . $search . "%'";
+        $where .= "WHERE name like '%" . $search . "%' OR status like '%" . $search . "%' OR type like '%" . $search. "%'" ;
     }
     if (isset($_GET['sort'])){
         $sort = $db->escapeString($_GET['sort']);
@@ -279,10 +383,21 @@ if (isset($_GET['table']) && $_GET['table'] == 'slides') {
         $order = $db->escapeString($_GET['order']);
 
     }
+    $sql = "SELECT COUNT(`id`) as total FROM `slides` ";
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
 
     $sql = "SELECT * FROM `slides`". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
     $db->sql($sql);
     $res = $db->getResult();
+
+    $bulkData = array();
+    $bulkData['total'] = $total;
+    
+    $rows = array();
+    $tempRow = array();
 
     foreach ($res as $row) {
 
@@ -290,6 +405,10 @@ if (isset($_GET['table']) && $_GET['table'] == 'slides') {
 
         $tempRow['id'] = $row['id'];
         $tempRow['name'] = $row['name'];
+        $tempRow['type'] = $row['type'];
+        $tempRow['category_id'] = $row['category_id'];
+       $tempRow['package_id'] = $row['package_id'];
+        $tempRow['link'] = $row['link'];
         if(!empty($row['image'])){
             $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['name'] . "'><img src='" . $row['image'] . "' title='" . $row['name'] . "' height='50' /></a>";
 
@@ -298,6 +417,11 @@ if (isset($_GET['table']) && $_GET['table'] == 'slides') {
 
         }
         $tempRow['status'] = $row['status'];
+        if($row['status']== '1'){
+            $tempRow['status'] = '<p class="text text-success">Active</p>';
+        }else{
+            $tempRow['status'] = '<p class="text text-danger">Inactive</p>';
+        }
        $tempRow['operate'] = $operate;
         $rows[] = $tempRow;
     }
@@ -323,7 +447,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'orders') {
 
     if (isset($_GET['search']) && !empty($_GET['search'])) {
         $search = $db->escapeString($fn->xss_clean($_GET['search']));
-        $where .= " WHERE package_name like '%" . $search . "%' OR type like '%" . $search . "%'";
+        $where .= "WHERE package_name like '%" . $search . "%' OR type like '%" . $search . "%' OR status like '%" . $search . "%'";
     }
     if (isset($_GET['sort'])){
         $sort = $db->escapeString($_GET['sort']);
@@ -333,10 +457,22 @@ if (isset($_GET['table']) && $_GET['table'] == 'orders') {
         $order = $db->escapeString($_GET['order']);
 
     }
-
-    $sql = "SELECT *,orders.id AS id,packages.name AS package_name FROM orders,packages WHERE orders.package_id = packages.id ";
+    
+    $sql = "SELECT COUNT(`id`) as total FROM `orders` ";
     $db->sql($sql);
     $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
+
+    $sql = "SELECT *,orders.id AS id,packages.name AS package_name FROM orders,packages WHERE orders.package_id = packages.id";
+    $db->sql($sql);
+    $res = $db->getResult();
+
+    $bulkData = array();
+    $bulkData['total'] = $total;
+    
+    $rows = array();
+    $tempRow = array();
 
     foreach ($res as $row) {
 

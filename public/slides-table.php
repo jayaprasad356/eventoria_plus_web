@@ -26,6 +26,10 @@
                                 <tr>
                                     <th data-field="id" data-sortable="true">ID</th>
                                     <th data-field="name" data-sortable="true">Name</th>
+                                    <th data-field="type" data-sortable="true">Type</th>
+                                    <th data-field="category_id" data-sortable="true">Category Id</th>
+                                    <th data-field="package_id" data-sortable="true">Package Id</th>
+                                    <th data-field="link" data-sortable="true">Link</th>
                                     <th data-field="image">Image</th>
                                     <th data-field="status" data-sortable="true" >Status</th>
                                     <th data-field="operate">Action</th>
@@ -64,44 +68,4 @@
             search: p.search
         };
     }
-</script>
-<script>
-    $('#category_id').on('change', function() {
-        id = $('#category_id').val();
-        $('#products_table').bootstrapTable('refresh');
-    });
-
-    window.actionEvents = {
-        'click .set-product-deactive': function(e, value, rows, index) {
-            var p_id = $(this).data("id");
-            $.ajax({
-                url: 'public/db-operation.php',
-                type: "get",
-                data: 'id=' + p_id + '&product_status=1&type=deactive',
-                success: function(result) {
-                    if (result == 1)
-                        $('#products_table').bootstrapTable('refresh');
-                    else
-                        alert('Error! Product could not be deactivated.');
-                }
-            });
-
-        },
-        'click .set-product-active': function(e, value, rows, index) {
-            var p_id = $(this).data("id");
-            $.ajax({
-                url: 'public/db-operation.php',
-                type: "get",
-                data: 'id=' + p_id + '&product_status=1&type=active',
-                success: function(result) {
-                    if (result == 1)
-                        $('#products_table').bootstrapTable('refresh');
-                    else
-                        alert('Error! Product could not be deactivated.');
-                }
-            });
-        }
-
-
-    };
 </script>

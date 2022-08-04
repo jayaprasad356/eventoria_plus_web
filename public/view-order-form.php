@@ -32,13 +32,21 @@ $order_id = $_GET['id'];
                         if($num >= 1){
                            
                         if($res[0]['type'] =='own'){
-                            $sql = "SELECT *,packages.name AS package_name  FROM orders,packages,address WHERE orders.package_id = packages.id  AND orders.address_id = address.id AND orders.id = $order_id";
+                            $sql = "SELECT *,packages.name AS package_name  FROM orders,packages,address,orders_timeslot WHERE orders.package_id = packages.id  AND orders.address_id = address.id AND orders.id = $order_id";
                             $db->sql($sql);
                             $res = $db->getResult();
                             ?>
                             <tr>
                                 <th style="width: 200px">ID</th>
                                 <td><?php echo $res[0]['id'] ?></td>
+                            </tr>
+                            <tr>
+                                <th style="width: 200px">Order Date</th>
+                                <td><?php echo $res[0]['order_date'] ?></td>
+                            </tr>
+                            <tr>
+                                <th style="width: 200px">Event Date</th>
+                                <td><?php echo $res[0]['event_date'] ?></td>
                             </tr>
                             <tr>
                                 <th style="width: 200px">Package Name</th>
@@ -79,7 +87,7 @@ $order_id = $_GET['id'];
                             <?php
                         }
                         else{
-                            $sql = "SELECT *,packages.name AS package_name,venues.price AS price,venues.pincode AS pincode  FROM orders,packages,venues WHERE orders.package_id = packages.id AND orders.venue_id = venues.id ";
+                            $sql = "SELECT *,packages.name AS package_name,orders_timeslot.price AS price,venues.pincode AS pincode,orders.id AS id FROM orders,packages,venues,orders_timeslot,users WHERE orders.package_id = packages.id AND orders.venue_id = venues.id AND orders.id = orders_timeslot.order_id AND orders.id = $order_id";
                             $db->sql($sql);
                             $res = $db->getResult();
                             ?>
@@ -88,11 +96,19 @@ $order_id = $_GET['id'];
                                 <td><?php echo $res[0]['id'] ?></td>
                             </tr>
                             <tr>
+                                <th style="width: 200px">Order Date</th>
+                                <td><?php echo $res[0]['order_date'] ?></td>
+                            </tr>
+                            <tr>
+                                <th style="width: 200px">Event Date</th>
+                                <td><?php echo $res[0]['event_date'] ?></td>
+                            </tr>
+                            <tr>
                                 <th style="width: 200px">Package Name</th>
                                 <td><?php echo $res[0]['package_name'] ?></td>
                             </tr>
                             <tr>
-                                <th style="width: 200px"> Price</th>
+                                <th style="width: 200px"> Total Price</th>
                                 <td><?php echo $res[0]['price'] ?></td>
                             </tr>
                             <tr>
@@ -108,13 +124,32 @@ $order_id = $_GET['id'];
                                 <td><?php echo $res[0]['name'] ?></td>
                             </tr>
                             <tr>
+                                <th style="width: 200px">Mobile</th>
+                                <td><?php echo $res[0]['mobile'] ?></td>
+                            </tr>
+                            <tr>
                                 <th style="width: 200px">Address</th>
                                 <td><?php echo $res[0]['address']; ?></td>
                             </tr>
                             <tr>
-                                <th style="width: 200px">Pin Code</th>
+                                <th style="width: 200px">Pincode</th>
                                 <td><?php echo $res[0]['pincode']; ?></td>
                             </tr>
+                            <?php
+                            $sql = "SELECT *,orders_timeslot.price AS price  FROM orders_timeslot,orders WHERE orders.id = orders_timeslot.order_id AND orders.id = $order_id";
+                            $db->sql($sql);
+                            $resad = $db->getResult();
+                            $index = 1;
+                            foreach ($resad as $row) {
+                            ?>
+                            <tr>
+                                <th style="width: 200px">Time Slots  <?php echo $index ?></th>
+                                <td><?php echo '<b>Start Time :</b> '.$row['start_time'].'<br>'.'<b>End Time :</b> '.$row['end_time'].'<br>'.'<b>Price :</b> '.$row['price']; ?></td>
+                            </tr>
+                            <?php
+                            $index++;
+                            }
+                            ?>
                         <?php
                         }
                         ?>
