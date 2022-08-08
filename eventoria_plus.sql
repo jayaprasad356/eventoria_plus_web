@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 05, 2022 at 12:47 AM
+-- Generation Time: Aug 08, 2022 at 11:41 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -86,7 +86,6 @@ CREATE TABLE `deliver_pincodes` (
 
 INSERT INTO `deliver_pincodes` (`id`, `pincode`) VALUES
 (1, '620028'),
-(2, '621331'),
 (3, '621313');
 
 -- --------------------------------------------------------
@@ -189,6 +188,36 @@ CREATE TABLE `packages` (
 
 INSERT INTO `packages` (`id`, `name`, `cover_photo`, `image1`, `image2`, `image3`, `image4`, `recommend`, `price`, `category_id`, `description`, `pincode`, `status`) VALUES
 (1, 'Basic Birthday', 'upload/images/1657836058.6088.png', 'upload/images/1657836058.6638.png', 'upload/images/1657836058.7648.png', NULL, 'upload/images/1657836059.2159.png', 1, '3000', 1, 'Basic Plan for Afforadable Price', '612345', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `promo_codes`
+--
+
+CREATE TABLE `promo_codes` (
+  `id` int(11) NOT NULL,
+  `promo_code` varchar(28) NOT NULL,
+  `message` varchar(512) NOT NULL,
+  `start_date` varchar(28) NOT NULL,
+  `end_date` varchar(28) NOT NULL,
+  `no_of_users` int(11) NOT NULL,
+  `minimum_order_amount` int(11) NOT NULL,
+  `discount` int(11) NOT NULL,
+  `discount_type` varchar(28) NOT NULL,
+  `max_discount_amount` int(11) NOT NULL,
+  `repeat_usage` tinyint(4) NOT NULL,
+  `no_of_repeat_usage` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `promo_codes`
+--
+
+INSERT INTO `promo_codes` (`id`, `promo_code`, `message`, `start_date`, `end_date`, `no_of_users`, `minimum_order_amount`, `discount`, `discount_type`, `max_discount_amount`, `repeat_usage`, `no_of_repeat_usage`, `status`, `date_created`) VALUES
+(1, 'DEMO', 'demo', '2022-01-31', '2022-02-03', 5, 100, 10, 'percentage', 300, 0, 0, 1, '2022-01-31 13:18:28');
 
 -- --------------------------------------------------------
 
@@ -351,6 +380,12 @@ ALTER TABLE `packages`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `promo_codes`
+--
+ALTER TABLE `promo_codes`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `settings`
 --
 ALTER TABLE `settings`
@@ -419,6 +454,12 @@ ALTER TABLE `orders_timeslot`
 --
 ALTER TABLE `packages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `promo_codes`
+--
+ALTER TABLE `promo_codes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `settings`

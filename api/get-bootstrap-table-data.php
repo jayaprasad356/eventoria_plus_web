@@ -354,6 +354,73 @@ if (isset($_GET['table']) && $_GET['table'] == 'deliver_pincodes') {
     $bulkData['rows'] = $rows;
     print_r(json_encode($bulkData));
 }
+if (isset($_GET['table']) && $_GET['table'] == 'promo-codes') {
+
+    $offset = 0;
+    $limit = 10;
+    $sort = 'id';
+    $order = 'DESC';
+    $where = '';
+    if (isset($_GET['offset']))
+        $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
+    if (isset($_GET['limit']))
+        $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
+
+    if (isset($_GET['sort']))
+        $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
+    if (isset($_GET['order']))
+        $order = $db->escapeString($fn->xss_clean($_GET['order']));
+
+    if (isset($_GET['search']) && $_GET['search'] != '') {
+        $search = $db->escapeString($fn->xss_clean($_GET['search']));
+        $where = " Where `id` like '%" . $search . "%' OR `promo_code` like '%" . $search . "%' OR `message` like '%" . $search . "%' OR `start_date` like '%" . $search . "%' OR `end_date` like '%" . $search . "%'";
+    }
+
+    $sql = "SELECT COUNT(id) as total FROM `promo_codes`" . $where;
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
+
+    $sql = "SELECT * FROM `promo_codes`" . $where . " ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . ", " . $limit;
+    $db->sql($sql);
+    $res = $db->getResult();
+
+    $bulkData = array();
+    $bulkData['total'] = $total;
+    $rows = array();
+    $tempRow = array();
+
+    foreach ($res as $row) {
+
+        $operate = "<a class='btn btn-xs btn-primary edit-promo-code' data-id='" . $row['id'] . "' data-toggle='modal' data-target='#editPromoCodeModal' title='Edit'><i class='fa fa-pencil-square-o'></i></a>";
+        $operate .= " <a class='btn btn-xs btn-danger delete-promo-code' data-id='" . $row['id'] . "' title='Delete'><i class='fa fa-trash-o'></i></a>";
+
+
+        $tempRow['id'] = $row['id'];
+        $tempRow['promo_code'] = $row['promo_code'];
+        $tempRow['message'] = $row['message'];
+        $tempRow['start_date'] = $row['start_date'];
+        $tempRow['end_date'] = $row['end_date'];
+        $tempRow['no_of_users'] = $row['no_of_users'];
+        $tempRow['minimum_order_amount'] = $row['minimum_order_amount'];
+        $tempRow['discount'] = $row['discount'];
+        $tempRow['discount_type'] = $row['discount_type'];
+        $tempRow['max_discount_amount'] = $row['max_discount_amount'];
+        $tempRow['repeat_usage'] = $row['repeat_usage'] == 1 ? 'Allowed' : 'Not Allowed';
+        $tempRow['no_of_repeat_usage'] = $row['no_of_repeat_usage'];
+        if ($row['status'] == 0)
+            $tempRow['status'] = "<label class='label label-danger'>Deactive</label>";
+        else
+            $tempRow['status'] = "<label class='label label-success'>Active</label>";
+        $tempRow['date_created'] = date('d-m-Y h:i:sa', strtotime($row['date_created']));
+        $tempRow['operate'] = $operate;
+
+        $rows[] = $tempRow;
+    }
+    $bulkData['rows'] = $rows;
+    print_r(json_encode($bulkData));
+}
 if (isset($_GET['table']) && $_GET['table'] == 'slides') {
 
     $offset = 0;

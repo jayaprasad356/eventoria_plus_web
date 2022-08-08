@@ -210,6 +210,12 @@ $db->sql("SET NAMES 'utf8'");
                     </ul>
                 </li>
                 <li class="treeview">
+                    <a href="promo-code.php">
+                        <i class="fa fa-gift"></i>
+                        <span>Promo code</span>
+                    </a>
+                </li>
+                <li class="treeview">
                     <a href="#">
                         <i class="fa fa-bullseye"></i>
                         <span>Slides</span>

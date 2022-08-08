@@ -69,7 +69,7 @@ class custom_functions
         $this->db->sql($sql);
         $res = $this->db->getResult();
         if (!empty($res)) {
-            return json_decode($res[0]['value'], true);
+            return  true;
         } else {
             return false;
         }
@@ -98,6 +98,111 @@ class custom_functions
                 return false;
             }
         }
+    }
+    public function validate_promo_code($user_id, $promo_code, $total)
+    {
+        $sql = "select * from promo_codes where promo_code='" . $promo_code . "'";
+        $this->db->sql($sql);
+        $res = $this->db->getResult();
+        if (empty($res)) {
+            $response['error'] = true;
+            $response['message'] = "Invalid promo code.";
+            return $response;
+            exit();
+        }
+        if ($res[0]['status'] == 0) {
+            $response['error'] = true;
+            $response['message'] = "This promo code is either expired / invalid.";
+            return $response;
+            exit();
+        }
+
+        $sql = "select id from users where id='" . $user_id . "'";
+        $this->db->sql($sql);
+        $res_user = $this->db->getResult();
+        if (empty($res_user)) {
+            $response['error'] = true;
+            $response['message'] = "Invalid user data.";
+            return $response;
+            exit();
+        }
+
+        $start_date = $res[0]['start_date'];
+        $end_date = $res[0]['end_date'];
+        $date = date('Y-m-d h:i:s a');
+
+        if ($date < $start_date) {
+            $response['error'] = true;
+            $response['message'] = "This promo code can't be used before " . date('d-m-Y', strtotime($start_date)) . "";
+            return $response;
+            exit();
+        }
+        if ($date > $end_date) {
+            $response['error'] = true;
+            $response['message'] = "This promo code can't be used after " . date('d-m-Y', strtotime($end_date)) . "";
+            return $response;
+            exit();
+        }
+        if ($total < $res[0]['minimum_order_amount']) {
+            $response['error'] = true;
+            $response['message'] = "This promo code is applicable only for order amount greater than or equal to " . $res[0]['minimum_order_amount'] . "";
+            return $response;
+            exit();
+        }
+        //check how many users have used this promo code and no of users used this promo code crossed max users or not
+        $sql = "select id from orders where promo_code='" . $promo_code . "' GROUP BY user_id";
+        $this->db->sql($sql);
+        $res_order = $this->db->numRows();
+
+        if ($res_order >= $res[0]['no_of_users']) {
+            $response['error'] = true;
+            $response['message'] = "This promo code is applicable only for first " . $res[0]['no_of_users'] . " users.";
+            return $response;
+            exit();
+        }
+        //check how many times user have used this promo code and count crossed max limit or not
+        if ($res[0]['repeat_usage'] == 1) {
+            $sql = "select id from orders where user_id=" . $user_id . " and promo_code='" . $promo_code . "'";
+            $this->db->sql($sql);
+            $total_usage = $this->db->numRows();
+            if ($total_usage >= $res[0]['no_of_repeat_usage']) {
+                $response['error'] = true;
+                $response['message'] = "This promo code is applicable only for " . $res[0]['no_of_repeat_usage'] . " times.";
+                return $response;
+                exit();
+            }
+        }
+        //check if repeat usage is not allowed and user have already used this promo code 
+        if ($res[0]['repeat_usage'] == 0) {
+            $sql = "select id from orders where user_id=" . $user_id . " and promo_code='" . $promo_code . "'";
+            $this->db->sql($sql);
+            $total_usage = $this->db->numRows();
+            if ($total_usage >= 1) {
+                $response['error'] = true;
+                $response['message'] = "This promo code is applicable only for 1 time.";
+                return $response;
+                exit();
+            }
+        }
+        if ($res[0]['discount_type'] == 'percentage') {
+            $percentage = $res[0]['discount'];
+            $discount = $total / 100 * $percentage;
+            if ($discount > $res[0]['max_discount_amount']) {
+                $discount = $res[0]['max_discount_amount'];
+            }
+        } else {
+            $discount = $res[0]['discount'];
+        }
+        $discounted_amount = $total - $discount;
+        $response['error'] = false;
+        $response['message'] = "promo code applied successfully.";
+        $response['promo_code'] = $promo_code;
+        $response['promo_code_message'] = $res[0]['message'];
+        $response['total'] = $total;
+        $response['discount'] = "$discount";
+        $response['discounted_amount'] = "$discounted_amount";
+        return $response;
+        exit();
     }
 
     public function get_settings($variable, $is_json = false)
