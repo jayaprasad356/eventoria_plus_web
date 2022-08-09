@@ -18,14 +18,18 @@ $res = $db->getResult();
 $num = $db->numRows($res);
 if($num>=1){
     foreach ($res as $row) {
-    $temp['id'] = $row['id'];
-    $temp['name'] = $row['name'];
-    $temp['cover_photo'] = DOMAIN_URL . $row['cover_photo'];
-    $temp['price'] = $row['price'];
-    $temp['category_id'] = $row['category_id'];
-    $temp['description'] = $row['description'];
-    $temp['pincode'] = $row['pincode'];
-    $rows[] = $temp;
+        $temp['id'] = $row['id'];
+        $temp['name'] = $row['name'];
+        $temp['cover_photo'] = DOMAIN_URL . $row['cover_photo'];
+        $temp['image1'] = empty($row['image1']) ? "" : DOMAIN_URL . $row['image1'];
+        $temp['image2'] = empty($row['image2']) ? "" : DOMAIN_URL . $row['image2'];
+        $temp['image3'] = empty($row['image3']) ? "" : DOMAIN_URL . $row['image3'];
+        $temp['image4'] = empty($row['image4']) ? "" : DOMAIN_URL . $row['image4'];
+        $temp['price'] = $row['price'];
+        $temp['category_id'] = $row['category_id'];
+        $temp['description'] = $row['description'];
+        $temp['pincode'] = $row['pincode'];
+        $rows[] = $temp;
     
     }
 
