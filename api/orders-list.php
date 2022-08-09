@@ -67,8 +67,6 @@ if ($num >= 1){
                 $temp['price'] = $row['price'];
                 $temp['type'] = $row['type'];
                 $temp['address'] = $row['name'].','.$row['address'].','.$row['pincode'];
-                $temp['start_time'] = $row['start_time'];
-                $temp['end_time'] = $row['end_time'];
                 
                 $rows[] = $temp;
                 
