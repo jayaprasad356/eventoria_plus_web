@@ -35,6 +35,7 @@ $package_id = $db->escapeString($_POST['package_id']);
 $type = $db->escapeString($_POST['type']);
 $user_id = $db->escapeString($_POST['user_id']);
 $order_date = date('Y-m-d');
+$price = $db->escapeString($_POST['price']);
 
 if($type=='own'){
     $address_id = $db->escapeString($_POST['address_id']);
