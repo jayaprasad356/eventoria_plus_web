@@ -237,6 +237,12 @@ $db->sql("SET NAMES 'utf8'");
                     </ul>
                 </li>
                 <li class="treeview">
+                    <a href="notifications.php">
+                        <i class="fa fa-bell"></i>
+                        <span>Notifications</span>
+                    </a>
+                </li>
+                <li class="treeview">
                     <a href="settings.php">
                         <i class="fa fa-gear"></i><span>Settings</span>  
                     </a>
