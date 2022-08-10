@@ -36,11 +36,11 @@ $type = $db->escapeString($_POST['type']);
 $user_id = $db->escapeString($_POST['user_id']);
 $order_date = date('Y-m-d');
 $price = $db->escapeString($_POST['price']);
-
+$promo_code = $db->escapeString($_POST['promo_code']);
 if($type=='own'){
     $address_id = $db->escapeString($_POST['address_id']);
 
-    $sql = "INSERT INTO orders (`order_date`,`user_id`,`address_id`,`package_id`,`price`,`type`,`status`)VALUES('$order_date','$user_id','$address_id','$package_id','$price','$type',1)";
+    $sql = "INSERT INTO orders (`order_date`,`user_id`,`promo_code`,`address_id`,`package_id`,`price`,`type`,`status`)VALUES('$order_date','$user_id','$promo_code','$address_id','$package_id','$price','$type',1)";
     $db->sql($sql);
     $res = $db->getResult();
     $response['success'] = true;
@@ -55,7 +55,7 @@ else{
     $price = $db->escapeString($_POST['price']);
     $venue_id = $db->escapeString($_POST['venue_id']);
     $event_date = $db->escapeString($_POST['event_date']);
-    $sql = "INSERT INTO orders (`order_date`,`event_date`,`user_id`,`venue_id`,`package_id`,`type`,`price`,`status`)VALUES('$order_date','$event_date','$user_id','$venue_id','$package_id','$type','$price',1)";
+    $sql = "INSERT INTO orders (`order_date`,`event_date`,`user_id`,`promo_code`,`venue_id`,`package_id`,`type`,`price`,`status`)VALUES('$order_date','$event_date','$user_id','$promo_code','$venue_id','$package_id','$type','$price',1)";
     $db->sql($sql);
     $res = $db->getResult();
     $sql = "SELECT * FROM orders ORDER BY id DESC LIMIT 1";
