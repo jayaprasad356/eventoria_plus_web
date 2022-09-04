@@ -32,7 +32,7 @@ $order_id = $_GET['id'];
                         if($num >= 1){
                            
                         if($res[0]['type'] =='own'){
-                            $sql = "SELECT *,packages.name AS package_name  FROM orders,packages,address,orders_timeslot WHERE orders.package_id = packages.id  AND orders.address_id = address.id AND orders.id = $order_id";
+                            $sql = "SELECT *,orders.id AS id FROM orders,users WHERE orders.user_id = users.id AND orders.id = $order_id";
                             $db->sql($sql);
                             $res = $db->getResult();
                             ?>
@@ -62,32 +62,28 @@ $order_id = $_GET['id'];
                             </tr>
                             <tr>
                                 <th style="width: 200px">Status</th>
-                                <td><?php echo $res[0]['status'] ?></td>
+                                <td>Booked</td>
                             </tr>
                             <tr>
                                 <th style="width: 200px">Customer Name</th>
                                 <td><?php echo $res[0]['name'] ?></td>
                             </tr>
                             <tr>
+                                <th style="width: 200px">Mobile</th>
+                                <td><?php echo $res[0]['mobile'] ?></td>
+                            </tr>
+                            <tr>
                                 <th style="width: 200px">Address</th>
                                 <td><?php echo $res[0]['address']; ?></td>
                             </tr>
                             <tr>
-                                <th style="width: 200px">District</th>
-                                <td><?php echo $res[0]['district']; ?></td>
-                            </tr>
-                            <tr>
-                                <th style="width: 200px">Pin Code</th>
+                                <th style="width: 200px">Pincode</th>
                                 <td><?php echo $res[0]['pincode']; ?></td>
-                            </tr>
-                            <tr>
-                                <th style="width: 200px">State</th>
-                                <td><?php echo $res[0]['state']; ?></td>
                             </tr>
                             <?php
                         }
                         else{
-                            $sql = "SELECT *,packages.name AS package_name,orders_timeslot.price AS price,venues.pincode AS pincode,orders.id AS id FROM orders,packages,venues,orders_timeslot,users WHERE orders.package_id = packages.id AND orders.venue_id = venues.id AND orders.id = orders_timeslot.order_id AND orders.id = $order_id";
+                            $sql = "SELECT *,orders.id AS id FROM orders,users WHERE orders.user_id = users.id AND orders.id = $order_id";
                             $db->sql($sql);
                             $res = $db->getResult();
                             ?>
@@ -117,7 +113,7 @@ $order_id = $_GET['id'];
                             </tr>
                             <tr>
                                 <th style="width: 200px">Status</th>
-                                <td><?php echo $res[0]['status'] ?></td>
+                                <td>Booked</td>
                             </tr>
                             <tr>
                                 <th style="width: 200px">Customer Name</th>
@@ -128,7 +124,7 @@ $order_id = $_GET['id'];
                                 <td><?php echo $res[0]['mobile'] ?></td>
                             </tr>
                             <tr>
-                                <th style="width: 200px">Address</th>
+                                <th style="width: 200px">Venue Address</th>
                                 <td><?php echo $res[0]['address']; ?></td>
                             </tr>
                             <tr>

@@ -17,9 +17,15 @@ if (empty($_POST['pincode'])) {
     print_r(json_encode($response));
     return false;
 }
+if (empty($_POST['category_id'])) {
+    $response['success'] = false;
+    $response['message'] = "Category ID is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 $pincode = $db->escapeString($_POST['pincode']);
-
-$sql = "SELECT * FROM  venues WHERE pincode='$pincode'";
+$category_id = $db->escapeString($_POST['category_id']);
+$sql = "SELECT * FROM  venues WHERE pincode='$pincode' AND categories IN ($category_id)";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);

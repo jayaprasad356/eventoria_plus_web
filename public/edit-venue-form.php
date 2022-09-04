@@ -18,6 +18,9 @@ if (isset($_POST['btnEdit'])) {
         $name = $db->escapeString($fn->xss_clean($_POST['name']));
         $address = $db->escapeString($fn->xss_clean($_POST['address']));
         $pincode = $db->escapeString($fn->xss_clean($_POST['pincode']));
+        $description = $db->escapeString($fn->xss_clean($_POST['description']));
+        $cat_id = $fn->xss_clean_array($_POST['cat_ids']);
+        $cat_ids = implode(",", $cat_id);
         $error = array();
 
        
@@ -162,7 +165,7 @@ if (isset($_POST['btnEdit'])) {
                 $db->sql($sql);
             }
 			
-            $sql = "UPDATE venues SET name='$name',address='$address',pincode='$pincode' WHERE id =  $ID";
+            $sql = "UPDATE venues SET name='$name',address='$address',pincode='$pincode',categories = '$cat_ids',description='$description' WHERE id =  $ID";
             $db->sql($sql);
             $res = $db->getResult();
             $update_result = $db->getResult();
@@ -274,6 +277,22 @@ if (isset($_POST['btnCancel'])) { ?>
                         </div>
                         <hr>
                         <div class="row">
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label for='catogories_ids'>Category</label><i class="text-danger asterik">*</i>
+                                    <select name='cat_ids[]' id='cat_ids' class='form-control' placeholder='Enter the category IDs you want to assign Seller' required multiple="multiple">
+                                        <?php $sql = 'select id,name from `categories`  order by id desc';
+                                        $db->sql($sql);
+
+                                        $result = $db->getResult();
+                                        foreach ($result as $value) {
+                                        ?>
+                                             <option value='<?= $value['id'] ?>' <?= (strpos(" " . $res[0]['categories'], $value['id'])) ? 'selected' : ''; ?>><?= $value['name'] ?></option>
+                                        <?php } ?>
+
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group">
                                <div class='col-md-4'>
                                        <label for="exampleInputFile">Cover Image</label>
@@ -285,6 +304,15 @@ if (isset($_POST['btnCancel'])) { ?>
 
                         </div>
                         <hr>
+                            <div class="form-group">
+                                <label for="description">Description :</label> <i class="text-danger asterik">*</i><?php echo isset($error['description']) ? $error['description'] : ''; ?>
+                                <textarea name="description" id="description" class="form-control" rows="8"><?php echo $res[0]['description']; ?></textarea>
+                                <script type="text/javascript" src="css/js/ckeditor/ckeditor.js"></script>
+                                <script type="text/javascript">
+                                    CKEDITOR.replace('description');
+                                </script>
+                            </div>
+                            <hr>
                         <div class="row">
                             <div class="form-group">
                                <div class='col-md-3'>
@@ -378,8 +406,16 @@ if (isset($_POST['btnCancel'])) { ?>
 
 <div class="separator"> </div>
 <?php $db->disconnect(); ?>
+<script>
+    $('#cat_ids').select2({
+        width: 'element',
+        placeholder: 'type in category name to search',
+
+    });
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <script>
     $(document).ready(function () {
         var max_fields = 7;

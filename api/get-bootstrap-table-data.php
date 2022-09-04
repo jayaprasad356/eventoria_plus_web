@@ -406,6 +406,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'promo-codes') {
         $tempRow['minimum_order_amount'] = $row['minimum_order_amount'];
         $tempRow['discount'] = $row['discount'];
         $tempRow['discount_type'] = $row['discount_type'];
+        $tempRow['type'] = $row['type'];
         $tempRow['max_discount_amount'] = $row['max_discount_amount'];
         $tempRow['repeat_usage'] = $row['repeat_usage'] == 1 ? 'Allowed' : 'Not Allowed';
         $tempRow['no_of_repeat_usage'] = $row['no_of_repeat_usage'];

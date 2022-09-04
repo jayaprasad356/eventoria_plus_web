@@ -19,6 +19,10 @@ if (isset($_POST['btnAdd'])) {
         $name = $db->escapeString($fn->xss_clean($_POST['name']));
         $address = $db->escapeString($fn->xss_clean($_POST['address']));
         $pincode = $db->escapeString($fn->xss_clean($_POST['pincode']));
+        $description = $db->escapeString($fn->xss_clean($_POST['description']));
+
+        $cat_id = $fn->xss_clean_array($_POST['cat_ids']);
+        $cat_ids = implode(",", $cat_id);
         
         // get image info
         $menu_image = $db->escapeString($_FILES['category_image']['name']);
@@ -161,7 +165,7 @@ if (isset($_POST['btnAdd'])) {
             $upload_image4 = 'upload/images/' . $image4;
             }
 
-            $sql = "INSERT INTO venues (name,address,cover_image,image1,image2,image3,image4,pincode) VALUES('$name','$address','$upload_image','$upload_image1','$upload_image2','$upload_image3','$upload_image4','$pincode')";
+            $sql = "INSERT INTO venues (name,address,cover_image,image1,image2,image3,image4,pincode,categories,description) VALUES('$name','$address','$upload_image','$upload_image1','$upload_image2','$upload_image3','$upload_image4','$pincode','$cat_ids','$description')";
             $db->sql($sql);
             $venue_result = $db->getResult();
             if (!empty($venue_result)) {
@@ -226,20 +230,20 @@ if (isset($_POST['btnAdd'])) {
                 <form id='add_venue_form' method="post" enctype="multipart/form-data">
                     <div class="box-body">
                         <div class="row">
-                            <div class="form-group">
-                               <div class='col-md-4'>
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Name</label> <i class="text-danger asterik">*</i> <?php echo isset($error['name']) ? $error['name'] : ''; ?><br>
                                     <input type="text" class="form-control" name="name" required>
                                 </div>
                             </div>
-                            <div class="form-group">
-                               <div class='col-md-4'>
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Address</label> <i class="text-danger asterik">*</i> <?php echo isset($error['address']) ? $error['address'] : ''; ?><br>
                                     <input type="text" class="form-control" name="address" required>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class='col-md-4'>
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Pincode</label> <i class="text-danger asterik">*</i> <?php echo isset($error['pincode']) ? $error['pincode'] : ''; ?><br>
                                     <input type="text" class="form-control" name="pincode" required>
                                 </div>
@@ -247,18 +251,44 @@ if (isset($_POST['btnAdd'])) {
                         </div>
                         <hr>
                         <div class="row">
-                                <div class="form-group">
-                                    <div class="col-md-4">
-                                        <label for="exampleInputFile">Cover Photo</label><i class="text-danger asterik">*</i><?php echo isset($error['category_image']) ? $error['category_image'] : ''; ?>
-                                        <input type="file" name="category_image" onchange="readURL(this);" accept="image/png,  image/jpeg" id="category_image" required/>
-                                        <div class="form-group">
-                                            <img id="blah" src="#" alt="image" />
+                        <div class="form-group col-md-4">
+                            <div class="form-group">
+                                <label for='catogories_ids'>Category</label><i class="text-danger asterik">*</i>
+                                <select name='cat_ids[]' id='cat_ids' class='form-control' placeholder='Enter the category IDs you want to assign Seller' required multiple="multiple">
+                                    <?php $sql = 'select id,name from `categories`  order by id desc';
+                                    $db->sql($sql);
 
-                                        </div>
+                                    $result = $db->getResult();
+                                    foreach ($result as $value) {
+                                    ?>
+                                        <option value='<?= $value['id'] ?>'><?= $value['name'] ?></option>
+                                    <?php } ?>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label for="exampleInputFile">Cover Photo</label><i class="text-danger asterik">*</i><?php echo isset($error['category_image']) ? $error['category_image'] : ''; ?>
+                                    <input type="file" name="category_image" onchange="readURL(this);" accept="image/png,  image/jpeg" id="category_image" required/>
+                                    <div class="form-group">
+                                        <img id="blah" src="#" alt="image" />
+
                                     </div>
                                 </div>
+                            </div>
                         </div>
-                        <hr>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description :</label> <i class="text-danger asterik">*</i><?php echo isset($error['description']) ? $error['description'] : ''; ?>
+                            <textarea name="description" id="description" class="form-control" rows="8"></textarea>
+                            <script type="text/javascript" src="css/js/ckeditor/ckeditor.js"></script>
+                            <script type="text/javascript">
+                                CKEDITOR.replace('description');
+                            </script>
+                        </div>
+
                         <div class="row">
                                 <div class="form-group">
                                     <div class="col-md-3">
@@ -378,6 +408,13 @@ if (isset($_POST['btnAdd'])) {
             }
         }
 </script>
+<script>
+    $('#cat_ids').select2({
+        width: 'element',
+        placeholder: 'type in category name to search',
+
+    });
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -402,5 +439,7 @@ if (isset($_POST['btnAdd'])) {
             x--;
         })
     });
+
 </script>
+
 <?php $db->disconnect(); ?>

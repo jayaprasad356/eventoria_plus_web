@@ -90,10 +90,19 @@ include_once('includes/custom-functions.php');
                 <option value="0">Deactive</option>
               </select>
             </div>
+            <div class="form-group col-md-6">
+              <label for="">Type</label>
+              <select name="type" id="type" class="form-control">
+                <option value="">Type</option>
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+              </select>
+            </div>
             <div class="form-group col-md-6" id="repeat_usage_block" style="display:none">
               <label for="">No. Of Repeat Usage</label>
               <input type="number" class="form-control" name="no_of_repeat_usage" id="no_of_repeat_usage">
             </div>
+
 
 
           </div><!-- /.box-body -->
@@ -207,6 +216,14 @@ include_once('includes/custom-functions.php');
                   <option value="0">Not Allowed</option>
                 </select>
               </div>
+              <div class="form-group">
+              <label for="">Type</label>
+              <select name="update_type" id="update_type" class="form-control">
+                <option value="">Type</option>
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+              </select>
+            </div>
               <div class="form-group" id="update_repeat_usage_block" style="display:none">
                 <label for="">No. Of Repeat Usage</label>
                 <input type="text" class="form-control" name="update_no_of_repeat_usage" id="update_no_of_repeat_usage">
@@ -259,6 +276,7 @@ include_once('includes/custom-functions.php');
       discount_type: "required",
       repeat_usage: "required",
       status: "required",
+      type: "required",
 
     }
   });
@@ -272,6 +290,7 @@ include_once('includes/custom-functions.php');
       update_minimum_order_amount: "required",
       update_discount: "required",
       update_discount_type: "required",
+      update_type: "required",
       update_repeat_usage: "required",
 
     }
@@ -344,6 +363,7 @@ include_once('includes/custom-functions.php');
       $('#update_minimum_order_amount').val(row.minimum_order_amount);
       $('#update_discount').val(row.discount);
       $('#update_discount_type').val(row.discount_type);
+      $('#update_type').val(row.type);
       $('#update_max_discount_amount').val(row.max_discount_amount);
       if (row.repeat_usage == 'Allowed') {
         $('#update_repeat_usage').val(1);

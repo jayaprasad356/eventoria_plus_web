@@ -12,7 +12,7 @@ include_once('../includes/crud.php');
 $db = new Database();
 $db->connect();
 
-$sql = "SELECT * FROM promo_codes";
+$sql = "SELECT * FROM promo_codes WHERE type = 'public'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);

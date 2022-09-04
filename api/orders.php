@@ -31,16 +31,32 @@ if (empty($_POST['user_id'])) {
     print_r(json_encode($response));
     return false;
 }
+if (empty($_POST['pincode'])) {
+    $response['success'] = false;
+    $response['message'] = "Pincode is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 $package_id = $db->escapeString($_POST['package_id']);
 $type = $db->escapeString($_POST['type']);
 $user_id = $db->escapeString($_POST['user_id']);
+$pincode = $db->escapeString($_POST['pincode']);
 $order_date = date('Y-m-d');
 $price = $db->escapeString($_POST['price']);
 $promo_code = $db->escapeString($_POST['promo_code']);
+$sql = "SELECT * FROM packages WHERE id = '$package_id'";
+$db->sql($sql);
+$res = $db->getResult();
+$package_name = $res[0]['name'];
+
 if($type=='own'){
     $address_id = $db->escapeString($_POST['address_id']);
+    $sql = "SELECT * FROM address WHERE id = '$address_id'";
+    $db->sql($sql);
+    $res = $db->getResult();
+    $address = $res[0]['name'].$res[0]['address'].$res[0]['district'].$res[0]['pincode'].$res[0]['state'];
 
-    $sql = "INSERT INTO orders (`order_date`,`user_id`,`promo_code`,`address_id`,`package_id`,`price`,`type`,`status`)VALUES('$order_date','$user_id','$promo_code','$address_id','$package_id','$price','$type',1)";
+    $sql = "INSERT INTO orders (`order_date`,`package_name`,`user_id`,`promo_code`,`address`,`address_id`,`package_id`,`price`,`type`,`status`,`pincode`)VALUES('$order_date','$package_name','$user_id','$promo_code','$address','$address_id','$package_id','$price','$type',1,'$pincode')";
     $db->sql($sql);
     $res = $db->getResult();
     $response['success'] = true;
@@ -55,7 +71,11 @@ else{
     $price = $db->escapeString($_POST['price']);
     $venue_id = $db->escapeString($_POST['venue_id']);
     $event_date = $db->escapeString($_POST['event_date']);
-    $sql = "INSERT INTO orders (`order_date`,`event_date`,`user_id`,`promo_code`,`venue_id`,`package_id`,`type`,`price`,`status`)VALUES('$order_date','$event_date','$user_id','$promo_code','$venue_id','$package_id','$type','$price',1)";
+    $sql = "SELECT * FROM venue WHERE id = '$venue_id'";
+    $db->sql($sql);
+    $res = $db->getResult();
+    $address = $res[0]['address'];
+    $sql = "INSERT INTO orders (`order_date`,`package_name`,`event_date`,`user_id`,`promo_code`,`address`,`venue_id`,`package_id`,`type`,`price`,`status`,`pincode`)VALUES('$order_date','$package_name','$event_date','$user_id','$promo_code','$address','$venue_id','$package_id','$type','$price',1,'$pincode')";
     $db->sql($sql);
     $res = $db->getResult();
     $sql = "SELECT * FROM orders ORDER BY id DESC LIMIT 1";

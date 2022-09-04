@@ -33,6 +33,7 @@ if (isset($_POST['add_promo_code']) && $_POST['add_promo_code'] == 1) {
     //     return false;
     // }
     $promo_code = $db->escapeString($fn->xss_clean($_POST['promo_code']));
+    $type = $db->escapeString($fn->xss_clean($_POST['type']));
     $message = $db->escapeString($fn->xss_clean($_POST['message']));
     $start_date = $db->escapeString($fn->xss_clean($_POST['start_date']));
     $end_date = $db->escapeString($fn->xss_clean($_POST['end_date']));
@@ -45,8 +46,8 @@ if (isset($_POST['add_promo_code']) && $_POST['add_promo_code'] == 1) {
     $no_of_repeat_usage = !empty($_POST['repeat_usage']) ? $db->escapeString($fn->xss_clean($_POST['no_of_repeat_usage'])) : 0;
     $status = $db->escapeString($fn->xss_clean($_POST['status']));
 
-    $sql = "INSERT INTO promo_codes (promo_code,message,start_date,end_date,no_of_users,minimum_order_amount,discount,discount_type,max_discount_amount,repeat_usage,no_of_repeat_usage,status)
-                        VALUES('$promo_code', '$message', '$start_date', '$end_date','$no_of_users','$minimum_order_amount','$discount','$discount_type','$max_discount_amount','$repeat_usage','$no_of_repeat_usage','$status')";
+    $sql = "INSERT INTO promo_codes (promo_code,message,start_date,end_date,no_of_users,minimum_order_amount,discount,discount_type,max_discount_amount,repeat_usage,no_of_repeat_usage,status,type)
+                        VALUES('$promo_code', '$message', '$start_date', '$end_date','$no_of_users','$minimum_order_amount','$discount','$discount_type','$max_discount_amount','$repeat_usage','$no_of_repeat_usage','$status','$type')";
     if ($db->sql($sql)) {
         echo '<label class="alert alert-success">Promo Code Added Successfully!</label>';
     } else {
