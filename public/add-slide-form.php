@@ -58,9 +58,22 @@ if (isset($_POST['btnAdd'])) {
                 $upload_image = 'upload/images/' . $menu_image;
 
             
-           
-            $sql_query = "INSERT INTO slides (name,image,type,category_id,package_id,link,status)VALUES('$name','$upload_image','$type','$category','$package','$link',1)";
-            $db->sql($sql_query);
+             if($type=='Category'){
+                $sql_query = "INSERT INTO slides (name,image,type,category_id,status)VALUES('$name','$upload_image','$type','$category',1)";
+                $db->sql($sql_query);
+             }
+             elseif($type=='Package'){
+                $sql_query = "INSERT INTO slides (name,image,type,package_id,status)VALUES('$name','$upload_image','$type','$package',1)";
+                $db->sql($sql_query);
+             }
+             elseif ($type=='External Link') {
+                $sql_query = "INSERT INTO slides (name,image,type,link,status)VALUES('$name','$upload_image','$type','$link',1)";
+                $db->sql($sql_query);
+             }
+             else {
+                $sql_query = "INSERT INTO slides (name,image,status)VALUES('$name','$upload_image',1)";
+                $db->sql($sql_query);
+             }
             $result = $db->getResult();
             if (!empty($result)) {
                 $result = 0;
