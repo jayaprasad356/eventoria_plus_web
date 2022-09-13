@@ -41,6 +41,7 @@ if ($num >= 1) {
         $temp['image3'] = empty($row['image3']) ? "" : DOMAIN_URL . $row['image3'];
         $temp['image4'] = empty($row['image4']) ? "" : DOMAIN_URL . $row['image4'];
         $temp['pincode'] = $row['pincode'];
+        $temp['description'] = $row['description'];
         $temp['timeslots'] = array();
 
         $sql="SELECT * FROM timeslots WHERE venue_id='$row[id]'";
