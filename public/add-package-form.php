@@ -313,7 +313,7 @@ if (isset($_POST['btnAdd'])) {
                                 </div>
                                 <div class='col-md-4'>
                                      <label class="control-label">Recommend</label>
-                                     <div id="recommend" class="form-group">
+                                     <div id="recommend" class="form-group" required>
                                         <label class="btn btn-default" data-toggle-class="btn-default" data-toggle-passive-class="btn-default">
                                             <input type="radio" name="recommend" value="1"> Yes
                                         </label>
