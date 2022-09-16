@@ -41,6 +41,20 @@ include_once('includes/custom-functions.php');
               <label for="">Message</label>
               <input type="text" class="form-control" name="message">
             </div>
+            <div class="form-group col-md-12">
+              <label for="">Category</label>
+              <select id='category' name="category" class='form-control'>
+                <option value="All">All</option>
+                                            <?php
+                                            $sql = "SELECT * FROM `categories`WHERE status=1";
+                                            $db->sql($sql);
+                                            $result = $db->getResult();
+                                            foreach ($result as $value) {
+                                            ?>
+                                                  <option value='<?= $value['id'] ?>'><?= $value['name'] ?></option>
+                                        <?php } ?>
+                                        </select>
+            </div>
             <div class="form-group col-md-6">
               <label for="">Start Date</label>
               <input type="date" class="form-control" name="start_date" id="start_date">
@@ -133,6 +147,7 @@ include_once('includes/custom-functions.php');
                   <th data-field="id" data-sortable="true">ID</th>
                   <th data-field="promo_code" data-sortable="true">Promo Code</th>
                   <th data-field="message" data-sortable="true">Message</th>
+                  <th data-field="category" data-sortable="true">Category</th>
                   <th data-field="start_date" data-sortable="true">Start Date</th>
                   <th data-field="end_date" data-sortable="true">End Date</th>
                   <th data-field="no_of_users" data-sortable="true">No Of Users</th>
@@ -142,6 +157,7 @@ include_once('includes/custom-functions.php');
                   <th data-field="max_discount_amount" data-sortable="true" data-visible="false">Max Discount Amount</th>
                   <th data-field="repeat_usage" data-sortable="true" data-visible="false">Repeat Usage</th>
                   <th data-field="no_of_repeat_usage" data-sortable="true" data-visible="false">No. Of Repeat Usage</th>
+                  <th data-field="type">Type</th>
                   <th data-field="status">Status</th>
                   <th data-field="date_created">Date Created</th>
                   <th data-field="operate" data-events="actionEvents">Action</th>
@@ -176,6 +192,20 @@ include_once('includes/custom-functions.php');
                 <label for="">Message</label>
                 <input type="text" class="form-control" name="update_message" id="update_message">
               </div>
+              <div class="form-group">
+                <label for="">Category</label>
+                <select id="update_category" name="update_category" class='form-control' value="<?php echo $res[0]['category']; ?>">
+                  <option value="All">All</option>
+                                              <?php
+                                              $sql = "SELECT * FROM `categories`WHERE status=1";
+                                              $db->sql($sql);
+                                              $result = $db->getResult();
+                                              foreach ($result as $value) {
+                                              ?>
+                                                    <option value='<?= $value['id'] ?>'><?= $value['name'] ?></option>
+                                          <?php } ?>
+                                          </select>
+            </div>
               <div class="form-group">
                 <label for="">Start Date</label>
                 <input type="date" class="form-control" name="update_start_date" id="update_start_date">
@@ -267,6 +297,7 @@ include_once('includes/custom-functions.php');
     rules: {
       promo_code: "required",
       message: "required",
+      category:"required",
       start_date: "required",
       end_date: "required",
       no_of_users: "required",
@@ -284,6 +315,7 @@ include_once('includes/custom-functions.php');
     rules: {
       update_promo: "required",
       update_message: "required",
+      update_category: "required",
       update_start_date: "required",
       update_end_date: "required",
       update_no_of_users: "required",
@@ -357,6 +389,7 @@ include_once('includes/custom-functions.php');
       $('#promo_code_id').val(row.id);
       $('#update_promo').val(row.promo_code);
       $('#update_message').val(row.message);
+      $('#update_category').val(row.category);
       $('#update_start_date').val(row.start_date);
       $('#update_end_date').val(row.end_date);
       $('#update_no_of_users').val(row.no_of_users);

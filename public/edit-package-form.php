@@ -222,7 +222,7 @@ $res = $db->getResult();
 
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form id='edit_package_form' method="post" enctype="multipart/form-data">
+                <form id='edit_package_form' method="post"  action="public/db-operation.php" enctype="multipart/form-data">
                     <div class="box-body">
                     <input type="hidden" id="old_image" name="old_image"  value="<?= $res[0]['cover_photo']; ?>">
                     <input type="hidden" id="old_image1" name="old_image"  value="<?= $res[0]['image1']; ?>">
@@ -233,11 +233,11 @@ $res = $db->getResult();
                         <div class="row">
                             <div class="form-group">
                                <div class='col-md-4'>
-                                    <label for="exampleInputEmail1">Name</label><?php echo isset($error['name']) ? $error['name'] : ''; ?>
+                                    <label for="exampleInputEmail1">Name</label> <i class="text-danger asterik">*</i><?php echo isset($error['name']) ? $error['name'] : ''; ?>
                                     <input type="text" class="form-control" name="name" value="<?php echo $res[0]['name']; ?>">
                                 </div>
                                 <div class='col-md-4'>
-                                    <label for="exampleInputEmail1">Pincode</label><?php echo isset($error['pincode']) ? $error['pincode'] : ''; ?>
+                                    <label for="exampleInputEmail1">Pincode</label> <i class="text-danger asterik">*</i><?php echo isset($error['pincode']) ? $error['pincode'] : ''; ?>
                                     <input type="text" class="form-control" name="pincode" value="<?php echo $res[0]['pincode']; ?>">
                                 </div>
                             </div>
@@ -246,9 +246,9 @@ $res = $db->getResult();
                         <div class="row">
                             <div class="form-group">
                                <div class='col-md-4'>
-                                       <label for="exampleInputFile">Cover Image</label>
+                                       <label for="exampleInputFile">Cover Image</label> <i class="text-danger asterik">*</i>
                                         
-                                        <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image" id="image">
+                                        <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image" id="image"><input type="submit" class="delete_media">
                                         <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['cover_photo']; ?>" style="max-width:100%" /></p>
                                 </div>
                                 <div class='col-md-4'>
@@ -288,7 +288,7 @@ $res = $db->getResult();
                         <div class="row">
                             <div class="form-group">
                                 <div class='col-md-4'>
-                                    <label for="exampleInputEmail1">Price</label> <?php echo isset($error['price']) ? $error['price'] : ''; ?>
+                                    <label for="exampleInputEmail1">Price</label>  <i class="text-danger asterik">*</i><?php echo isset($error['price']) ? $error['price'] : ''; ?>
                                     <input type="text" class="form-control" name="price" value="<?php echo $res[0]['price']; ?>" >
                                 </div>
                                 <div class='col-md-4'>
@@ -311,11 +311,11 @@ $res = $db->getResult();
                         <div class="row">
                             <div class="form-group">
                                <div class='col-md-4'>
-                                    <label for="exampleInputEmail1">Description</label><?php echo isset($error['description']) ? $error['description'] : ''; ?>
+                                    <label for="exampleInputEmail1">Description</label> <i class="text-danger asterik">*</i><?php echo isset($error['description']) ? $error['description'] : ''; ?>
                                     <input type="text" class="form-control" name="description" value="<?php echo $res[0]['description']; ?>">
                                 </div>
                                 <div class='col-md-4'>
-                                        <label class="control-label">Recommend</label>
+                                        <label class="control-label">Recommend</label> <i class="text-danger asterik">*</i>
                                         <div id="recommend" class="form-group">
                                             <label class="btn btn-default" data-toggle-class="btn-default" data-toggle-passive-class="btn-default">
                                                 <input type="radio" name="recommend" value="1" <?= ($res[0]['recommend'] == 1) ? 'checked' : ''; ?>> Yes
@@ -334,7 +334,7 @@ $res = $db->getResult();
                         <div class="row">
                             <div class="form-group">
                                 <div class='col-md-4'>
-                                        <label class="control-label">Status</label>
+                                        <label class="control-label">Status</label> <i class="text-danger asterik">*</i>
                                         <div id="status" class="btn-group">
                                             <label class="btn btn-default" data-toggle-class="btn-default" data-toggle-passive-class="btn-default">
                                                 <input type="radio" name="status" value="0" <?= ($res[0]['status'] == 0) ? 'checked' : ''; ?>> Deactivated
@@ -361,5 +361,21 @@ $res = $db->getResult();
 </section>
 
 <div class="separator"> </div>
+<script>
+        $(document).on('click', '.delete_media', function() {
+            if (confirm('Are you sure?')) {
+                id = $(this).data("id");
+                cover_photo = $(this).data("cover_photo");
+                $.ajax({
+                    url: 'public/db-operation.php',
+                    type: "post",
+                    data: 'id=' + id + '&cover_photo=' + cover_photo + '&delete_media=1',
+                    success: function(result) {
+                        $('#edit_package_form').bootstrapTable('refresh');
+                    }
+                });
+            }
+        });
+    </script>
 <?php $db->disconnect(); ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>

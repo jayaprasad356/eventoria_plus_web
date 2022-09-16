@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 09, 2022 at 06:15 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.27
+-- Generation Time: Sep 16, 2022 at 01:14 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -77,6 +77,8 @@ INSERT INTO `categories` (`id`, `name`, `image`, `status`) VALUES
 
 CREATE TABLE `deliver_pincodes` (
   `id` int(11) NOT NULL,
+  `state` text DEFAULT NULL,
+  `district` text DEFAULT NULL,
   `pincode` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -84,9 +86,8 @@ CREATE TABLE `deliver_pincodes` (
 -- Dumping data for table `deliver_pincodes`
 --
 
-INSERT INTO `deliver_pincodes` (`id`, `pincode`) VALUES
-(1, '620028'),
-(3, '621313');
+INSERT INTO `deliver_pincodes` (`id`, `state`, `district`, `pincode`) VALUES
+(1, 'Tamilnadu', 'Karur', '621313');
 
 -- --------------------------------------------------------
 
@@ -218,6 +219,7 @@ CREATE TABLE `promo_codes` (
   `id` int(11) NOT NULL,
   `promo_code` varchar(28) NOT NULL,
   `message` varchar(512) NOT NULL,
+  `category` text DEFAULT NULL,
   `start_date` varchar(28) NOT NULL,
   `end_date` varchar(28) NOT NULL,
   `no_of_users` int(11) NOT NULL,
@@ -227,6 +229,7 @@ CREATE TABLE `promo_codes` (
   `max_discount_amount` int(11) NOT NULL,
   `repeat_usage` tinyint(4) NOT NULL,
   `no_of_repeat_usage` int(11) NOT NULL,
+  `type` text DEFAULT NULL,
   `status` tinyint(4) NOT NULL,
   `date_created` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -235,8 +238,8 @@ CREATE TABLE `promo_codes` (
 -- Dumping data for table `promo_codes`
 --
 
-INSERT INTO `promo_codes` (`id`, `promo_code`, `message`, `start_date`, `end_date`, `no_of_users`, `minimum_order_amount`, `discount`, `discount_type`, `max_discount_amount`, `repeat_usage`, `no_of_repeat_usage`, `status`, `date_created`) VALUES
-(1, 'DEMO', 'demo', '2022-01-31', '2022-02-03', 5, 100, 10, 'percentage', 300, 0, 0, 1, '2022-01-31 13:18:28');
+INSERT INTO `promo_codes` (`id`, `promo_code`, `message`, `category`, `start_date`, `end_date`, `no_of_users`, `minimum_order_amount`, `discount`, `discount_type`, `max_discount_amount`, `repeat_usage`, `no_of_repeat_usage`, `type`, `status`, `date_created`) VALUES
+(1, 'DEMO', 'demo', 'All', '2022-01-31', '2022-02-03', 5, 100, 10, 'percentage', 300, 0, 0, 'private', 1, '2022-01-31 13:18:28');
 
 -- --------------------------------------------------------
 
@@ -460,7 +463,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `deliver_pincodes`
 --
 ALTER TABLE `deliver_pincodes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `notifications`

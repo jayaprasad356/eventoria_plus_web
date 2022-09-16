@@ -107,12 +107,12 @@ if (isset($_POST['btnCancel'])) { ?>
 					<div class="box-body">
 					<input type="hidden" id="old_image" name="old_image"  value="<?= $res[0]['image']; ?>">
 						<div class="form-group">
-							<label for="exampleInputEmail1">Category Name</label><?php echo isset($error['name']) ? $error['name'] : ''; ?>
+							<label for="exampleInputEmail1">Category Name</label> <i class="text-danger asterik">*</i><?php echo isset($error['name']) ? $error['name'] : ''; ?>
 							<input type="text" class="form-control" name="name" value="<?php echo $res[0]['name']; ?>">
 						</div>
 
 					<div class="form-group">
-						<label class="control-label">Status</label>
+						<label class="control-label">Status</label> <i class="text-danger asterik">*</i>
 						<div id="status" class="btn-group">
 							<label class="btn btn-default" data-toggle-class="btn-default" data-toggle-passive-class="btn-default">
 								<input type="radio" name="status" value="0" <?= ($res[0]['status'] == 0) ? 'checked' : ''; ?>> Deactivated
@@ -125,7 +125,7 @@ if (isset($_POST['btnCancel'])) { ?>
 					        <div class="row">
                                 <div class="form-group col-md-3">
                                     <div class="form-group">
-                                        <label for="exampleInputFile">Image</label>
+                                        <label for="exampleInputFile">Image</label> <i class="text-danger asterik">*</i>
                                         
                                         <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image" id="image">
                                         <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['image']; ?>" style="max-width:100%" /></p>

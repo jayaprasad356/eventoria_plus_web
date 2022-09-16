@@ -317,7 +317,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'deliver_pincodes') {
 
     if (isset($_GET['search']) && !empty($_GET['search'])) {
         $search = $db->escapeString($fn->xss_clean($_GET['search']));
-        $where .= "WHERE pincode like '%" . $search . "%'" ;
+        $where .= "WHERE pincode like '%" . $search . "%' OR state like '%" . $search . "%' OR district like '%" . $search . "%'" ;
     }
     if (isset($_GET['sort'])){
         $sort = $db->escapeString($_GET['sort']);
@@ -348,6 +348,8 @@ if (isset($_GET['table']) && $_GET['table'] == 'deliver_pincodes') {
         $operate = ' <a href="delete-pincode.php?id=' . $row['id'] .'"  class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>Delete</a>';
 
         $tempRow['id'] = $row['id'];
+        $tempRow['state'] = $row['state'];
+        $tempRow['district'] = $row['district'];
         $tempRow['pincode'] = $row['pincode'];
        $tempRow['operate'] = $operate;
         $rows[] = $tempRow;
@@ -401,13 +403,13 @@ if (isset($_GET['table']) && $_GET['table'] == 'promo-codes') {
         $tempRow['id'] = $row['id'];
         $tempRow['promo_code'] = $row['promo_code'];
         $tempRow['message'] = $row['message'];
+        $tempRow['category'] = $row['category'];
         $tempRow['start_date'] = $row['start_date'];
         $tempRow['end_date'] = $row['end_date'];
         $tempRow['no_of_users'] = $row['no_of_users'];
         $tempRow['minimum_order_amount'] = $row['minimum_order_amount'];
         $tempRow['discount'] = $row['discount'];
         $tempRow['discount_type'] = $row['discount_type'];
-        $tempRow['type'] = $row['type'];
         $tempRow['max_discount_amount'] = $row['max_discount_amount'];
         $tempRow['repeat_usage'] = $row['repeat_usage'] == 1 ? 'Allowed' : 'Not Allowed';
         $tempRow['no_of_repeat_usage'] = $row['no_of_repeat_usage'];
@@ -415,6 +417,8 @@ if (isset($_GET['table']) && $_GET['table'] == 'promo-codes') {
             $tempRow['status'] = "<label class='label label-danger'>Deactive</label>";
         else
             $tempRow['status'] = "<label class='label label-success'>Active</label>";
+       $tempRow['type'] = $row['type'];
+
         $tempRow['date_created'] = date('d-m-Y h:i:sa', strtotime($row['date_created']));
         $tempRow['operate'] = $operate;
 

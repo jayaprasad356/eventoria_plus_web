@@ -11,7 +11,7 @@
         <!-- Main row -->
         <div class="row">
             <!-- Left col -->
-            <div class="col-md-8">
+            <div class="col-md-10">
             <ol class="breadcrumb">
                 <a class="btn btn-block btn-default" href="add-pincode.php"><i class="fa fa-plus-square"></i> Add New Pincode</a>
             </ol>
@@ -26,6 +26,8 @@
                             <thead>
                                 <tr>
                                     <th data-field="id" data-sortable="true">ID</th>
+                                    <th data-field="state" data-sortable="true">State</th>
+                                    <th data-field="district" data-sortable="true">District</th>
                                     <th data-field="pincode" data-sortable="true">Pincode</th>
                                     <th data-field="operate">Action</th>
                     

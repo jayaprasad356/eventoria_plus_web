@@ -9,19 +9,25 @@ $fn = new custom_functions;
 if (isset($_POST['btnAdd'])) {
 
 
+        $state = $db->escapeString($fn->xss_clean($_POST['state']));
+        $district = $db->escapeString($fn->xss_clean($_POST['district']));
         $pincode = $db->escapeString($fn->xss_clean($_POST['pincode']));
       
 
         if (empty($pincode)) {
             $error['pincode'] = " <span class='label label-danger'>Required!</span>";
         }
+        if (empty($district)) {
+            $error['district'] = " <span class='label label-danger'>Required!</span>";
+        }
+        if (empty($state)) {
+            $error['state'] = " <span class='label label-danger'>Required!</span>";
+        }
       
 
-        if (!empty($pincode) ) {
-
-            
-           
-            $sql_query = "INSERT INTO deliver_pincodes (pincode)VALUE('$pincode')";
+        if (!empty($pincode) && !empty($district) && !empty($state)) {
+        
+            $sql_query = "INSERT INTO deliver_pincodes (state,district,pincode)VALUE('$state','$district','$pincode')";
             $db->sql($sql_query);
             $result = $db->getResult();
             if (!empty($result)) {
@@ -42,29 +48,47 @@ if (isset($_POST['btnAdd'])) {
     <h1>Add Pincode<small><a href='pincodes.php'> <i class='fa fa-angle-double-left'></i>&nbsp;&nbsp;&nbsp;Back to Pincodes</a></small></h1>
 
     <?php echo isset($error['add_pincode']) ? $error['add_pincode'] : ''; ?>
-   
-    <hr />
+       <ol class="breadcrumb">
+            <li><a href="home.php"><i class="fa fa-home"></i> Home</a></li>
+        </ol>
 </section>
 <section class="content">
     <div class="row">
-        <div class="col-md-4">
-        <ol class="breadcrumb">
-            <li><a href="home.php"><i class="fa fa-home"></i> Home</a></li>
-        </ol>
+        <div class="col-md-8">
            
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Add Pincode</h3>
 
                 </div><!-- /.box-header -->
+                <div class="box-header">
+                    <?php echo isset($error['cancelable']) ? '<span class="label label-danger">Till status is required.</span>' : ''; ?>
+                </div>
                 <!-- form start -->
                 <form name="add_pincode" method="post" enctype="multipart/form-data">
                     <div class="box-body">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1"> Pincode</label><?php echo isset($error['pincode']) ? $error['pincode'] : ''; ?>
-                            <input type="number" class="form-control" name="pincode" required>
-                        </div>                  
+                       <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                        <label for="exampleInputEmail1"> State</label> <i class="text-danger asterik">*</i><?php echo isset($error['state']) ? $error['state'] : ''; ?>
+                                        <input type="text" class="form-control" name="state" required>
+                                </div>
+                                <div class="col-md-6">
+                                        <label for="exampleInputEmail1"> District</label> <i class="text-danger asterik">*</i><?php echo isset($error['district']) ? $error['district'] : ''; ?>
+                                        <input type="text" class="form-control" name="district" required>
+                                </div>
+                             </div>          
+                        </div>    
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                        <label for="exampleInputEmail1"> Pincode</label> <i class="text-danger asterik">*</i><?php echo isset($error['pincode']) ? $error['pincode'] : ''; ?>
+                                        <input type="number" class="form-control" name="pincode" required>
+
+                                </div>
+                             </div>          
+                        </div>               
                     </div>
                   
                     <!-- /.box-body -->

@@ -112,12 +112,12 @@ if (isset($_POST['btnAdd'])) {
                 <form name="add_slide" method="post" enctype="multipart/form-data">
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1"> Name</label><?php echo isset($error['name']) ? $error['name'] : ''; ?>
+                            <label for="exampleInputEmail1"> Name</label> <i class="text-danger asterik">*</i><?php echo isset($error['name']) ? $error['name'] : ''; ?>
                             <input type="text" class="form-control" name="name" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="type">Type</label>
+                            <label for="type">Type</label> <i class="text-danger asterik">*</i>
                               <select  name="type" id="type" class="form-control" required>
                                      <option value="none">Select Type</option>
                                     <option value="Category">Category</option>
@@ -126,7 +126,7 @@ if (isset($_POST['btnAdd'])) {
                               </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputFile">Image</label><?php echo isset($error['category_image']) ? $error['category_image'] : ''; ?>
+                            <label for="exampleInputFile">Image</label> <i class="text-danger asterik">*</i><?php echo isset($error['category_image']) ? $error['category_image'] : ''; ?>
                             <input type="file" name="category_image" onchange="readURL(this);" accept="image/png,  image/jpeg" id="category_image" />
                         </div>
                         <div class="form-group">

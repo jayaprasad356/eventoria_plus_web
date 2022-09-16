@@ -35,6 +35,7 @@ if (isset($_POST['add_promo_code']) && $_POST['add_promo_code'] == 1) {
     $promo_code = $db->escapeString($fn->xss_clean($_POST['promo_code']));
     $type = $db->escapeString($fn->xss_clean($_POST['type']));
     $message = $db->escapeString($fn->xss_clean($_POST['message']));
+    $category = $db->escapeString($fn->xss_clean($_POST['category']));
     $start_date = $db->escapeString($fn->xss_clean($_POST['start_date']));
     $end_date = $db->escapeString($fn->xss_clean($_POST['end_date']));
     $no_of_users = $db->escapeString($fn->xss_clean($_POST['no_of_users']));
@@ -46,8 +47,8 @@ if (isset($_POST['add_promo_code']) && $_POST['add_promo_code'] == 1) {
     $no_of_repeat_usage = !empty($_POST['repeat_usage']) ? $db->escapeString($fn->xss_clean($_POST['no_of_repeat_usage'])) : 0;
     $status = $db->escapeString($fn->xss_clean($_POST['status']));
 
-    $sql = "INSERT INTO promo_codes (promo_code,message,start_date,end_date,no_of_users,minimum_order_amount,discount,discount_type,max_discount_amount,repeat_usage,no_of_repeat_usage,status,type)
-                        VALUES('$promo_code', '$message', '$start_date', '$end_date','$no_of_users','$minimum_order_amount','$discount','$discount_type','$max_discount_amount','$repeat_usage','$no_of_repeat_usage','$status','$type')";
+    $sql = "INSERT INTO promo_codes (promo_code,message,category,start_date,end_date,no_of_users,minimum_order_amount,discount,discount_type,max_discount_amount,repeat_usage,no_of_repeat_usage,status,type)
+                        VALUES('$promo_code', '$message','$category', '$start_date', '$end_date','$no_of_users','$minimum_order_amount','$discount','$discount_type','$max_discount_amount','$repeat_usage','$no_of_repeat_usage','$status','$type')";
     if ($db->sql($sql)) {
         echo '<label class="alert alert-success">Promo Code Added Successfully!</label>';
     } else {
@@ -66,6 +67,7 @@ if (isset($_POST['update_promo_code']) && $_POST['update_promo_code'] == 1) {
     $id = $db->escapeString($fn->xss_clean($_POST['promo_code_id']));
     $promo_code = $db->escapeString($fn->xss_clean($_POST['update_promo']));
     $message = $db->escapeString($fn->xss_clean($_POST['update_message']));
+    $category = $db->escapeString($fn->xss_clean($_POST['update_category']));
     $start_date = $db->escapeString($fn->xss_clean($_POST['update_start_date']));
     $end_date = $db->escapeString($fn->xss_clean($_POST['update_end_date']));
     $no_of_users = $db->escapeString($fn->xss_clean($_POST['update_no_of_users']));
@@ -76,8 +78,10 @@ if (isset($_POST['update_promo_code']) && $_POST['update_promo_code'] == 1) {
     $repeat_usage = $db->escapeString($fn->xss_clean($_POST['update_repeat_usage']));
     $no_of_repeat_usage = $repeat_usage == 0 ? '0' : $db->escapeString($fn->xss_clean($_POST['update_no_of_repeat_usage']));
     $status = $db->escapeString($fn->xss_clean($_POST['status']));
+    $type = $db->escapeString($fn->xss_clean($_POST['update_type']));
 
-    $sql = "UPDATE promo_codes set `promo_code`='" . $promo_code . "',`message`='" . $message . "',`start_date`='" . $start_date . "',`end_date`='" . $end_date . "',`no_of_users`='" . $no_of_users . "',`minimum_order_amount`='" . $minimum_order_amount . "',`discount`='" . $discount . "',`discount_type`='" . $discount_type . "',`max_discount_amount`='" . $max_discount_amount . "',`repeat_usage`='" . $repeat_usage . "',`no_of_repeat_usage`='" . $no_of_repeat_usage . "',`status`='" . $status . "' where `id`=" . $id;
+
+    $sql = "UPDATE promo_codes set `promo_code`='" . $promo_code . "',`message`='" . $message . "',`category`='" . $category . "',`start_date`='" . $start_date . "',`end_date`='" . $end_date . "',`no_of_users`='" . $no_of_users . "',`minimum_order_amount`='" . $minimum_order_amount . "',`discount`='" . $discount . "',`discount_type`='" . $discount_type . "',`max_discount_amount`='" . $max_discount_amount . "',`repeat_usage`='" . $repeat_usage . "',`no_of_repeat_usage`='" . $no_of_repeat_usage . "',`status`='" . $status . "',`type`='" . $type . "' where `id`=" . $id;
 
     if ($db->sql($sql)) {
         echo "<label class='alert alert-success'>Promo Code Updated Successfully.</label>";
@@ -96,6 +100,22 @@ if (isset($_GET['delete_promo_code']) && $_GET['delete_promo_code'] == 1) {
         echo 0;
     } else {
         echo 1;
+    }
+}
+
+if (isset($_POST['delete_media']) && !empty($_POST['id']) && $_POST['delete_media'] == 1) {
+    $id     = $db->escapeString($fn->xss_clean($_POST['id']));
+    $cover_photo  = $db->escapeString($fn->xss_clean($_POST['cover_photo']));
+    if (!empty( $cover_photo ))
+        unlink('../' . $image);
+        $sql = "UPDATE `packages` SET cover_photo= WHERE `id`='" . $id . "'";
+
+    if ($db->sql($sql)) {
+        echo 1;
+        echo "<p class='alert alert-success'>Cover Image Deleted successfully!</p><br>";
+    } else {
+        echo 0;
+        echo "<p class='alert alert-success'>Cover Image is not Deleted!</p><br>";
     }
 }
 
