@@ -50,11 +50,12 @@ $res = $db->getResult();
 $package_name = $res[0]['name'];
 
 if($type=='own'){
+    $event_date = $db->escapeString($_POST['event_date']);
     $address_id = $db->escapeString($_POST['address_id']);
     $sql = "SELECT * FROM address WHERE id = '$address_id'";
     $db->sql($sql);
     $res = $db->getResult();
-    $address = $res[0]['name'].$res[0]['address'].$res[0]['district'].$res[0]['pincode'].$res[0]['state'];
+    $address = $res[0]['name'].','.$res[0]['address'].','.$res[0]['district'].','.$res[0]['pincode'].','.$res[0]['state'];
 
     $sql = "INSERT INTO orders (`order_date`,`package_name`,`user_id`,`promo_code`,`address`,`address_id`,`package_id`,`price`,`type`,`status`,`pincode`)VALUES('$order_date','$package_name','$user_id','$promo_code','$address','$address_id','$package_id','$price','$type',1,'$pincode')";
     $db->sql($sql);
@@ -71,7 +72,7 @@ else{
     $price = $db->escapeString($_POST['price']);
     $venue_id = $db->escapeString($_POST['venue_id']);
     $event_date = $db->escapeString($_POST['event_date']);
-    $sql = "SELECT * FROM venue WHERE id = '$venue_id'";
+    $sql = "SELECT * FROM venues WHERE id = '$venue_id'";
     $db->sql($sql);
     $res = $db->getResult();
     $address = $res[0]['address'];
