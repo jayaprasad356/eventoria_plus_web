@@ -20,11 +20,12 @@ $response = array();
 
 if (isset($_POST['validate_promo_code']) && $_POST['validate_promo_code'] == 1) {
 
-    if ((isset($_POST['user_id']) && $_POST['user_id'] != '') && (isset($_POST['promo_code']) && $_POST['promo_code'] != '') && (isset($_POST['total']) && $_POST['total'] != '')) {
+    if ((isset($_POST['user_id']) && $_POST['user_id'] != '') && (isset($_POST['promo_code']) && $_POST['promo_code'] != '') && (isset($_POST['total']) && $_POST['total'] != '') && (isset($_POST['category_id']) && $_POST['category_id'] != '')) {
         $user_id = $db->escapeString($fn->xss_clean($_POST['user_id']));
         $promo_code = $db->escapeString($fn->xss_clean($_POST['promo_code']));
         $total = $db->escapeString($fn->xss_clean($_POST['total']));
-        $response = $fn->validate_promo_code($user_id, $promo_code, $total);
+        $category_id = $db->escapeString($fn->xss_clean($_POST['category_id']));
+        $response = $fn->validate_promo_code($user_id, $promo_code, $total, $category_id);
         print_r(json_encode($response));
         return false;
     } else {

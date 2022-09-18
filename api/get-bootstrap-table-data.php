@@ -403,7 +403,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'promo-codes') {
         $tempRow['id'] = $row['id'];
         $tempRow['promo_code'] = $row['promo_code'];
         $tempRow['message'] = $row['message'];
-        $tempRow['category'] = $row['category'];
+        $tempRow['category_id'] = $row['category_id'];
         $tempRow['start_date'] = $row['start_date'];
         $tempRow['end_date'] = $row['end_date'];
         $tempRow['no_of_users'] = $row['no_of_users'];
@@ -537,7 +537,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'orders') {
     foreach ($res as $row)
         $total = $row['total'];
 
-    $sql = "SELECT *,orders.id AS id,packages.name AS package_name FROM orders,packages WHERE orders.package_id = packages.id";
+    $sql = "SELECT *,orders.id AS id,packages.name AS package_name,orders.status AS status FROM orders,packages WHERE orders.package_id = packages.id";
     $db->sql($sql);
     $res = $db->getResult();
 
@@ -554,10 +554,12 @@ if (isset($_GET['table']) && $_GET['table'] == 'orders') {
         $tempRow['package_name'] = $row['package_name'];
         $tempRow['price'] = $row['price'];
         $tempRow['type'] = $row['type'];
-        $tempRow['status'] = $row['status'];
         if($row['status']== '1'){
             $tempRow['status'] = '<p class="text text-success">Booked</p>';
-        }else{
+        }elseif($row['status']== '2'){
+            $tempRow['status'] = '<p class="text text-danger">Cancelled</p>';
+        }
+        else{
             $tempRow['status'] = '<p class="text text-danger">Not Booked</p>';
         }
        $tempRow['operate'] = $operate;

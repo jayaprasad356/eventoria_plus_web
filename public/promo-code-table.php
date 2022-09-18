@@ -44,7 +44,7 @@ include_once('includes/custom-functions.php');
             <div class="form-group col-md-12">
               <label for="">Category</label>
               <select id='category' name="category" class='form-control'>
-                <option value="All">All</option>
+                <option value="0">All</option>
                                             <?php
                                             $sql = "SELECT * FROM `categories`WHERE status=1";
                                             $db->sql($sql);
@@ -147,7 +147,7 @@ include_once('includes/custom-functions.php');
                   <th data-field="id" data-sortable="true">ID</th>
                   <th data-field="promo_code" data-sortable="true">Promo Code</th>
                   <th data-field="message" data-sortable="true">Message</th>
-                  <th data-field="category" data-sortable="true">Category</th>
+                  <th data-field="category_id" data-sortable="true">Category Id</th>
                   <th data-field="start_date" data-sortable="true">Start Date</th>
                   <th data-field="end_date" data-sortable="true">End Date</th>
                   <th data-field="no_of_users" data-sortable="true">No Of Users</th>
@@ -195,7 +195,7 @@ include_once('includes/custom-functions.php');
               <div class="form-group">
                 <label for="">Category</label>
                 <select id="update_category" name="update_category" class='form-control' value="<?php echo $res[0]['category']; ?>">
-                  <option value="All">All</option>
+                  <option value="0">All</option>
                                               <?php
                                               $sql = "SELECT * FROM `categories`WHERE status=1";
                                               $db->sql($sql);

@@ -99,7 +99,7 @@ class custom_functions
             }
         }
     }
-    public function validate_promo_code($user_id, $promo_code, $total)
+    public function validate_promo_code($user_id, $promo_code, $total, $category_id)
     {
         $sql = "select * from promo_codes where promo_code='" . $promo_code . "'";
         $this->db->sql($sql);
@@ -146,6 +146,13 @@ class custom_functions
         if ($total < $res[0]['minimum_order_amount']) {
             $response['error'] = true;
             $response['message'] = "This promo code is applicable only for order amount greater than or equal to " . $res[0]['minimum_order_amount'] . "";
+            return $response;
+            exit();
+        }
+
+        if ($res[0]['category_id'] != 0 && $res[0]['category_id'] != $category_id) {
+            $response['error'] = true;
+            $response['message'] = "This promo code is not applicable for this category product";
             return $response;
             exit();
         }

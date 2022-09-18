@@ -32,7 +32,7 @@ $order_id = $_GET['id'];
                         if($num >= 1){
                            
                         if($res[0]['type'] =='own'){
-                            $sql = "SELECT *,orders.id AS id FROM orders,users WHERE orders.user_id = users.id AND orders.id = $order_id";
+                            $sql = "SELECT *,orders.id AS id,orders.status AS status FROM orders,users WHERE orders.user_id = users.id AND orders.id = $order_id";
                             $db->sql($sql);
                             $res = $db->getResult();
                             ?>
@@ -62,7 +62,14 @@ $order_id = $_GET['id'];
                             </tr>
                             <tr>
                                 <th style="width: 200px">Status</th>
-                                <td>Booked</td>
+                                <td><?php        if($res[0]['status']== '1'){
+                                    echo 'Booked';
+                                }elseif($res[0]['status']== '2'){
+                                    echo 'Cancelled';
+                                }
+                                else{
+                                    echo 'Not Booked';
+                                }?></td>
                             </tr>
                             <tr>
                                 <th style="width: 200px">Customer Name</th>
@@ -113,7 +120,14 @@ $order_id = $_GET['id'];
                             </tr>
                             <tr>
                                 <th style="width: 200px">Status</th>
-                                <td>Booked</td>
+                                <td><?php        if($res[0]['status']== '1'){
+                                    echo 'Booked';
+                                }elseif($res[0]['status']== '2'){
+                                    echo 'Cancelled';
+                                }
+                                else{
+                                    echo 'Not Booked';
+                                }?></td>
                             </tr>
                             <tr>
                                 <th style="width: 200px">Customer Name</th>

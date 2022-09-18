@@ -47,7 +47,7 @@ if (isset($_POST['add_promo_code']) && $_POST['add_promo_code'] == 1) {
     $no_of_repeat_usage = !empty($_POST['repeat_usage']) ? $db->escapeString($fn->xss_clean($_POST['no_of_repeat_usage'])) : 0;
     $status = $db->escapeString($fn->xss_clean($_POST['status']));
 
-    $sql = "INSERT INTO promo_codes (promo_code,message,category,start_date,end_date,no_of_users,minimum_order_amount,discount,discount_type,max_discount_amount,repeat_usage,no_of_repeat_usage,status,type)
+    $sql = "INSERT INTO promo_codes (promo_code,message,category_id,start_date,end_date,no_of_users,minimum_order_amount,discount,discount_type,max_discount_amount,repeat_usage,no_of_repeat_usage,status,type)
                         VALUES('$promo_code', '$message','$category', '$start_date', '$end_date','$no_of_users','$minimum_order_amount','$discount','$discount_type','$max_discount_amount','$repeat_usage','$no_of_repeat_usage','$status','$type')";
     if ($db->sql($sql)) {
         echo '<label class="alert alert-success">Promo Code Added Successfully!</label>';
@@ -81,7 +81,7 @@ if (isset($_POST['update_promo_code']) && $_POST['update_promo_code'] == 1) {
     $type = $db->escapeString($fn->xss_clean($_POST['update_type']));
 
 
-    $sql = "UPDATE promo_codes set `promo_code`='" . $promo_code . "',`message`='" . $message . "',`category`='" . $category . "',`start_date`='" . $start_date . "',`end_date`='" . $end_date . "',`no_of_users`='" . $no_of_users . "',`minimum_order_amount`='" . $minimum_order_amount . "',`discount`='" . $discount . "',`discount_type`='" . $discount_type . "',`max_discount_amount`='" . $max_discount_amount . "',`repeat_usage`='" . $repeat_usage . "',`no_of_repeat_usage`='" . $no_of_repeat_usage . "',`status`='" . $status . "',`type`='" . $type . "' where `id`=" . $id;
+    $sql = "UPDATE promo_codes set `promo_code`='" . $promo_code . "',`message`='" . $message . "',`category_id`='" . $category . "',`start_date`='" . $start_date . "',`end_date`='" . $end_date . "',`no_of_users`='" . $no_of_users . "',`minimum_order_amount`='" . $minimum_order_amount . "',`discount`='" . $discount . "',`discount_type`='" . $discount_type . "',`max_discount_amount`='" . $max_discount_amount . "',`repeat_usage`='" . $repeat_usage . "',`no_of_repeat_usage`='" . $no_of_repeat_usage . "',`status`='" . $status . "',`type`='" . $type . "' where `id`=" . $id;
 
     if ($db->sql($sql)) {
         echo "<label class='alert alert-success'>Promo Code Updated Successfully.</label>";
