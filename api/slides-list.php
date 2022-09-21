@@ -21,6 +21,10 @@ if ($num >= 1) {
         $temp['id'] = $row['id'];
         $temp['name'] = $row['name'];
         $temp['image'] = DOMAIN_URL . $row['image'];
+        $temp['category_id'] = $row['category_id'];
+        $temp['package_id'] = $row['package_id'];
+        $temp['link'] = $row['link'];
+        $temp['type'] = $row['type'];
         $temp['status'] = $row['status'];
         $rows[] = $temp;
         
