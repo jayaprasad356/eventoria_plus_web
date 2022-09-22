@@ -45,8 +45,8 @@ $order_id = $_GET['id'];
                                 <td><?php echo $res[0]['order_date'] ?></td>
                             </tr>
                             <tr>
-                                <th style="width: 200px">Event Date</th>
-                                <td><?php echo $res[0]['event_date'] ?></td>
+                                <th style="width: 200px">Event Date/Time</th>
+                                <td><?php echo $res[0]['event_date'] .' / '.$res[0]['event_time'] ?></td>
                             </tr>
                             <tr>
                                 <th style="width: 200px">Package Name</th>

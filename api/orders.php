@@ -52,13 +52,14 @@ $order_time = date('H:i:s');
 
 if($type=='own'){
     $event_date = $db->escapeString($_POST['event_date']);
+    $event_time = $db->escapeString($_POST['event_time']);
     $address_id = $db->escapeString($_POST['address_id']);
     $sql = "SELECT * FROM address WHERE id = '$address_id'";
     $db->sql($sql);
     $res = $db->getResult();
     $address = $res[0]['name'].','.$res[0]['address'].','.$res[0]['district'].','.$res[0]['pincode'].','.$res[0]['state'];
 
-    $sql = "INSERT INTO orders (`order_date`,`order_time`,`package_name`,`user_id`,`promo_code`,`address`,`address_id`,`package_id`,`price`,`type`,`status`,`pincode`)VALUES('$order_date','$order_time','$package_name','$user_id','$promo_code','$address','$address_id','$package_id','$price','$type',1,'$pincode')";
+    $sql = "INSERT INTO orders (`order_date`,`order_time`,`package_name`,`user_id`,`promo_code`,`address`,`address_id`,`package_id`,`price`,`type`,`status`,`pincode`,`event_date`,`event_time`)VALUES('$order_date','$order_time','$package_name','$user_id','$promo_code','$address','$address_id','$package_id','$price','$type',1,'$pincode','$event_date','$event_time')";
     $db->sql($sql);
     $res = $db->getResult();
     $response['success'] = true;
