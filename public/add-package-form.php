@@ -92,11 +92,8 @@ if (isset($_POST['btnAdd'])) {
         if (empty($pincode)) {
             $error['pincode'] = " <span class='label label-danger'>Required!</span>";
         }
-        if (empty($recommend)) {
-            $error['recommend'] = " <span class='label label-danger'>Required!</span>";
-        }
 
-        if (!empty($name) && !empty($price) && !empty($category) && !empty($description)&& !empty($pincode)&& !empty($recommend))
+        if (!empty($name) && !empty($price) && !empty($category) && !empty($description)&& !empty($pincode))
         {
 
 //cover_image
