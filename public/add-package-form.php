@@ -318,7 +318,7 @@ if (isset($_POST['btnAdd'])) {
                                             <input type="radio" name="recommend" value="1"> Yes
                                         </label>
                                         <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                            <input type="radio" name="recommend" value="0"> No
+                                            <input type="radio" name="recommend" value="0" checked> No
                                         </label>
                                      </div>
                                 </div>

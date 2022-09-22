@@ -222,7 +222,7 @@ $res = $db->getResult();
 
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form id='edit_package_form' method="post"  action="public/db-operation.php" enctype="multipart/form-data">
+                <form id='edit_package_form' method="post"  enctype="multipart/form-data">
                     <div class="box-body">
                     <input type="hidden" id="old_image" name="old_image"  value="<?= $res[0]['cover_photo']; ?>">
                     <input type="hidden" id="old_image1" name="old_image"  value="<?= $res[0]['image1']; ?>">
@@ -361,7 +361,7 @@ $res = $db->getResult();
 </section>
 
 <div class="separator"> </div>
-<script>
+<!-- <script>
         $(document).on('click', '.delete_media', function() {
             if (confirm('Are you sure?')) {
                 id = $(this).data("id");
@@ -376,6 +376,6 @@ $res = $db->getResult();
                 });
             }
         });
-    </script>
+    </script> -->
 <?php $db->disconnect(); ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
