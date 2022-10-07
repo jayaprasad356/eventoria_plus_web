@@ -31,6 +31,12 @@ if (empty($_POST['district'])) {
     print_r(json_encode($response));
     return false;
 }
+if (empty($_POST['place'])) {
+    $response['success'] = false;
+    $response['message'] = "Place is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 if (empty($_POST['pincode'])) {
     $response['success'] = false;
     $response['message'] = "Pincode is Empty";
@@ -47,6 +53,7 @@ $name = $db->escapeString($_POST['name']);
 $address = $db->escapeString($_POST['address']);
 $district = $db->escapeString($_POST['district']);
 $pincode = $db->escapeString($_POST['pincode']);
+$place = $db->escapeString($_POST['place']);
 $state = $db->escapeString($_POST['state']);
 
 $sql = "SELECT * FROM deliver_pincodes WHERE pincode ='$pincode'";
@@ -54,7 +61,7 @@ $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num >= 1){
-    $sql = "INSERT INTO address (`name`,`address`,`district`,`pincode`,`state`)VALUES('$name','$address','$district','$pincode','$state')";
+    $sql = "INSERT INTO address (`name`,`address`,`district`,`pincode`,`place`,`state`)VALUES('$name','$address','$district','$pincode','$place','$state')";
     $db->sql($sql);
     $sql = "SELECT * FROM address ORDER BY id DESC LIMIT 1";
     $db->sql($sql);
@@ -62,12 +69,11 @@ if ($num >= 1){
     $response['success'] = true;
     $response['message'] = "Address Added Successfully ";
     $response['data'] = $res;
-    
     print_r(json_encode($response));
 }
 else{
     $response['success'] = false;
-    $response['message'] = "We Are Not Available Here";
+    $response['message'] = "Currently we are not available in your area";
     $response['data'] = $res;
     print_r(json_encode($response));
 
