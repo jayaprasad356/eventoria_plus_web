@@ -280,7 +280,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'venues') {
     foreach ($res as $row) {
 
         $operate = ' <a href="edit-venue.php?id=' . $row['id'] . '"><i class="fa fa-edit"></i>Edit</a>';
-
+        $operate .= ' <a class="text text-danger" href="delete-venue.php?id=' . $row['id'] . '"><i class="fa fa-trash"></i>Delete</a>';
         $tempRow['id'] = $row['id'];
         $tempRow['name'] = $row['name'];
         $tempRow['address'] = $row['address'];
