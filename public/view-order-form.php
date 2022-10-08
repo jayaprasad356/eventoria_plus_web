@@ -146,7 +146,7 @@ $order_id = $_GET['id'];
                                 <td><?php echo $res[0]['pincode']; ?></td>
                             </tr>
                             <?php
-                            $sql = "SELECT *,orders_timeslot.price AS price  FROM orders_timeslot,orders WHERE orders.id = orders_timeslot.order_id AND orders.id = $order_id";
+                            $sql = "SELECT *  FROM orders_timeslot WHERE order_id = $order_id";
                             $db->sql($sql);
                             $resad = $db->getResult();
                             $index = 1;
