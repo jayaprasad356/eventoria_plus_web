@@ -156,35 +156,27 @@ $logo =$res[0]['logo'];
                             <i class="fa fa-home" class="active"></i> <span>Home</span>
                         </a>
                     </li>
-                    <!-- <li class="treeview">
-                        <a href="used_vehicles.php">
-                            <i class="fa fa-motorcycle"></i> <span>Used Vehicles</span>
-                        </a>
-                    </li>
                     <li class="treeview">
-                        <a href="used_vehicles_orders.php">
-                            <i class="fa fa-shopping-cart"></i> <span>Used Vehicle Orders</span>
+                        <a href="#">
+                            <i class="fa fa-bullseye"></i>
+                            <span>Categories</span>
+                            <i class="fa fa-angle-right pull-right"></i>
                         </a>
-                    </li>
-                    <li class="treeview">
-                        <a href="rental_vehicles.php">
-                            <i class="fa fa-bus"></i> <span>Rental Vehicles</span>
-                        </a>
-                    </li>
-                    <li class="treeview">
-                        <a href="rental_orders.php">
-                            <i class="fa fa-shopping-cart"></i> <span>Rental Orders</span>
-                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="categories.php"><i class="fa fa-sliders"></i> Manage Categories</a></li>
+                        </ul>
                     </li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-wrench"></i>
-                            <span>Services</span>
+                            <i class="fa fa-cube"></i>
+                            <span>Products</span>
+                            <i class="fa fa-angle-right pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="services.php"><i class="fa fa-sliders"></i> Manage Services</a></li>
+                            <li><a href="add-product.php"><i class="fa fa-plus"></i> Add Product</a></li>
+                            <li><a href="products.php"><i class="fa fa-sliders"></i> Manage Products</a></li>
                         </ul>
-                    </li> -->
+                    </li>
                 </ul>
             </section>
             <!-- /.sidebar -->
