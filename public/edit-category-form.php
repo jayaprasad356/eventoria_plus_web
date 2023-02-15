@@ -112,7 +112,7 @@ if (isset($_POST['btnCancel'])) { ?>
 						</div>
 
 					<div class="form-group">
-						<label class="control-label">Status</label> <i class="text-danger asterik">*</i>
+						<label class="control-label">Status</label> <i class="text-danger asterik">*</i><br>
 						<div id="status" class="btn-group">
 							<label class="btn btn-default" data-toggle-class="btn-default" data-toggle-passive-class="btn-default">
 								<input type="radio" name="status" value="0" <?= ($res[0]['status'] == 0) ? 'checked' : ''; ?>> Deactivated
@@ -128,7 +128,7 @@ if (isset($_POST['btnCancel'])) { ?>
                                         <label for="exampleInputFile">Image</label> <i class="text-danger asterik">*</i>
                                         
                                         <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image" id="image">
-                                        <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['image']; ?>" style="max-width:100%" /></p>
+                                        <p class="help-block"><img id="blah" src="<?php echo $res[0]['image']; ?>" style="max-width:100%" /></p>
                                     </div>
                                 </div>
                             </div>

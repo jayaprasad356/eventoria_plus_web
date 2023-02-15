@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 16, 2022 at 01:14 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Generation Time: Feb 15, 2023 at 10:38 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -36,15 +36,6 @@ CREATE TABLE `address` (
   `state` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `address`
---
-
-INSERT INTO `address` (`id`, `name`, `address`, `district`, `pincode`, `state`) VALUES
-(1, 'prasad', 'street', 'sholapuram', '612828', 'kumbakonam'),
-(2, 'c', 'vv', 'bbv', 'ff', 'gv'),
-(3, 'Ad', 'udbxb', '134556', '18$849', 'india');
-
 -- --------------------------------------------------------
 
 --
@@ -63,11 +54,14 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `image`, `status`) VALUES
-(1, 'Birthday Event', 'upload/images/4743-2022-07-13.jpg', 1),
-(2, 'Marriage Hall', 'upload/images/5311-2022-07-13.jpeg', 1),
-(3, 'Graduation', 'upload/images/3397-2022-07-13.jpg', 1),
-(4, 'Propose Hall', 'upload/images/8713-2022-07-13.jpg', 1),
-(5, 'Birthday Decoration', 'upload/images/4202-2022-07-13.jpg', 1);
+(1, 'Birthday eventoria', 'upload/images/1661263742.2405.jpg', 1),
+(2, 'Marriage eventoria', 'upload/images/5311-2022-07-13.jpeg', 1),
+(3, 'Commercial eventoria', 'upload/images/3397-2022-07-13.jpg', 1),
+(4, 'Dating eventoria', 'upload/images/1661263426.2398.jpg', 1),
+(5, 'Romantic room', 'upload/images/1661265987.8388.jfif', 1),
+(6, 'Kitty party eventoria', 'upload/images/1661266015.51.jpg', 1),
+(7, 'Gaming or fun eventoria', 'upload/images/0198-2022-08-23.jpg', 0),
+(8, 'Outdoor Picnic', 'upload/images/9421-2022-08-23.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -77,17 +71,18 @@ INSERT INTO `categories` (`id`, `name`, `image`, `status`) VALUES
 
 CREATE TABLE `deliver_pincodes` (
   `id` int(11) NOT NULL,
-  `state` text DEFAULT NULL,
-  `district` text DEFAULT NULL,
-  `pincode` text DEFAULT NULL
+  `pincode` text DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `district` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `deliver_pincodes`
 --
 
-INSERT INTO `deliver_pincodes` (`id`, `state`, `district`, `pincode`) VALUES
-(1, 'Tamilnadu', 'Karur', '621313');
+INSERT INTO `deliver_pincodes` (`id`, `pincode`, `state`, `district`) VALUES
+(1, '620028', NULL, NULL),
+(3, '621313', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -106,7 +101,7 @@ CREATE TABLE `notifications` (
 --
 
 INSERT INTO `notifications` (`id`, `title`, `description`) VALUES
-(1, 'payments', 'Is there online payments available?');
+(1, 'Payments', 'Is there notifications available?');
 
 -- --------------------------------------------------------
 
@@ -116,14 +111,21 @@ INSERT INTO `notifications` (`id`, `title`, `description`) VALUES
 
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
+  `package_name` varchar(255) DEFAULT NULL,
   `order_date` varchar(200) DEFAULT NULL,
+  `order_time` varchar(255) DEFAULT NULL,
   `event_date` varchar(100) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   `address_id` int(11) DEFAULT NULL,
   `venue_id` int(11) DEFAULT NULL,
   `package_id` int(11) NOT NULL,
   `price` text DEFAULT NULL,
+  `promo_code` varchar(100) DEFAULT NULL,
   `type` text DEFAULT NULL,
+  `start_time` text DEFAULT NULL,
+  `end_time` text DEFAULT NULL,
+  `pincode` varchar(255) DEFAULT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -131,21 +133,10 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `order_date`, `event_date`, `user_id`, `address_id`, `venue_id`, `package_id`, `price`, `type`, `status`) VALUES
-(1, NULL, NULL, 1, 1, NULL, 1, '3000', 'own', 1),
-(5, NULL, NULL, 1, NULL, 3, 1, '800', 'venue', 1),
-(7, NULL, NULL, 1, NULL, 3, 1, '3000', 'venue', 1),
-(8, NULL, NULL, 1, NULL, 3, 1, '', 'venue', 1),
-(9, NULL, NULL, 1, NULL, 3, 1, '6000', 'venue', 1),
-(10, '2022', NULL, 1, NULL, 3, 1, '6000', 'venue', 1),
-(11, '2022-08-02', NULL, 1, NULL, 3, 1, '6000', 'venue', 1),
-(12, '2022-08-02', NULL, 1, NULL, 3, 1, '6000', 'venue', 1),
-(13, '2022-08-02', NULL, 1, NULL, 3, 1, '6000', 'venue', 1),
-(14, '2022-08-02', '2022-08-05', 1, NULL, 3, 1, '6000', 'venue', 1),
-(15, '2022-08-02', '2022-08-07', 1, NULL, 3, 1, '6000', 'venue', 1),
-(16, '2022-08-02', '2022-08-07', 1, NULL, 3, 1, '3400', 'venue', 1),
-(17, '2022-08-03', '2022-08-03', 2, NULL, 3, 1, '6000', 'venue', 1),
-(18, '2022-08-03', '2022-08-07', 3, NULL, 3, 1, '3200', 'venue', 1);
+INSERT INTO `orders` (`id`, `package_name`, `order_date`, `order_time`, `event_date`, `address`, `user_id`, `address_id`, `venue_id`, `package_id`, `price`, `promo_code`, `type`, `start_time`, `end_time`, `pincode`, `status`) VALUES
+(50, 'Romantic candle light date', '2022-09-17', '23:49:22', '2022-09-17', 'near old bus stand Ambikapur', 1, NULL, 6, 12, '1000', '', 'venue', NULL, NULL, '612345', 2),
+(51, 'Romantic room', '2022-09-20', '17:03:38', '2022-09-21', 'Bramha road, old panchsheel gali', 2, NULL, 8, 11, '3200', '', 'venue', NULL, NULL, '497001', 2),
+(52, 'Romantic room', '2022-09-20', '17:30:44', '2022-09-21', 'Bramha road, old panchsheel gali', 2, NULL, 8, 11, '3200', '', 'venue', NULL, NULL, '497001', 2);
 
 -- --------------------------------------------------------
 
@@ -177,8 +168,40 @@ INSERT INTO `orders_timeslot` (`id`, `user_id`, `order_id`, `venue_id`, `time_sl
 (6, 1, 14, 3, 1, '20:00', '20:00', 3000),
 (7, 1, 15, 3, 1, '20:00', '20:00', 3000),
 (8, 1, 16, 3, 4, '11:45', '15:40', 400),
-(9, 3, 18, 3, 1, '20:00', '20:00', 3000),
-(10, 3, 18, 3, 3, '16:19', '20:24', 200);
+(9, 2, 17, 3, 1, '20:00', '20:00', 3000),
+(10, 3, 18, 3, 3, '16:19', '20:24', 200),
+(11, 2, 19, 3, 1, '20:00', '20:00', 3000),
+(12, 2, 20, 3, 1, '20:00', '20:00', 3000),
+(13, 2, 20, 3, 3, '16:19', '20:24', 200),
+(14, 2, 20, 3, 4, '11:45', '15:40', 400),
+(15, 3, 24, 3, 1, '20:00', '20:00', 3000),
+(16, 1, 25, 3, 1, '20:00', '20:00', 3000),
+(17, 1, 25, 3, 3, '16:19', '20:24', 200),
+(18, 1, 25, 3, 4, '11:45', '15:40', 400),
+(19, 1, 26, 3, 1, '20:00', '20:00', 3000),
+(20, 1, 26, 3, 4, '11:45', '15:40', 400),
+(21, 1, 31, 3, 1, '20:00', '20:00', 3000),
+(22, 1, 32, 3, 1, '20:00', '20:00', 3000),
+(23, 1, 32, 3, 3, '16:19', '20:24', 200),
+(24, 1, 33, 3, 3, '16:19', '20:24', 200),
+(25, 1, 36, 3, 1, '20:00', '20:00', 3000),
+(26, 1, 38, 3, 1, '20:00', '20:00', 3000),
+(27, 1, 39, 3, 1, '20:00', '20:00', 3000),
+(28, 1, 40, 3, 1, '20:00', '20:00', 3000),
+(29, 1, 40, 3, 3, '16:19', '20:24', 200),
+(30, 1, 41, 3, 1, '20:00', '20:00', 3000),
+(31, 1, 41, 3, 3, '16:19', '20:24', 200),
+(32, 1, 41, 3, 4, '11:45', '15:40', 400),
+(33, 2, 42, 5, 0, '', '', 0),
+(34, 2, 43, 6, 7, '10:00', '23:00', 500),
+(35, 2, 44, 6, 7, '10:00', '23:00', 500),
+(36, 2, 45, 6, 7, '10:00', '12:00', 500),
+(37, 1, 47, 6, 7, '10:00', '12:00', 500),
+(38, 1, 48, 6, 7, '10:00', '12:00', 500),
+(39, 1, 49, 6, 7, '10:00', '12:00', 500),
+(40, 1, 50, 6, 7, '10:00', '12:00', 500),
+(41, 2, 51, 8, 10, '11:00', '20:00', 1200),
+(42, 2, 52, 8, 10, '11:00', '20:00', 1200);
 
 -- --------------------------------------------------------
 
@@ -207,7 +230,11 @@ CREATE TABLE `packages` (
 --
 
 INSERT INTO `packages` (`id`, `name`, `cover_photo`, `image1`, `image2`, `image3`, `image4`, `recommend`, `price`, `category_id`, `description`, `pincode`, `status`) VALUES
-(1, 'Basic Birthday', 'upload/images/1657836058.6088.png', 'upload/images/1657836058.6638.png', 'upload/images/1657836058.7648.png', NULL, 'upload/images/1657836059.2159.png', 1, '3000', 1, 'Basic Plan for Afforadable Price', '612345', 1);
+(1, 'Basic Birthday', 'upload/images/1661266567.7263.jpg', 'upload/images/1657836058.6638.png', 'upload/images/1657836058.7648.png', NULL, 'upload/images/1657836059.2159.png', 1, '3000', 1, 'Basic Plan for Afforadable Price', '497001', 1),
+(10, 'Special romantic date', 'upload/images/9277-2022-08-22.', '', '', '', '', 1, '5000', 2, 'decorated, dating space ....', '497001', 1),
+(11, 'Romantic room', 'upload/images/3848-2022-08-23.', '', '', '', '', 0, '2000', 5, 'romantic decorated room', '497001', 1),
+(12, 'Romantic candle light date', 'upload/images/0144-2022-08-23.', 'upload/images/4655-2022-08-23.', 'upload/images/9495-2022-08-23.', 'upload/images/2588-2022-08-23.', 'upload/images/0502-2022-08-23.', 0, '500', 1, 'romantic candle light table', '612345', 1),
+(14, 'hhhhh', 'upload/images/1676377331.432.jpg', 'upload/images/1676377331.4362.jpg', 'upload/images/1676377331.4403.jpg', 'upload/images/1676377331.4449.jpg', 'upload/images/1676377331.4492.jpg', 1, '677', 2, '7777', '612908', 1);
 
 -- --------------------------------------------------------
 
@@ -217,9 +244,9 @@ INSERT INTO `packages` (`id`, `name`, `cover_photo`, `image1`, `image2`, `image3
 
 CREATE TABLE `promo_codes` (
   `id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL DEFAULT 0,
   `promo_code` varchar(28) NOT NULL,
   `message` varchar(512) NOT NULL,
-  `category` text DEFAULT NULL,
   `start_date` varchar(28) NOT NULL,
   `end_date` varchar(28) NOT NULL,
   `no_of_users` int(11) NOT NULL,
@@ -229,8 +256,8 @@ CREATE TABLE `promo_codes` (
   `max_discount_amount` int(11) NOT NULL,
   `repeat_usage` tinyint(4) NOT NULL,
   `no_of_repeat_usage` int(11) NOT NULL,
-  `type` text DEFAULT NULL,
   `status` tinyint(4) NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
   `date_created` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -238,8 +265,14 @@ CREATE TABLE `promo_codes` (
 -- Dumping data for table `promo_codes`
 --
 
-INSERT INTO `promo_codes` (`id`, `promo_code`, `message`, `category`, `start_date`, `end_date`, `no_of_users`, `minimum_order_amount`, `discount`, `discount_type`, `max_discount_amount`, `repeat_usage`, `no_of_repeat_usage`, `type`, `status`, `date_created`) VALUES
-(1, 'DEMO', 'demo', 'All', '2022-01-31', '2022-02-03', 5, 100, 10, 'percentage', 300, 0, 0, 'private', 1, '2022-01-31 13:18:28');
+INSERT INTO `promo_codes` (`id`, `category_id`, `promo_code`, `message`, `start_date`, `end_date`, `no_of_users`, `minimum_order_amount`, `discount`, `discount_type`, `max_discount_amount`, `repeat_usage`, `no_of_repeat_usage`, `status`, `type`, `date_created`) VALUES
+(1, 0, 'DEMO', 'demo', '2022-01-31', '2022-02-03', 5, 100, 10, 'percentage', 300, 0, 0, 1, NULL, '2022-01-31 13:18:28'),
+(3, 0, 'SUCCESS', 'success', '2022-08-09', '2022-08-24', 10, 3000, 5, 'percentage', 1000, 1, 10, 1, NULL, '2022-08-09 13:57:31'),
+(4, 0, '12345', 'gift', '2022-05-25', '2022-10-25', 1, 1, 30, 'percentage', 300, 0, 0, 1, NULL, '2022-08-24 04:28:40'),
+(5, 0, 'REER', 'ddfdfd', '2022-09-12', '2022-09-13', 5, 500, 50, 'percentage', 500, 1, 0, 1, 'public', '2022-09-04 04:10:43'),
+(6, 0, 'FDFDF', 'dffsdfs', '2022-09-04', '2022-09-14', 4, 400, 343, 'percentage', 4343, 1, 4, 1, 'public', '2022-09-04 04:12:43'),
+(7, 0, 'dsds', 'sdsds', '2022-09-13', '2022-09-28', 5, 5, 5, 'amount', 5, 0, 0, 1, 'public', '2022-09-16 13:04:37'),
+(8, 0, 'sdsds', 'dsds', '2022-09-15', '2022-09-27', 5, 500, 5, 'amount', 5, 0, 0, 1, 'public', '2022-09-16 13:05:59');
 
 -- --------------------------------------------------------
 
@@ -251,15 +284,54 @@ CREATE TABLE `settings` (
   `id` int(11) NOT NULL,
   `whatsapp` text DEFAULT NULL,
   `telegram` text DEFAULT NULL,
-  `instagram` text DEFAULT NULL
+  `instagram` text DEFAULT NULL,
+  `paytm_payment_method` tinyint(4) NOT NULL,
+  `paytm_merchant_id` varchar(255) DEFAULT NULL,
+  `paytm_merchant_key` varchar(255) DEFAULT NULL,
+  `paytm_mode` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `settings`
 --
 
-INSERT INTO `settings` (`id`, `whatsapp`, `telegram`, `instagram`) VALUES
-(1, 'https://div.whatsapp.com', 'eventoria.telegram.in', 'eventoria13.instagram.com');
+INSERT INTO `settings` (`id`, `whatsapp`, `telegram`, `instagram`, `paytm_payment_method`, `paytm_merchant_id`, `paytm_merchant_key`, `paytm_mode`) VALUES
+(1, 'https://div.whatsapp.com', 'eventoria.telegram.in', 'eventoria13.instagram.com', 1, '', '', 'sandbox');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shops`
+--
+
+CREATE TABLE `shops` (
+  `id` int(11) NOT NULL,
+  `name` text CHARACTER SET utf8 DEFAULT NULL,
+  `shop_name` text CHARACTER SET utf8 DEFAULT NULL,
+  `mobile` text DEFAULT NULL,
+  `email` text CHARACTER SET utf8 DEFAULT NULL,
+  `password` text CHARACTER SET utf8 DEFAULT NULL,
+  `balance` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `logo` text CHARACTER SET utf8 DEFAULT NULL,
+  `pincode` text DEFAULT NULL,
+  `street` text CHARACTER SET utf8 DEFAULT NULL,
+  `state` text CHARACTER SET utf8 DEFAULT NULL,
+  `account_number` text CHARACTER SET utf8 DEFAULT NULL,
+  `bank_ifsc_code` text CHARACTER SET utf8 DEFAULT NULL,
+  `holder_name` text CHARACTER SET utf8 DEFAULT NULL,
+  `bank_name` text CHARACTER SET utf8 DEFAULT NULL,
+  `latitude` varchar(256) CHARACTER SET utf8 DEFAULT NULL,
+  `longitude` varchar(256) CHARACTER SET utf8 DEFAULT NULL,
+  `status` tinyint(2) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `shops`
+--
+
+INSERT INTO `shops` (`id`, `name`, `shop_name`, `mobile`, `email`, `password`, `balance`, `logo`, `pincode`, `street`, `state`, `account_number`, `bank_ifsc_code`, `holder_name`, `bank_name`, `latitude`, `longitude`, `status`) VALUES
+(1, 'Divakar A', 'DANGI Store', '7358832695', 'dinesh@gmail.com', 'Dangi@314', '0.00', '1676429139.4261.jpg', '621313', '2/42, Azhagapuri,R.T.Malai(Po)', 'Tamil Nadu', '83550981234', 'SBI0008355', 'Dangi Divakar', 'State Bank Of India', '74.259377', '10.677280', 0),
+(2, 'Lalaa', 'LALA Eventers', '9876322323', 'lara@gmail.com', 'Smsatta@2022', '500.00', '1676433720.2287.jpg', '988399', 'West BANGAL', 'Andhra Pradesh', '83181051987', 'BOI66668318', 'samkarthi', 'Bank of India', '7645', '65.098', 1);
 
 -- --------------------------------------------------------
 
@@ -270,25 +342,23 @@ INSERT INTO `settings` (`id`, `whatsapp`, `telegram`, `instagram`) VALUES
 CREATE TABLE `slides` (
   `id` int(11) NOT NULL,
   `name` text DEFAULT NULL,
-  `type` varchar(200) NOT NULL,
-  `package_id` int(11) DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
-  `link` text DEFAULT NULL,
+  `package_id` int(11) DEFAULT NULL,
   `image` text DEFAULT NULL,
-  `status` tinyint(4) DEFAULT NULL
+  `status` tinyint(4) DEFAULT NULL,
+  `link` text DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `slides`
 --
 
-INSERT INTO `slides` (`id`, `name`, `type`, `package_id`, `category_id`, `link`, `image`, `status`) VALUES
-(1, 'Outdoor Decoration', '', NULL, NULL, NULL, 'upload/images/6592-2022-07-13.jpg', 1),
-(2, 'Birthday Decoration', '', NULL, NULL, NULL, 'upload/images/7013-2022-07-13.jpg', 1),
-(3, 'Wedding Decoration', '', NULL, NULL, NULL, 'upload/images/4790-2022-07-13.jpg', 1),
-(15, 'jalabula', 'External Link', 0, 0, 'https://ncbcugc.in', 'upload/images/0468-2022-08-05.jpeg', 1),
-(16, 'Birthday', 'Package', 1, 0, '', 'upload/images/1148-2022-08-05.jpeg', 1),
-(17, 'Graduation Day Celebration', 'Category', 0, 3, '', 'upload/images/4671-2022-08-05.jpg', 1);
+INSERT INTO `slides` (`id`, `name`, `category_id`, `package_id`, `image`, `status`, `link`, `type`) VALUES
+(1, 'Outdoor Decoration', NULL, 1, 'upload/images/3858-2023-02-14.jpg', 1, NULL, 'Package'),
+(2, 'Birthday Decoration', NULL, NULL, 'upload/images/7013-2022-07-13.jpg', 1, NULL, NULL),
+(3, 'Wedding Decoration', NULL, NULL, 'upload/images/4790-2022-07-13.jpg', 1, NULL, NULL),
+(4, 'dfsfs', NULL, 1, 'upload/images/2510-2022-09-13.', 1, NULL, 'Package');
 
 -- --------------------------------------------------------
 
@@ -312,7 +382,13 @@ INSERT INTO `timeslots` (`id`, `venue_id`, `start_time`, `end_time`, `prices`) V
 (1, 3, '20:00', '20:00', 3000),
 (2, 4, '03:45', '16:00', 500),
 (3, 3, '16:19', '20:24', 200),
-(4, 3, '11:45', '15:40', 400);
+(4, 3, '11:45', '15:40', 400),
+(5, 5, '10:00', '12:00', 500),
+(6, 5, '01:00', '03:00', 500),
+(7, 6, '10:00', '12:00', 500),
+(8, 6, '12:30', '14:30', 500),
+(9, 7, '14:29', '14:29', 4500),
+(10, 8, '11:00', '20:00', 1200);
 
 -- --------------------------------------------------------
 
@@ -346,20 +422,26 @@ CREATE TABLE `venues` (
   `id` int(11) NOT NULL,
   `name` text DEFAULT NULL,
   `address` text DEFAULT NULL,
+  `categories` varchar(255) DEFAULT NULL,
   `cover_image` text DEFAULT NULL,
   `image1` text DEFAULT NULL,
   `image2` text DEFAULT NULL,
   `image3` text DEFAULT NULL,
   `image4` text DEFAULT NULL,
-  `pincode` text DEFAULT NULL
+  `pincode` text DEFAULT NULL,
+  `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `venues`
 --
 
-INSERT INTO `venues` (`id`, `name`, `address`, `cover_image`, `image1`, `image2`, `image3`, `image4`, `pincode`) VALUES
-(3, 'Violet Park', 'near lasangles', 'upload/images/4059-2022-07-13.jpg', 'upload/images/1657837946.8139.png', NULL, 'upload/images/1657837947.0739.jpeg', NULL, '612345');
+INSERT INTO `venues` (`id`, `name`, `address`, `categories`, `cover_image`, `image1`, `image2`, `image3`, `image4`, `pincode`, `description`) VALUES
+(3, 'Violet Park', 'near lasangles', '7', 'upload/images/4059-2022-07-13.jpg', 'upload/images/1657837946.8139.png', NULL, 'upload/images/1657837947.0739.jpeg', NULL, '612345', ''),
+(5, 'GRS', 'near new bus stand Ambikapur', NULL, 'upload/images/1175-2022-08-22.', '', '', '', '', '497001', NULL),
+(6, 'Hotel Virendra Prabha', 'near old bus stand Ambikapur', '1', 'upload/images/8042-2022-08-23.', '', '', '', '', '612345', 'dfdfdfdfdvd'),
+(7, 'dsds', 'sdsd', '7,5', 'upload/images/1620-2022-09-04.', '', '', '', '', '434344', ''),
+(8, 'Hotel Devraj', 'Bramha road, old panchsheel gali', '5', 'upload/images/0001-2022-09-20.', '', '', '', '', '497001', 'clean and secure atmosphere.');
 
 --
 -- Indexes for dumped tables
@@ -420,6 +502,12 @@ ALTER TABLE `settings`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `shops`
+--
+ALTER TABLE `shops`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `slides`
 --
 ALTER TABLE `slides`
@@ -451,19 +539,19 @@ ALTER TABLE `venues`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `deliver_pincodes`
 --
 ALTER TABLE `deliver_pincodes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -475,25 +563,25 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `orders_timeslot`
 --
 ALTER TABLE `orders_timeslot`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `packages`
 --
 ALTER TABLE `packages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `promo_codes`
 --
 ALTER TABLE `promo_codes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -502,16 +590,22 @@ ALTER TABLE `settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `shops`
+--
+ALTER TABLE `shops`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `slides`
 --
 ALTER TABLE `slides`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `timeslots`
 --
 ALTER TABLE `timeslots`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -523,7 +617,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `venues`
 --
 ALTER TABLE `venues`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

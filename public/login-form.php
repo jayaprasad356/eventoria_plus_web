@@ -23,7 +23,6 @@ if (isset($_POST['btnLogin'])) {
     }
 
     // if email and password is not empty, check in database
-    // if email and password is not empty, check in database
     if (!empty($email) && !empty($password)) {
         if($email == 'admin@gmail.com' && $password == 'admin123'){
             $_SESSION['id'] = '1';

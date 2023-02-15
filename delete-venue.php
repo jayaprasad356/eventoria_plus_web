@@ -11,9 +11,19 @@ $db->connect();
 		exit(0);
 	}
 	$data = array();
-
-	$sql_query = "DELETE  FROM venues WHERE id =" . $ID;
+	$sql_query = "SELECT *  FROM venues WHERE id =" . $ID;
 	$db->sql($sql_query);
 	$res = $db->getResult();
-	header("location:venues.php");
+	$target_path = "".$res[0]['cover_image'];
+	$target_path1 = "".$res[0]['image1'];
+	$target_path2 = "".$res[0]['image2'];
+	$target_path3 = "".$res[0]['image3'];
+	$target_path4 = "".$res[0]['image4'];
+
+	if(unlink($target_path) && unlink($target_path1) && unlink($target_path2) && unlink($target_path3) && unlink($target_path4)){	
+			$sql_query = "DELETE  FROM venues WHERE id =" . $ID;
+			$db->sql($sql_query);
+			$res = $db->getResult();
+			header("location:venues.php");
+	}
 ?>

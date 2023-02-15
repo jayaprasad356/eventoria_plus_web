@@ -236,15 +236,13 @@ if (isset($_POST['btnAdd'])) {
                                         <input type="file" name="category_image" onchange="readURL(this);" accept="image/png,  image/jpeg" id="category_image" required/>
                                         <div class="form-group">
                                             <img id="blah" src="#" alt="image" />
-
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <label for="exampleInputFile">Image1</label><?php echo isset($error['image1']) ? $error['image1'] : ''; ?>
-                                        <input type="file" name="image1" onchange="readURL(this);" accept="image/png,  image/jpeg" id="image1" />
+                                        <input type="file" name="image1"  accept="image/png,  image/jpeg" id="image1" />
                                         <div class="form-group">
                                             <img id="blah" src="#" alt="image" />
-
                                         </div>
                                     </div>
                                 </div>
@@ -254,7 +252,7 @@ if (isset($_POST['btnAdd'])) {
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         <label for="exampleInputFile">Image2</label><?php echo isset($error['image2']) ? $error['image2'] : ''; ?>
-                                        <input type="file" name="image2" onchange="readURL(this);" accept="image/png,  image/jpeg" id="image2"/>
+                                        <input type="file" name="image2"  accept="image/png,  image/jpeg" id="image2"/>
                                         <div class="form-group">
                                             <img id="blah" src="#" alt="image" />
 
@@ -262,7 +260,7 @@ if (isset($_POST['btnAdd'])) {
                                     </div>
                                     <div class="col-md-4">
                                         <label for="exampleInputFile">Image3</label><?php echo isset($error['image3']) ? $error['image3'] : ''; ?>
-                                        <input type="file" name="image3" onchange="readURL(this);" accept="image/png,  image/jpeg" id="image3" />
+                                        <input type="file" name="image3"  accept="image/png,  image/jpeg" id="image3" />
                                         <div class="form-group">
                                             <img id="blah" src="#" alt="image" />
 
@@ -270,7 +268,7 @@ if (isset($_POST['btnAdd'])) {
                                     </div>
                                     <div class="col-md-4">
                                         <label for="exampleInputFile">Image4</label><?php echo isset($error['image4']) ? $error['image4'] : ''; ?>
-                                        <input type="file" name="image4" onchange="readURL(this);" accept="image/png,  image/jpeg" id="image4" />
+                                        <input type="file" name="image4" accept="image/png,  image/jpeg" id="image4" />
                                         <div class="form-group">
                                             <img id="blah" src="#" alt="image" />
 

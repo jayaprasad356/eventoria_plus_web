@@ -26,12 +26,12 @@
 <?php include "header.php";?>
 <html>
 <head>
-<title>Edit Category | - Dashboard</title>
+<title>Edit Shop | - Dashboard</title>
 </head>
 </body>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-        <?php include('public/edit-category-form.php'); ?>
+        <?php include('public/edit-shop-form.php'); ?>
       </div><!-- /.content-wrapper -->
   </body>
 </html>

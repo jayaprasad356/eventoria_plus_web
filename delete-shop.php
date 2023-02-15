@@ -11,17 +11,15 @@ $db->connect();
 		exit(0);
 	}
 	$data = array();
-
-	$sql_query = "SELECT *  FROM slides WHERE id =" . $ID;
+	
+	$sql_query = "SELECT *  FROM shops WHERE id =" . $ID;
 	$db->sql($sql_query);
 	$res = $db->getResult();
-	$target_path = "".$res[0]['image'];
+	$target_path = "upload/shops/".$res[0]['logo'];
 	if(unlink($target_path)){	
-			$sql_query = "DELETE  FROM slides WHERE id =" . $ID;
+			$sql_query = "DELETE  FROM shops WHERE id =" . $ID;
 			$db->sql($sql_query);
 			$res = $db->getResult();
-			header("location:slides.php");
+			header("location:shops.php");
 	}
-
-	
 ?>

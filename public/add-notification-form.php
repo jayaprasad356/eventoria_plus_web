@@ -66,7 +66,7 @@ if (isset($_POST['btnAdd'])) {
                     <div class="box-body">
                         <div class="form-group">
                             <div class="row">
-                                 <div class='col-md-6'>
+                                 <div class='col-md-8'>
                                     <label for="exampleInputEmail1">Title</label> <i class="text-danger asterik">*</i><?php echo isset($error['title']) ? $error['title'] : ''; ?>
                                     <input type="text" class="form-control" name="title" required>
                                 </div>
@@ -74,9 +74,9 @@ if (isset($_POST['btnAdd'])) {
                         </div>
                         <div class="form-group">
                            <div class="row">
-                                <div class='col-md-6'>
+                                <div class='col-md-12'>
                                     <label for="exampleInputEmail1">Description</label> <i class="text-danger asterik">*</i><?php echo isset($error['description']) ? $error['description'] : ''; ?>
-                                    <textarea type="text" class="form-control" name="description" rows="10"  required></textarea>
+                                    <textarea type="text" class="form-control" name="description" rows="4"  required></textarea>
                                 </div>
                             </div>
 

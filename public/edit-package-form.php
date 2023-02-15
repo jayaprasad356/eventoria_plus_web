@@ -224,11 +224,11 @@ $res = $db->getResult();
                 <!-- form start -->
                 <form id='edit_package_form' method="post"  enctype="multipart/form-data">
                     <div class="box-body">
-                    <input type="hidden" id="old_image" name="old_image"  value="<?= $res[0]['cover_photo']; ?>">
-                    <input type="hidden" id="old_image1" name="old_image"  value="<?= $res[0]['image1']; ?>">
-                    <input type="hidden" id="old_image2" name="old_image"  value="<?= $res[0]['image2']; ?>">
-                    <input type="hidden" id="old_image3" name="old_image"  value="<?= $res[0]['image3']; ?>">
-                    <input type="hidden" id="old_image4" name="old_image"  value="<?= $res[0]['image4']; ?>">
+                        <input type="hidden" id="old_image" name="old_image"  value="<?= $res[0]['cover_photo']; ?>">
+                        <input type="hidden" id="old_image1" name="old_image"  value="<?= $res[0]['image1']; ?>">
+                        <input type="hidden" id="old_image2" name="old_image"  value="<?= $res[0]['image2']; ?>">
+                        <input type="hidden" id="old_image3" name="old_image"  value="<?= $res[0]['image3']; ?>">
+                        <input type="hidden" id="old_image4" name="old_image"  value="<?= $res[0]['image4']; ?>">
 
                         <div class="row">
                             <div class="form-group">
@@ -242,43 +242,40 @@ $res = $db->getResult();
                                 </div>
                             </div>
                         </div>
-                        <hr>
+                        <br>
                         <div class="row">
                             <div class="form-group">
                                <div class='col-md-4'>
                                        <label for="exampleInputFile">Cover Image</label> <i class="text-danger asterik">*</i>
                                         
-                                        <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image" id="image"><input type="submit" class="delete_media">
+                                        <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image" id="image">
                                         <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['cover_photo']; ?>" style="max-width:100%" /></p>
                                 </div>
                                 <div class='col-md-4'>
                                        <label for="exampleInputFile">Image1</label>
                                         
-                                        <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image1" id="image1">
+                                        <input type="file" accept="image/png,  image/jpeg" name="image1" id="image1">
                                         <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['image1']; ?>" style="max-width:100%" /></p>
                                 </div>
                             </div>
 
                         </div>
-                        <hr>
+                        <br>
                         <div class="row">
                             <div class="form-group">
                                <div class='col-md-4'>
                                        <label for="exampleInputFile">Image2</label>
-                                        
-                                        <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image2" id="image2">
+                                        <input type="file" accept="image/png,  image/jpeg"  name="image2" id="image2">
                                         <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['image2']; ?>" style="max-width:100%" /></p>
                                 </div>
                                 <div class='col-md-4'>
                                        <label for="exampleInputFile">Image3</label>
-                                        
-                                        <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image3" id="image3">
+                                        <input type="file" accept="image/png,  image/jpeg"  name="image3" id="image3">
                                         <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['image3']; ?>" style="max-width:100%" /></p>
                                 </div>
                                 <div class='col-md-4'>
                                        <label for="exampleInputFile">Image4</label>
-                                        
-                                        <input type="file" accept="image/png,  image/jpeg" onchange="readURL(this);"  name="image4" id="image4">
+                                        <input type="file" accept="image/png,  image/jpeg"  name="image4" id="image4">
                                         <p class="help-block"><img id="blah" src="<?php echo DOMAIN_URL . $res[0]['image4']; ?>" style="max-width:100%" /></p>
                                 </div>
                             </div>
@@ -300,7 +297,7 @@ $res = $db->getResult();
                                             $result = $db->getResult();
                                             foreach ($result as $value) {
                                             ?>
-                                                  <option value='<?= $value['id'] ?>'><?= $value['name'] ?></option>
+											   <option value='<?= $value['id'] ?>' <?= $value['id']==$res[0]['category_id'] ? 'selected="selected"' : '';?>><?= $value['name'] ?></option>
                                         <?php } ?>
                                         </select>
                                 </div>
@@ -315,8 +312,8 @@ $res = $db->getResult();
                                     <input type="text" class="form-control" name="description" value="<?php echo $res[0]['description']; ?>">
                                 </div>
                                 <div class='col-md-4'>
-                                        <label class="control-label">Recommend</label> <i class="text-danger asterik">*</i>
-                                        <div id="recommend" class="form-group">
+                                        <label class="control-label">Recommend</label> <i class="text-danger asterik">*</i><br>
+                                        <div id="recommend" class="btn-group">
                                             <label class="btn btn-default" data-toggle-class="btn-default" data-toggle-passive-class="btn-default">
                                                 <input type="radio" name="recommend" value="1" <?= ($res[0]['recommend'] == 1) ? 'checked' : ''; ?>> Yes
                                             </label>
@@ -334,20 +331,19 @@ $res = $db->getResult();
                         <div class="row">
                             <div class="form-group">
                                 <div class='col-md-4'>
-                                        <label class="control-label">Status</label> <i class="text-danger asterik">*</i>
+                                        <label class="control-label">Status</label> <i class="text-danger asterik">*</i><br>
                                         <div id="status" class="btn-group">
-                                            <label class="btn btn-default" data-toggle-class="btn-default" data-toggle-passive-class="btn-default">
+                                            <label class="btn btn-danger" data-toggle-class="btn-default" data-toggle-passive-class="btn-default">
                                                 <input type="radio" name="status" value="0" <?= ($res[0]['status'] == 0) ? 'checked' : ''; ?>> Deactivated
                                             </label>
-                                            <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                            <label class="btn btn-success" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                                                 <input type="radio" name="status" value="1" <?= ($res[0]['status'] == 1) ? 'checked' : ''; ?>> Activated
                                             </label>
                                         </div>
 						        </div>
 					       </div>
                         </div>
-                        <hr>
-                 </div>
+                    </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
 						<button type="submit" class="btn btn-primary" name="btnEdit">Update</button>
@@ -361,21 +357,21 @@ $res = $db->getResult();
 </section>
 
 <div class="separator"> </div>
-<!-- <script>
-        $(document).on('click', '.delete_media', function() {
-            if (confirm('Are you sure?')) {
-                id = $(this).data("id");
-                cover_photo = $(this).data("cover_photo");
-                $.ajax({
-                    url: 'public/db-operation.php',
-                    type: "post",
-                    data: 'id=' + id + '&cover_photo=' + cover_photo + '&delete_media=1',
-                    success: function(result) {
-                        $('#edit_package_form').bootstrapTable('refresh');
-                    }
-                });
+<script>
+    function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+                };
+
+                reader.readAsDataURL(input.files[0]);
             }
-        });
-    </script> -->
+        }
+</script>
 <?php $db->disconnect(); ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>

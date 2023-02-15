@@ -189,6 +189,12 @@ $db->sql("SET NAMES 'utf8'");
                     </ul>
                 </li>
                 <li class="treeview">
+                    <a href="shops.php">
+                        <i class="fa fa-building"></i>
+                        <span>Shops</span>
+                    </a>
+                </li>
+                <li class="treeview">
                     <a href="#">
                         <i class="fa fa-globe"></i>
                         <span>Venues</span>

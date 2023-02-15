@@ -1,5 +1,6 @@
 <?php
 	// start session
+	ob_start();
 	
 	session_start();
 	
@@ -26,13 +27,16 @@
 <?php include "header.php";?>
 <html>
 <head>
-<title>Edit Category | - Dashboard</title>
+<title>Add Shop | - Dashboard </title>
 </head>
 </body>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-        <?php include('public/edit-category-form.php'); ?>
+		<?php
+			include('public/add-shop-form.php'); 
+		?>
       </div><!-- /.content-wrapper -->
   </body>
 </html>
 <?php include "footer.php";?>
+    	

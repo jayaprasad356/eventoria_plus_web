@@ -8,7 +8,7 @@
 	$expired = 3600;
 	
 	// if session not set go to login page
-	if(!isset($_SESSION['user'])){
+	if(!isset($_SESSION['username'])){
 		header("location:index.php");
 	}
 	
@@ -26,12 +26,12 @@
 <?php include "header.php";?>
 <html>
 <head>
-<title>Edit Category | - Dashboard</title>
+<title>Shops | - Dashboard</title>
 </head>
 </body>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-        <?php include('public/edit-category-form.php'); ?>
+        <?php include('public/shops-table.php'); ?>
       </div><!-- /.content-wrapper -->
   </body>
 </html>
