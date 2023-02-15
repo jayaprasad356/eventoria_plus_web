@@ -8,8 +8,10 @@
 	$expired = 3600;
 	
 	// if session not set go to login page
-	if(!isset($_SESSION['user'])){
+	if (!isset($_SESSION['seller_id']) && !isset($_SESSION['seller_name'])) {
 		header("location:index.php");
+	} else {
+		$ID = $_SESSION['seller_id'];
 	}
 	
 	// if current time is more than session timeout back to login page
