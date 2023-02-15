@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 15, 2023 at 10:38 AM
+-- Generation Time: Feb 15, 2023 at 01:41 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -61,7 +61,8 @@ INSERT INTO `categories` (`id`, `name`, `image`, `status`) VALUES
 (5, 'Romantic room', 'upload/images/1661265987.8388.jfif', 1),
 (6, 'Kitty party eventoria', 'upload/images/1661266015.51.jpg', 1),
 (7, 'Gaming or fun eventoria', 'upload/images/0198-2022-08-23.jpg', 0),
-(8, 'Outdoor Picnic', 'upload/images/9421-2022-08-23.jpg', 1);
+(8, 'Outdoor Picnic', 'upload/images/9421-2022-08-23.jpg', 1),
+(9, 'Test', 'upload/images/1676455610.2253.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -239,6 +240,33 @@ INSERT INTO `packages` (`id`, `name`, `cover_photo`, `image1`, `image2`, `image3
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `measurement` text DEFAULT NULL,
+  `unit` text DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `pincode` text DEFAULT NULL,
+  `product_image` text DEFAULT NULL,
+  `image1` text DEFAULT NULL,
+  `status` tinyint(4) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `category_id`, `measurement`, `unit`, `price`, `description`, `pincode`, `product_image`, `image1`, `status`) VALUES
+(1, 'Strawberry Cake', 1, '1', 'Kg', '14999.00', 'This is one of the customer\'s liked product from ours', '620008', 'upload/images/2743-2023-02-15.jpg', 'upload/images/5098-2023-02-15.jpg', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `promo_codes`
 --
 
@@ -330,7 +358,7 @@ CREATE TABLE `shops` (
 --
 
 INSERT INTO `shops` (`id`, `name`, `shop_name`, `mobile`, `email`, `password`, `balance`, `logo`, `pincode`, `street`, `state`, `account_number`, `bank_ifsc_code`, `holder_name`, `bank_name`, `latitude`, `longitude`, `status`) VALUES
-(1, 'Divakar A', 'DANGI Store', '7358832695', 'dinesh@gmail.com', 'Dangi@314', '0.00', '1676429139.4261.jpg', '621313', '2/42, Azhagapuri,R.T.Malai(Po)', 'Tamil Nadu', '83550981234', 'SBI0008355', 'Dangi Divakar', 'State Bank Of India', '74.259377', '10.677280', 0),
+(1, 'Divakar A', 'DANGI Store', '7358832695', 'dinesh@gmail.com', 'Dangi@314', '0.00', '1676429139.4261.jpg', '621313', '2/42, Azhagapuri,R.T.Malai(Po)', 'Tamil Nadu', '83550981234', 'SBI0008355', 'Dangi Divakar', 'State Bank Of India', '74.259377', '10.677280', 1),
 (2, 'Lalaa', 'LALA Eventers', '9876322323', 'lara@gmail.com', 'Smsatta@2022', '500.00', '1676433720.2287.jpg', '988399', 'West BANGAL', 'Andhra Pradesh', '83181051987', 'BOI66668318', 'samkarthi', 'Bank of India', '7645', '65.098', 1);
 
 -- --------------------------------------------------------
@@ -389,6 +417,26 @@ INSERT INTO `timeslots` (`id`, `venue_id`, `start_time`, `end_time`, `prices`) V
 (8, 6, '12:30', '14:30', 500),
 (9, 7, '14:29', '14:29', 4500),
 (10, 8, '11:00', '20:00', 1200);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `units`
+--
+
+CREATE TABLE `units` (
+  `id` int(11) NOT NULL,
+  `unit` text DEFAULT NULL,
+  `name` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `units`
+--
+
+INSERT INTO `units` (`id`, `unit`, `name`) VALUES
+(1, 'g', 'Gram'),
+(2, 'Kg', 'Kilogram');
 
 -- --------------------------------------------------------
 
@@ -490,6 +538,12 @@ ALTER TABLE `packages`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `promo_codes`
 --
 ALTER TABLE `promo_codes`
@@ -520,6 +574,12 @@ ALTER TABLE `timeslots`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `units`
+--
+ALTER TABLE `units`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -545,7 +605,7 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `deliver_pincodes`
@@ -578,6 +638,12 @@ ALTER TABLE `packages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `promo_codes`
 --
 ALTER TABLE `promo_codes`
@@ -606,6 +672,12 @@ ALTER TABLE `slides`
 --
 ALTER TABLE `timeslots`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `units`
+--
+ALTER TABLE `units`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`

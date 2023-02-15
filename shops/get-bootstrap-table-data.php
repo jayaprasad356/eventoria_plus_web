@@ -102,7 +102,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'categories') {
     $bulkData['rows'] = $rows;
     print_r(json_encode($bulkData));
 }
-if (isset($_GET['table']) && $_GET['table'] == 'used_vehicles') {
+if (isset($_GET['table']) && $_GET['table'] == 'products') {
 
     $offset = 0;
     $limit = 10;
@@ -121,142 +121,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'used_vehicles') {
 
     if (isset($_GET['search']) && !empty($_GET['search'])) {
         $search = $db->escapeString($fn->xss_clean($_GET['search']));
-        $where .= "WHERE bike_name like '%" . $search . "%' OR model like '%" . $search . "%' OR location like '%" . $search . "%' OR price like '%" . $search . "%'";
-    }
-    if (isset($_GET['sort'])) {
-        $sort = $db->escapeString($_GET['sort']);
-    }
-    if (isset($_GET['order'])) {
-        $order = $db->escapeString($_GET['order']);
-    }
-    $sql = "SELECT COUNT(`id`) as total FROM `used_vehicles` ";
-    $db->sql($sql);
-    $res = $db->getResult();
-    foreach ($res as $row)
-        $total = $row['total'];
-
-    $sql = "SELECT * FROM `used_vehicles` " . $where . " ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
-    $db->sql($sql);
-    $res = $db->getResult();
-
-
-    $bulkData = array();
-    $bulkData['total'] = $total;
-
-    $rows = array();
-    $tempRow = array();
-
-    foreach ($res as $row) {
-
-        $operate = ' <a href="edit-used_vehicle.php?id=' . $row['id'] . '"><i class="fa fa-edit"></i>Edit</a>';
-        $tempRow['id'] = $row['id'];
-        $tempRow['brand'] = $row['brand'];
-        $tempRow['bike_name'] = $row['bike_name'];
-        $tempRow['model'] = $row['model'];
-        $tempRow['km_driven'] = $row['km_driven'];
-        $tempRow['price'] = $row['price'];
-        $tempRow['location'] = $row['location'];
-        $tempRow['color'] = $row['color'];
-        if (!empty($row['image'])) {
-            $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['image'] . "'><img src='../upload/vehicles/". $row['image'] . "' title='" . $row['image'] . "' height='50' /></a>";
-        } else {
-            $tempRow['image'] = 'No Image';
-        }
-        if ($row['status'] == 0)
-           $tempRow['status'] = "<label class='label label-danger'>Not-Available</label>";
-        else
-           $tempRow['status'] = "<label class='label label-success'>Available</label>";
-        $tempRow['operate'] = $operate;
-        $rows[] = $tempRow;
-    }
-    $bulkData['rows'] = $rows;
-    print_r(json_encode($bulkData));
-}
-if (isset($_GET['table']) && $_GET['table'] == 'rental_vehicles') {
-
-    $offset = 0;
-    $limit = 10;
-    $sort = 'id';
-    $order = 'DESC';
-    $where = '';
-    if (isset($_GET['offset']))
-        $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
-    if (isset($_GET['limit']))
-        $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
-
-    if (isset($_GET['sort']))
-        $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
-    if (isset($_GET['order']))
-        $order = $db->escapeString($fn->xss_clean($_GET['order']));
-
-    if (isset($_GET['search']) && !empty($_GET['search'])) {
-        $search = $db->escapeString($fn->xss_clean($_GET['search']));
-        $where .= "WHERE category like '%" . $search . "%' OR brand like '%" . $search . "%' OR bike_name like '%" . $search . "%'";
-    }
-    if (isset($_GET['sort'])) {
-        $sort = $db->escapeString($_GET['sort']);
-    }
-    if (isset($_GET['order'])) {
-        $order = $db->escapeString($_GET['order']);
-    }
-    $sql = "SELECT COUNT(`id`) as total FROM `rental_vehicles` ";
-    $db->sql($sql);
-    $res = $db->getResult();
-    foreach ($res as $row)
-        $total = $row['total'];
-
-    $sql = "SELECT * FROM `rental_vehicles` " . $where . " ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
-    $db->sql($sql);
-    $res = $db->getResult();
-
-
-    $bulkData = array();
-    $bulkData['total'] = $total;
-
-    $rows = array();
-    $tempRow = array();
-
-    foreach ($res as $row) {
-
-        $operate = ' <a href="edit-rental_vehicle.php?id=' . $row['id'] . '"><i class="fa fa-edit"></i>Edit</a>';
-        $tempRow['id'] = $row['id'];
-        $tempRow['rental_category_id'] = $row['rental_category_id'];
-        $tempRow['pincode'] = $row['pincode'];
-        if (!empty($row['image'])) {
-            $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['image'] . "'><img src='../upload/rentals/" . $row['image'] . "' title='" . $row['image'] . "' height='50' /></a>";
-        } else {
-            $tempRow['image'] = 'No Image';
-        }
-        if ($row['status'] == 1)
-            $tempRow['status'] = "<p class='text text-success'>Available</p>";
-        else
-            $tempRow['status'] = "<p class='text text-danger'>Unavailable</p>";
-        $tempRow['operate'] = $operate;
-        $rows[] = $tempRow;
-    }
-    $bulkData['rows'] = $rows;
-    print_r(json_encode($bulkData));
-}
-if (isset($_GET['table']) && $_GET['table'] == 'rental_orders') {
-
-    $offset = 0;
-    $limit = 10;
-    $sort = 'id';
-    $order = 'DESC';
-    $where = '';
-    if (isset($_GET['offset']))
-        $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
-    if (isset($_GET['limit']))
-        $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
-
-    if (isset($_GET['sort']))
-        $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
-    if (isset($_GET['order']))
-        $order = $db->escapeString($fn->xss_clean($_GET['order']));
-
-    if (isset($_GET['search']) && !empty($_GET['search'])) {
-        $search = $db->escapeString($fn->xss_clean($_GET['search']));
-        $where .= "AND ro.mobile like '%" . $search . "%' OR ro.name like '%" . $search . "%' OR ro.start_time like '%" . $search . "%' OR ro.status like '%" . $search . "%' ";
+        $where .= "AND p.name like '%" . $search . "%' OR c.name like '%" . $search . "%' OR p.price like '%" . $search . "%' OR p.pincode like '%" . $search . "%' ";
     }
     if (isset($_GET['sort'])) {
         $sort = $db->escapeString($_GET['sort']);
@@ -265,16 +130,16 @@ if (isset($_GET['table']) && $_GET['table'] == 'rental_orders') {
         $order = $db->escapeString($_GET['order']);
     }
 
-    $join = "LEFT JOIN `rental_vehicles` rv ON ro.rental_vehicles_id = rv.id WHERE ro.id IS NOT NULL ";
+    $join = "LEFT JOIN `categories` c ON p.category_id = c.id WHERE p.id IS NOT NULL ";
 
 
-    $sql = "SELECT COUNT(ro.id) as total FROM `rental_orders` ro $join " . $where . "";
+    $sql = "SELECT COUNT(p.id) as total FROM `products` p $join " . $where . "";
     $db->sql($sql);
     $res = $db->getResult();
     foreach ($res as $row)
         $total = $row['total'];
 
-    $sql = "SELECT ro.id AS id,ro.*,ro.status AS status FROM `rental_orders` ro $join 
+    $sql = "SELECT p.id AS id,p.*,p.status AS status,c.name AS category FROM `products` p $join 
             $where ORDER BY $sort $order LIMIT $offset, $limit";
     $db->sql($sql);
     $res = $db->getResult();
@@ -288,14 +153,25 @@ if (isset($_GET['table']) && $_GET['table'] == 'rental_orders') {
 
     foreach ($res as $row) {
 
-        $operate = '<a href="view-rental_order.php?id=' . $row['id'] . '" class="label label-primary" title="View">View</a>';
-        $tempRow['id'] = $row['id'];
+        $operate = ' <a href="edit-product.php?id=' . $row['id'] . '"><i class="fa fa-edit"></i>Edit</a>';
+        $operate .= ' <a class="text text-danger" href="delete-product.php?id=' . $row['id'] . '"><i class="fa fa-trash"></i>Delete</a>';        $tempRow['id'] = $row['id'];
         $tempRow['name'] = $row['name'];
-        $tempRow['mobile'] = $row['mobile'];
-        $tempRow['rental_vehicles_id'] = $row['rental_vehicles_id'];
-        $tempRow['start_time'] = $row['start_time'];
-        $tempRow['end_time'] = $row['end_time'];
-        $tempRow['status'] = $row['status'];
+        $tempRow['category'] = $row['category'];
+        $tempRow['measurement'] = $row['measurement'];
+        $tempRow['unit'] = $row['unit'];
+        $tempRow['price'] = $row['price'];
+        $tempRow['pincode'] = $row['pincode'];
+        if(!empty($row['product_image'])){
+            $tempRow['product_image'] = "<a data-lightbox='category' href='" . $row['product_image'] . "' data-caption='" . $row['name'] . "'><img src='../" . $row['product_image'] . "' title='" . $row['name'] . "' height='50' /></a>";
+
+        }else{
+            $tempRow['product_image'] = 'No Image';
+
+        }
+        if ($row['status'] == 0)
+              $tempRow['status'] = "<p class='text text-danger'>Unavailable</p>";
+        else if ($row['status'] == 1)
+              $tempRow['status'] = "<p class='text text-success'>Available</p>";   
         $tempRow['operate'] = $operate;
         $rows[] = $tempRow;
     }
