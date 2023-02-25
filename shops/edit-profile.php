@@ -80,16 +80,22 @@ include "header.php"; ?>
                                 <input type="hidden" id="update_id" name="update_id" required value="<?= $ID; ?>">
                                 <input type="hidden" id="old_logo" name="old_logo"  value="<?= "../../upload/shops/".$res[0]['logo']; ?>">
                                 <div class="row">
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-4">
                                         <div class="form-group">
                                             <label for="">Name</label><i class="text-danger asterik">*</i>
                                             <input type="text" class="form-control" name="name" id="name" value="<?= $res[0]['name']; ?>">
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-4">
                                         <div class="form-group">
                                             <label for="">Shop Name</label><i class="text-danger asterik">*</i>
                                             <input type="text" class="form-control" name="shop_name" id="shop_name" value="<?= $res[0]['shop_name']; ?>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label for="">Joined Date</label>
+                                            <input type="text" class="form-control" name="joined_date" id="joined_date" value="<?= $res[0]['joined_date']; ?>" readonly>
                                         </div>
                                     </div>
                                 </div>

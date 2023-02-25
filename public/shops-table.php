@@ -15,6 +15,23 @@
             <!-- Left col -->
             <div class="col-xs-12">
                 <div class="box">
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <h4 class="box-title">Filter by Joined Date </h4>
+                                <input type="date" class="form-control" id="date" name="date" value="<?php echo (isset($_GET['date'])) ? $_GET['date'] : "" ?>"></input>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <h4 class="box-title">Filter by Status</h4>
+                                <select class="form-control" id="status" name="status">
+                                    <option value="">--select--</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">Deactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>
 
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
@@ -32,6 +49,7 @@
                                     <th data-field="state" data-sortable="true">State</th>
                                     <th data-field="balance" data-sortable="true">Balance</th>
                                     <th data-field="logo">Logo</th>
+                                    <th data-field="joined_date" data-sortable="true" >Joined Date</th>
                                     <th data-field="status" data-sortable="true" >Status</th>
                                     <th data-field="operate">Action</th>
                     
@@ -50,18 +68,24 @@
     </section>
 
 <script>
-    $('#seller_id').on('change', function() {
-        $('#products_table').bootstrapTable('refresh');
+    $('#date').on('change', function() {
+            id = $('#date').val();
+            $('#users_table').bootstrapTable('refresh');
     });
-    $('#community').on('change', function() {
-        $('#users_table').bootstrapTable('refresh');
+    $('#status').on('change', function() {
+            id = $('#status').val();
+            $('#users_table').bootstrapTable('refresh');
     });
+    // $('#community').on('change', function() {
+    //     $('#users_table').bootstrapTable('refresh');
+    // });
 
     function queryParams(p) {
         return {
-            "category_id": $('#category_id').val(),
-            "seller_id": $('#seller_id').val(),
-            "community": $('#community').val(),
+            "date": $('#date').val(),
+            "status": $('#status').val(),
+            // "seller_id": $('#seller_id').val(),
+            // "community": $('#community').val(),
             limit: p.limit,
             sort: p.sort,
             order: p.order,

@@ -177,6 +177,16 @@ $logo =$res[0]['logo'];
                             <li><a href="products.php"><i class="fa fa-sliders"></i> Manage Products</a></li>
                         </ul>
                     </li>
+                    <li class="treeview">
+                        <a href="orders.php">
+                            <i class="fa fa-shopping-cart"></i> <span>Orders</span>
+                        </a>
+                    </li>
+                    <li class="treeview">
+                        <a href="info.php">
+                            <i class="fa fa-info"></i> <span>Terms & Conditions</span>
+                        </a>
+                    </li>
                 </ul>
             </section>
             <!-- /.sidebar -->

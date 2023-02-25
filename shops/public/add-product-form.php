@@ -5,17 +5,18 @@ $function = new functions;
 include_once('../includes/custom-functions.php');
 $fn = new custom_functions;
 
-$sql_query = "SELECT id, name FROM category ORDER BY id ASC";
+$sql_query = "SELECT id, name FROM categories ORDER BY id ASC";
 $db->sql($sql_query);
 
 $res = $db->getResult();
-$sql_query = "SELECT value FROM settings WHERE variable = 'Currency'";
-$pincode_ids_exc = "";
-$db->sql($sql_query);
-$res_cur = $db->getResult();
+// $sql_query = "SELECT value FROM settings WHERE variable = 'Currency'";
+// $pincode_ids_exc = "";
+// $db->sql($sql_query);
+// $res_cur = $db->getResult();
 
 if (isset($_POST['btnAdd'])) {
         $error = array();
+        $ID = $_SESSION['seller_id'];
         $name = $db->escapeString($fn->xss_clean($_POST['name']));
         $category = $db->escapeString($fn->xss_clean($_POST['category']));
         $price = $db->escapeString($fn->xss_clean($_POST['price']));
@@ -104,7 +105,7 @@ if (isset($_POST['btnAdd'])) {
                 $upload_image1 = 'upload/images/' . $image1;
 
             }
-            $sql = "INSERT INTO products (name,category_id,measurement,unit,price,description,pincode,product_image,image1,status) VALUES('$name','$category','$measurement','$unit','$price','$description','$pincode','$upload_image','$upload_image1',1)";
+            $sql = "INSERT INTO products (name,seller_id,category_id,measurement,unit,price,description,pincode,product_image,image1,status) VALUES('$name','$ID','$category','$measurement','$unit','$price','$description','$pincode','$upload_image','$upload_image1',1)";
             $db->sql($sql);
             $result = $db->getResult();
             if (!empty($result)) {

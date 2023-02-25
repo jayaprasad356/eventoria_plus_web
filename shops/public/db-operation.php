@@ -7,13 +7,13 @@ session_start();
 
 include('../../includes/variables.php');
 include_once('../../includes/custom-functions.php');
-
 include_once('../../includes/functions.php');
 $function = new functions;
 $fn = new custom_functions;
 
 
 if (isset($_POST['add_shop']) && $_POST['add_shop'] == 1) {
+    $date=date('Y-m-d');
     $name = $db->escapeString($fn->xss_clean($_POST['name']));
     $email = $db->escapeString($fn->xss_clean($_POST['email']));
     $mobile = $db->escapeString($fn->xss_clean($_POST['mobile']));
@@ -58,7 +58,7 @@ if (isset($_POST['add_shop']) && $_POST['add_shop'] == 1) {
         }
     }
   
-    $sql = "INSERT INTO `shops` (name,shop_name,email,mobile,password,pincode,street,state,latitude,longitude,account_number,bank_ifsc_code,holder_name,bank_name,logo,balance,status)VALUES('$name','$shop_name','$email','$mobile','$password','$pincode','$street','$state','$latitude','$longitude','$account_number','$bank_ifsc_code','$holder_name','$bank_name','$filename','$balance',0)";
+    $sql = "INSERT INTO `shops` (name,shop_name,email,mobile,password,pincode,street,state,latitude,longitude,account_number,bank_ifsc_code,holder_name,bank_name,logo,balance,joined_date,status)VALUES('$name','$shop_name','$email','$mobile','$password','$pincode','$street','$state','$latitude','$longitude','$account_number','$bank_ifsc_code','$holder_name','$bank_name','$filename','$balance','$date',0)";
     if ($db->sql($sql)) {
         echo '<label class="alert alert-success">Shop Added Successfully!</label>';
 

@@ -38,7 +38,7 @@ include "header.php";
 </head>
 <body>
  <!-- Content Wrapper. Contains page content -->
- <div class="content-wrapper">
+    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>Home</h1>
@@ -48,58 +48,102 @@ include "header.php";
                 </li>
             </ol>
         </section>
-        <!-- <section class="content">
-            <div class="row">
-                <div class="col-md-4 col-xs-6">
-                    <div class="small-box bg-aqua">
-                        <div class="inner">
-                            <h3><?php
-                            $sql = "SELECT * FROM rental_vehicles";
-                            $db->sql($sql);
-                            $res = $db->getResult();
-                            $num = $db->numRows($res);
-                            echo $num;
-                             ?></h3>
-                            <p>Rental Vehicles</p>
-                        </div>
-                        <div class="icon"><i class="fa fa-bus"></i></div>
-                        <a href="rental_vehicles.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-3 col-xs-6">
+        <section class="content">
+            <h4>Welcome
+                <?php
+                $sql="SELECT * FROM shops WHERE id='$ID'";
+                $db->sql($sql);
+                $res=$db->getResult();
+                echo $res[0]['shop_name'];
+            ?></h4>
+            <br>
+            <div class="row">   
+                <div class="col-lg-4 col-xs-6">
                     <div class="small-box bg-yellow">
                         <div class="inner">
-                        <h3><?php
-                            $sql = "SELECT * FROM used_vehicles";
+                            <h3><?php                           
+                            $sql = "SELECT * FROM users";
                             $db->sql($sql);
                             $res = $db->getResult();
                             $num = $db->numRows($res);
-                            echo $num;
-                             ?></h3>
-                            <p>Used Vehicles</p>
+                            echo $num; ?></h3>
+                            
+                            <p>Users</p>
                         </div>
-                        <div class="icon"><i class="fa fa-motorcycle"></i></div>
-                        <a href="used_vehicles.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <div class="icon"><i class="fa fa-users"></i></div>
+                        <a href="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-xs-6">
+                <!-- <div class="col-lg-4 col-xs-6">
                     <div class="small-box bg-green">
                         <div class="inner">
-                        <h3><?php
-                            $sql = "SELECT * FROM rental_orders";
+                            <h3><?php                           
+                            $sql = "SELECT * FROM products";
                             $db->sql($sql);
                             $res = $db->getResult();
                             $num = $db->numRows($res);
-                            echo $num;
-                             ?></h3>
-                            <p>Rental Orders</p>
+                            echo $num; ?></h3>
+                            
+                            <p>Total Products</p>
                         </div>
-                        <div class="icon"><i class="fa fa-shopping-cart"></i></div>
-                        <a href="rental_orders.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <div class="icon"><i class="fa fa-cube"></i></div>
+                        <a href="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div> -->
+                <div class="col-lg-4 col-xs-6">
+                    <div class="small-box bg-purple">
+                        <div class="inner">
+                            <h3><?php                           
+                            $sql = "SELECT * FROM products WHERE seller_id='$ID'";
+                            $db->sql($sql);
+                            $res = $db->getResult();
+                            $num = $db->numRows($res);
+                            echo $num; ?></h3>
+                            
+                            <p>My Products</p>
+                        </div>
+                        <div class="icon"><i class="fa fa-circle"></i></div>
+                        <a href="products.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
-        </section> -->
+            <div class="row">
+                <div class="col-lg-4 col-xs-6">
+                    <div class="small-box bg-blue">
+                        <div class="inner">
+                            <h3><?php                           
+                            $sql = "SELECT * FROM vendor_orders WHERE seller_id='$ID'";
+                            $db->sql($sql);
+                            $res = $db->getResult();
+                            $num = $db->numRows($res);
+                            echo $num; ?></h3>
+                            
+                            <p>Orders</p>
+                        </div>
+                        <div class="icon"><i class="fa fa-shopping-cart"></i></div>
+                        <a href="orders.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xs-6">
+                    <div class="small-box bg-red">
+                        <div class="inner">
+                            <h3><?php                           
+                            $sql = "SELECT SUM(price) AS amount FROM vendor_orders WHERE status=1 AND seller_id='$ID'";
+                            $db->sql($sql);
+                            $res = $db->getResult();
+                            $totalamount = $res[0]['amount'];
+                            echo "Rs.".$totalamount;
+                            ?>
+                            </h3>
+                            <p>Sales</p>
+                        </div>
+                        <div class="icon"><i class="fa fa-money"></i></div>
+                        <a href="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
     </div>
     <?php include "footer.php"; ?>
 </body>

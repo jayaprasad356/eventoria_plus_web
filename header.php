@@ -124,7 +124,7 @@ $db->sql("SET NAMES 'utf8'");
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="./images/logo.png" class="user-image" alt="User Image">
-                                   
+                                      admin
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
@@ -136,11 +136,11 @@ $db->sql("SET NAMES 'utf8'");
                                         </p>
                                     </li>
                                     <li class="user-footer">
-                                        <!-- <div class="pull-left invisible">
-                                            <a href="admin-profile.php" class="btn btn-default btn-flat"> Edit Profile</a>
-                                        </div> -->
                                         <div class="pull-left">
-                                            <a href="logout.php" class="btn btn-primary btn-flat">Log out</a>
+                                            <a href="settings.php" class="btn btn-primary btn-flat"><i class="fa fa-gear"></i>Settings</a>
+                                        </div>
+                                        <div class="pull-right">
+                                            <a href="logout.php" class="btn btn-primary btn-flat"><i class="fa fa-arrow-right"></i>Log out</a>
                                         </div>
                                     </li>
                                     <!-- Menu Body -->
@@ -184,15 +184,20 @@ $db->sql("SET NAMES 'utf8'");
                         <i class="fa fa-angle-right pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="add-package.php"><i class="fa fa-sliders"></i> Add Package</a></li>
+                        <li><a href="add-package.php"><i class="fa fa-plus"></i> Add Package</a></li>
                         <li><a href="packages.php"><i class="fa fa-sliders"></i> Manage Packages</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
-                    <a href="shops.php">
+                    <a href="#">
                         <i class="fa fa-building"></i>
                         <span>Shops</span>
+                        <i class="fa fa-angle-right pull-right"></i>
                     </a>
+                    <ul class="treeview-menu">
+                        <li><a href="add-shop.php"><i class="fa fa-plus"></i> Add Shop</a></li>
+                        <li><a href="shops.php"><i class="fa fa-sliders"></i> Manage Shops</a></li>
+                    </ul>
                 </li>
                 <li class="treeview">
                     <a href="#">
@@ -240,6 +245,7 @@ $db->sql("SET NAMES 'utf8'");
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="orders.php"><i class="fa fa-sliders"></i> Manage Orders</a></li>
+                        <li><a href="vendor_orders.php"><i class="fa fa-shopping-cart"></i> Vendor Orders</a></li>
                     </ul>
                 </li>
                 <li class="treeview">

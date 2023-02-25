@@ -74,7 +74,7 @@ if (isset($_POST['btnEdit'])) {
 //image1
             if ($_FILES['image1']['size'] != 0 && $_FILES['image1']['error'] == 0 && !empty($_FILES['image1']))
             {
-				$old_image = $db->escapeString($_POST['old_image']);
+				$old_image1 = $db->escapeString($_POST['old_image1']);
 				$extension = pathinfo($_FILES["image1"]["name"])['extension'];
                 $new_image = $ID . "." . $extension;
                 
@@ -145,8 +145,8 @@ $res = $db->getResult();
                 <!-- form start -->
                 <form id='edit_package_form' method="post"  enctype="multipart/form-data">
                     <div class="box-body">
-                        <input type="hidden" id="old_image" name="old_image"  value="<?= "../".$res[0]['cover_photo']; ?>">
-                        <input type="hidden" id="old_image1" name="old_image"  value="<?= "../".$res[0]['image1']; ?>">
+                        <input type="hidden" id="old_image" name="old_image"  value="<?= "../" .$res[0]['product_image']; ?>">
+                        <input type="hidden" id="old_image1" name="old_image1"  value="<?= "../" .$res[0]['image1']; ?>">
                        
                         <div class="row">
                             <div class="form-group">

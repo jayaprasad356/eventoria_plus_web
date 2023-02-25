@@ -44,8 +44,7 @@ include "header.php";
 
         </section>
         <section class="content">
-            <div class="row">
-                
+            <div class="row">   
                 <div class="col-lg-4 col-xs-6">
                     <div class="small-box bg-yellow">
                         <div class="inner">
@@ -79,11 +78,9 @@ include "header.php";
                     </div>
                 </div>
                 
-            </div>
-            <div class="row">
-                
+
                 <div class="col-lg-4 col-xs-6">
-                    <div class="small-box bg-red">
+                    <div class="small-box bg-purple">
                         <div class="inner">
                             <h3><?php                           
                             $sql = "SELECT * FROM packages";
@@ -114,8 +111,56 @@ include "header.php";
                         <a href="venues.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
+                <div class="col-lg-4 col-xs-6">
+                    <div class="small-box bg-red">
+                        <div class="inner">
+                            <h3><?php                           
+                            $sql = "SELECT * FROM shops";
+                            $db->sql($sql);
+                            $res = $db->getResult();
+                            $num = $db->numRows($res);
+                            echo $num; ?></h3>
+                            
+                            <p>Shops</p>
+                        </div>
+                        <div class="icon"><i class="fa fa-building"></i></div>
+                        <a href="shops.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xs-6">
+                    <div class="small-box bg-teal">
+                        <div class="inner">
+                            <h3><?php                           
+                            $sql = "SELECT * FROM products";
+                            $db->sql($sql);
+                            $res = $db->getResult();
+                            $num = $db->numRows($res);
+                            echo $num; ?></h3>
+                            
+                            <p>Products</p>
+                        </div>
+                        <!-- <div class="icon"><i class="fa fa-circle"></i></div> -->
+                        <a href="products.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xs-6">
+                    <div class="small-box bg-orange">
+                        <div class="inner">
+                            <h3><?php                           
+                            $sql = "SELECT SUM(price) AS amount FROM vendor_orders WHERE status=1";
+                            $db->sql($sql);
+                            $res = $db->getResult();
+                            $totalamount = $res[0]['amount'];
+                            echo "Rs.".$totalamount;
+                            ?>
+                            </h3>
+                            <p>Vendor Sales</p>
+                        </div>
+                        <div class="icon"><i class="fa fa-money"></i></div>
+                        <a href="vendor_orders.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
                 
-            </div>
             
         </section>
         
