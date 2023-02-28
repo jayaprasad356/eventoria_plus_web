@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2023 at 11:59 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Feb 28, 2023 at 08:39 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,7 +34,7 @@ CREATE TABLE `address` (
   `district` text DEFAULT NULL,
   `pincode` text DEFAULT NULL,
   `state` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `address`
@@ -54,7 +54,7 @@ CREATE TABLE `categories` (
   `name` text DEFAULT NULL,
   `image` text DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `categories`
@@ -74,6 +74,39 @@ INSERT INTO `categories` (`id`, `name`, `image`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `coupon_codes`
+--
+
+CREATE TABLE `coupon_codes` (
+  `id` int(11) NOT NULL,
+  `seller_id` int(11) DEFAULT NULL,
+  `category_id` int(11) NOT NULL DEFAULT 0,
+  `coupon_code` varchar(28) NOT NULL,
+  `message` varchar(512) NOT NULL,
+  `start_date` varchar(28) NOT NULL,
+  `end_date` varchar(28) NOT NULL,
+  `no_of_users` int(11) NOT NULL,
+  `minimum_order_amount` int(11) NOT NULL,
+  `discount` int(11) NOT NULL,
+  `discount_type` varchar(28) NOT NULL,
+  `max_discount_amount` int(11) NOT NULL,
+  `repeat_usage` tinyint(4) NOT NULL,
+  `no_of_repeat_usage` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `coupon_codes`
+--
+
+INSERT INTO `coupon_codes` (`id`, `seller_id`, `category_id`, `coupon_code`, `message`, `start_date`, `end_date`, `no_of_users`, `minimum_order_amount`, `discount`, `discount_type`, `max_discount_amount`, `repeat_usage`, `no_of_repeat_usage`, `status`, `type`, `date_created`) VALUES
+(1, 1, 1, 'ggrg435', 'HRHR', '2023-02-15', '2023-03-02', 5, 6655, 3, 'percentage', 45, 0, 0, 1, 'public', '2023-02-28 07:22:12');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `deliver_pincodes`
 --
 
@@ -82,7 +115,7 @@ CREATE TABLE `deliver_pincodes` (
   `pincode` text DEFAULT NULL,
   `state` varchar(255) DEFAULT NULL,
   `district` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `deliver_pincodes`
@@ -101,7 +134,7 @@ INSERT INTO `deliver_pincodes` (`id`, `pincode`, `state`, `district`) VALUES
 CREATE TABLE `months` (
   `id` int(11) NOT NULL,
   `month` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `months`
@@ -131,7 +164,7 @@ CREATE TABLE `notifications` (
   `id` int(11) NOT NULL,
   `title` text DEFAULT NULL,
   `description` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `notifications`
@@ -164,7 +197,7 @@ CREATE TABLE `orders` (
   `end_time` text DEFAULT NULL,
   `pincode` varchar(255) DEFAULT NULL,
   `status` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `orders`
@@ -190,7 +223,7 @@ CREATE TABLE `orders_timeslot` (
   `start_time` varchar(100) DEFAULT NULL,
   `end_time` varchar(100) DEFAULT NULL,
   `price` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `orders_timeslot`
@@ -260,7 +293,7 @@ CREATE TABLE `packages` (
   `description` text DEFAULT NULL,
   `pincode` text DEFAULT NULL,
   `status` tinyint(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `packages`
@@ -292,7 +325,7 @@ CREATE TABLE `products` (
   `product_image` text DEFAULT NULL,
   `image1` text DEFAULT NULL,
   `status` tinyint(4) DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `products`
@@ -324,7 +357,7 @@ CREATE TABLE `promo_codes` (
   `status` tinyint(4) NOT NULL,
   `type` varchar(255) DEFAULT NULL,
   `date_created` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `promo_codes`
@@ -355,7 +388,7 @@ CREATE TABLE `settings` (
   `paytm_merchant_key` varchar(255) DEFAULT NULL,
   `paytm_mode` varchar(255) DEFAULT NULL,
   `terms_conditions` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `settings`
@@ -372,25 +405,25 @@ INSERT INTO `settings` (`id`, `whatsapp`, `telegram`, `instagram`, `paytm_paymen
 
 CREATE TABLE `shops` (
   `id` int(11) NOT NULL,
-  `name` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `shop_name` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `name` text CHARACTER SET utf8 DEFAULT NULL,
+  `shop_name` text CHARACTER SET utf8 DEFAULT NULL,
   `mobile` text DEFAULT NULL,
-  `email` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `password` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `email` text CHARACTER SET utf8 DEFAULT NULL,
+  `password` text CHARACTER SET utf8 DEFAULT NULL,
   `balance` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `logo` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `logo` text CHARACTER SET utf8 DEFAULT NULL,
   `pincode` text DEFAULT NULL,
-  `street` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `state` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `account_number` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `bank_ifsc_code` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `holder_name` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `bank_name` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `latitude` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `longitude` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `street` text CHARACTER SET utf8 DEFAULT NULL,
+  `state` text CHARACTER SET utf8 DEFAULT NULL,
+  `account_number` text CHARACTER SET utf8 DEFAULT NULL,
+  `bank_ifsc_code` text CHARACTER SET utf8 DEFAULT NULL,
+  `holder_name` text CHARACTER SET utf8 DEFAULT NULL,
+  `bank_name` text CHARACTER SET utf8 DEFAULT NULL,
+  `latitude` varchar(256) CHARACTER SET utf8 DEFAULT NULL,
+  `longitude` varchar(256) CHARACTER SET utf8 DEFAULT NULL,
   `joined_date` text DEFAULT NULL,
   `status` tinyint(2) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `shops`
@@ -415,7 +448,7 @@ CREATE TABLE `slides` (
   `status` tinyint(4) DEFAULT NULL,
   `link` text DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `slides`
@@ -439,7 +472,7 @@ CREATE TABLE `timeslots` (
   `start_time` text DEFAULT NULL,
   `end_time` text DEFAULT NULL,
   `prices` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `timeslots`
@@ -467,7 +500,7 @@ CREATE TABLE `units` (
   `id` int(11) NOT NULL,
   `unit` text DEFAULT NULL,
   `name` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `units`
@@ -488,7 +521,7 @@ CREATE TABLE `users` (
   `name` text DEFAULT NULL,
   `mobile` text DEFAULT NULL,
   `pincode` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
@@ -515,7 +548,7 @@ CREATE TABLE `vendor_orders` (
   `price` decimal(10,2) DEFAULT NULL,
   `order_date` text DEFAULT NULL,
   `status` tinyint(4) DEFAULT 0 COMMENT 'Booked-0 | Confirmed-1 |\r\nCompleted -2 |\r\nCancelled-3'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `vendor_orders`
@@ -542,7 +575,7 @@ CREATE TABLE `venues` (
   `image4` text DEFAULT NULL,
   `pincode` text DEFAULT NULL,
   `description` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `venues`
@@ -564,7 +597,7 @@ INSERT INTO `venues` (`id`, `name`, `address`, `categories`, `cover_image`, `ima
 CREATE TABLE `years` (
   `id` int(11) NOT NULL,
   `year` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `years`
@@ -592,6 +625,12 @@ ALTER TABLE `address`
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `coupon_codes`
+--
+ALTER TABLE `coupon_codes`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -711,6 +750,12 @@ ALTER TABLE `address`
 --
 ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `coupon_codes`
+--
+ALTER TABLE `coupon_codes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `deliver_pincodes`

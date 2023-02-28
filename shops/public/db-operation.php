@@ -157,3 +157,86 @@ if (isset($_POST['update_shop'])  && !empty($_POST['update_shop'])) {
         echo "<label class='alert alert-danger'>Some Error Occurred! Please Try Again.</label>";
     }
 }
+
+
+//coupon codes
+if (isset($_POST['add_coupon_code']) && $_POST['add_coupon_code'] == 1) {
+    // if (!checkadmin($auth_username)) {
+    //     echo "<label class='alert alert-danger'>Access denied - You are not authorized to access this page.</label>";
+    //     return false;
+    // }
+    // if ($permissions['coupon_codes']['create'] == 0) {
+    //     echo '<label class="alert alert-danger">You have no permission to create coupon code</label>';
+    //     return false;
+    // }
+    $seller_id = $_SESSION['seller_id'];
+    $coupon_code = $db->escapeString($fn->xss_clean($_POST['coupon_code']));
+    $type = $db->escapeString($fn->xss_clean($_POST['type']));
+    $message = $db->escapeString($fn->xss_clean($_POST['message']));
+    $category = $db->escapeString($fn->xss_clean($_POST['category']));
+    $start_date = $db->escapeString($fn->xss_clean($_POST['start_date']));
+    $end_date = $db->escapeString($fn->xss_clean($_POST['end_date']));
+    $no_of_users = $db->escapeString($fn->xss_clean($_POST['no_of_users']));
+    $minimum_order_amount = $db->escapeString($fn->xss_clean($_POST['minimum_order_amount']));
+    $discount = $db->escapeString($fn->xss_clean($_POST['discount']));
+    $discount_type = $db->escapeString($fn->xss_clean($_POST['discount_type']));
+    $max_discount_amount = $db->escapeString($fn->xss_clean($_POST['max_discount_amount']));
+    $repeat_usage = $db->escapeString($fn->xss_clean($_POST['repeat_usage']));
+    $no_of_repeat_usage = !empty($_POST['repeat_usage']) ? $db->escapeString($fn->xss_clean($_POST['no_of_repeat_usage'])) : 0;
+    $status = $db->escapeString($fn->xss_clean($_POST['status']));
+
+    $sql = "INSERT INTO coupon_codes (seller_id,coupon_code,message,category_id,start_date,end_date,no_of_users,minimum_order_amount,discount,discount_type,max_discount_amount,repeat_usage,no_of_repeat_usage,status,type)
+                        VALUES('$seller_id','$coupon_code', '$message','$category', '$start_date', '$end_date','$no_of_users','$minimum_order_amount','$discount','$discount_type','$max_discount_amount','$repeat_usage','$no_of_repeat_usage','$status','$type')";
+    if ($db->sql($sql)) {
+        echo '<label class="alert alert-success">Coupon Code Added Successfully!</label>';
+    } else {
+        echo '<label class="alert alert-danger">Some Error Occrred! please try again.</label>';
+    }
+}
+if (isset($_POST['update_coupon_code']) && $_POST['update_coupon_code'] == 1) {
+    // if (!checkadmin($auth_username)) {
+    //     echo "<label class='alert alert-danger'>Access denied - You are not authorized to access this page.</label>";
+    //     return false;
+    // }
+    // if ($permissions['coupon_codes']['update'] == 0) {
+    //     echo '<label class="alert alert-danger">You have no permission to update coupon code</label>';
+    //     return false;
+    // }
+    $id = $db->escapeString($fn->xss_clean($_POST['coupon_code_id']));
+    $coupon_code = $db->escapeString($fn->xss_clean($_POST['update_coupon']));
+    $message = $db->escapeString($fn->xss_clean($_POST['update_message']));
+    $category = $db->escapeString($fn->xss_clean($_POST['update_category']));
+    $start_date = $db->escapeString($fn->xss_clean($_POST['update_start_date']));
+    $end_date = $db->escapeString($fn->xss_clean($_POST['update_end_date']));
+    $no_of_users = $db->escapeString($fn->xss_clean($_POST['update_no_of_users']));
+    $minimum_order_amount = $db->escapeString($fn->xss_clean($_POST['update_minimum_order_amount']));
+    $discount = $db->escapeString($fn->xss_clean($_POST['update_discount']));
+    $discount_type = $db->escapeString($fn->xss_clean($_POST['update_discount_type']));
+    $max_discount_amount = $db->escapeString($fn->xss_clean($_POST['update_max_discount_amount']));
+    $repeat_usage = $db->escapeString($fn->xss_clean($_POST['update_repeat_usage']));
+    $no_of_repeat_usage = $repeat_usage == 0 ? '0' : $db->escapeString($fn->xss_clean($_POST['update_no_of_repeat_usage']));
+    $status = $db->escapeString($fn->xss_clean($_POST['status']));
+    $type = $db->escapeString($fn->xss_clean($_POST['update_type']));
+
+
+    $sql = "UPDATE coupon_codes set `coupon_code`='" . $coupon_code . "',`message`='" . $message . "',`category_id`='" . $category . "',`start_date`='" . $start_date . "',`end_date`='" . $end_date . "',`no_of_users`='" . $no_of_users . "',`minimum_order_amount`='" . $minimum_order_amount . "',`discount`='" . $discount . "',`discount_type`='" . $discount_type . "',`max_discount_amount`='" . $max_discount_amount . "',`repeat_usage`='" . $repeat_usage . "',`no_of_repeat_usage`='" . $no_of_repeat_usage . "',`status`='" . $status . "',`type`='" . $type . "' where `id`=" . $id;
+
+    if ($db->sql($sql)) {
+        echo "<label class='alert alert-success'>Coupon Code Updated Successfully.</label>";
+    } else {
+        echo "<label class='alert alert-danger'>Some Error Occurred! Please Try Again.</label>";
+    }
+}
+if (isset($_GET['delete_coupon_code']) && $_GET['delete_coupon_code'] == 1) {
+    // if ($permissions['coupon_codes']['delete'] == 0) {
+    //     echo 2;
+    //     return false;
+    // }
+    $id = $db->escapeString($fn->xss_clean($_GET['id']));
+    $sql = "DELETE FROM `coupon_codes` WHERE id=" . $id;
+    if ($db->sql($sql)) {
+        echo 0;
+    } else {
+        echo 1;
+    }
+}

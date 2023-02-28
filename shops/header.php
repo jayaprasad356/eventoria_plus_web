@@ -183,6 +183,12 @@ $logo =$res[0]['logo'];
                         </a>
                     </li>
                     <li class="treeview">
+                        <a href="coupon-code.php">
+                            <i class="fa fa-gift"></i>
+                            <span>Coupon code</span>
+                        </a>
+                    </li>
+                    <li class="treeview">
                         <a href="info.php">
                             <i class="fa fa-info"></i> <span>Terms & Conditions</span>
                         </a>
