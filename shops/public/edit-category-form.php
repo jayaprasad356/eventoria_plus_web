@@ -48,11 +48,11 @@ if (isset($_POST['btnEdit'])) {
 					unlink($old_image);
 				}
 				$upload_image = 'upload/images/' . $filename;
-				$sql = "UPDATE categories SET `image`='" . $upload_image . "' WHERE `id`=" . $ID;
+				$sql = "UPDATE vendor_categories SET `image`='" . $upload_image . "' WHERE `id`=" . $ID;
 				$db->sql($sql);
 			}
 			
-             $sql_query = "UPDATE categories SET name='$name',status='$status' WHERE id =  $ID";
+             $sql_query = "UPDATE vendor_categories SET name='$name',status='$status' WHERE id =  $ID";
 			 $db->sql($sql_query);
              $update_result = $db->getResult();
 			if (!empty($update_result)) {
@@ -74,7 +74,7 @@ if (isset($_POST['btnEdit'])) {
 // create array variable to store previous data
 $data = array();
 
-$sql_query = "SELECT * FROM categories WHERE id =" . $ID;
+$sql_query = "SELECT * FROM vendor_categories WHERE id =" . $ID;
 $db->sql($sql_query);
 $res = $db->getResult();
 

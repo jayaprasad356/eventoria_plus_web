@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2023 at 08:39 AM
+-- Generation Time: Mar 02, 2023 at 12:39 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -535,6 +535,28 @@ INSERT INTO `users` (`id`, `name`, `mobile`, `pincode`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `vendor_categories`
+--
+
+CREATE TABLE `vendor_categories` (
+  `id` int(11) NOT NULL,
+  `seller_id` int(11) DEFAULT NULL,
+  `name` text DEFAULT NULL,
+  `image` text DEFAULT NULL,
+  `status` tinyint(4) DEFAULT 0 COMMENT 'Inactive -0 |\r\nActive - 1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `vendor_categories`
+--
+
+INSERT INTO `vendor_categories` (`id`, `seller_id`, `name`, `image`, `status`) VALUES
+(1, 1, 'Cakes', 'upload/images/1676455610.2253.jpg', 1),
+(2, 2, 'Snacks', 'upload/images/4351-2023-03-02.jpg', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `vendor_orders`
 --
 
@@ -718,6 +740,12 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `vendor_categories`
+--
+ALTER TABLE `vendor_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `vendor_orders`
 --
 ALTER TABLE `vendor_orders`
@@ -840,6 +868,12 @@ ALTER TABLE `units`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `vendor_categories`
+--
+ALTER TABLE `vendor_categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `vendor_orders`

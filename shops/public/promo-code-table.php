@@ -7,6 +7,8 @@ $db->sql("SET NAMES 'utf8'");
 
 include('../includes/variables.php');
 include_once('../includes/custom-functions.php');
+$seller_id = $_SESSION['seller_id'];
+
 
 // $fn = new custom_functions;
 // $config = $fn->get_configurations();
@@ -46,7 +48,7 @@ include_once('../includes/custom-functions.php');
                 <select id='category' name="category" class='form-control'>
                    <option value="0">All</option>
                     <?php
-                    $sql = "SELECT * FROM `categories`WHERE status=1";
+                    $sql = "SELECT * FROM `vendor_categories`WHERE status=1 AND seller_id='$seller_id'";
                     $db->sql($sql);
                     $result = $db->getResult();
                     foreach ($result as $value) {
@@ -197,7 +199,7 @@ include_once('../includes/custom-functions.php');
                 <select id="update_category" name="update_category" class='form-control'>
                   <option value="0">All</option>
                             <?php
-                            $sql = "SELECT * FROM `categories`WHERE status=1";
+                            $sql = "SELECT * FROM `vendor_categories` WHERE status=1 AND seller_id='$seller_id'";
                             $db->sql($sql);
                             $result = $db->getResult();
                             foreach ($result as $value) {

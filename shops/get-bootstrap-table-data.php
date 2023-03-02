@@ -56,7 +56,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'categories') {
 
     if (isset($_GET['search']) && !empty($_GET['search'])) {
         $search = $db->escapeString($fn->xss_clean($_GET['search']));
-        $where .= "WHERE  name like '%" . $search . "%'";
+        $where .= "AND  name like '%" . $search . "%' ";
     }
     if (isset($_GET['sort'])){
         $sort = $db->escapeString($_GET['sort']);
@@ -66,14 +66,15 @@ if (isset($_GET['table']) && $_GET['table'] == 'categories') {
         $order = $db->escapeString($_GET['order']);
 
     }
-    
-    $sql = "SELECT COUNT(`id`) as total FROM `categories` ";
+    $join = "WHERE id IS NOT NULL AND seller_id = $id "; 
+
+    $sql = "SELECT COUNT(`id`) as total FROM `vendor_categories` $join " . $where . "";
     $db->sql($sql);
     $res = $db->getResult();
     foreach ($res as $row)
         $total = $row['total'];
 
-    $sql = "SELECT * FROM `categories`". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
+    $sql = "SELECT * FROM `vendor_categories` $join ". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
     $db->sql($sql);
     $res = $db->getResult();
 
@@ -97,8 +98,11 @@ if (isset($_GET['table']) && $_GET['table'] == 'categories') {
             $tempRow['image'] = 'No Image';
 
         }
-        $tempRow['status'] = $row['status'];
-       $tempRow['operate'] = $operate;
+        if ($row['status'] == 0)
+               $tempRow['status'] = "<p class='text text-danger'>Inactive</p>";
+        else if ($row['status'] == 1)
+              $tempRow['status'] = "<p class='text text-success'>Active</p>";                    
+        $tempRow['operate'] = $operate;
         $rows[] = $tempRow;
     }
     $bulkData['rows'] = $rows;
@@ -132,7 +136,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'products') {
         $order = $db->escapeString($_GET['order']);
     }
 
-    $join = "LEFT JOIN `categories` c ON p.category_id = c.id WHERE p.id IS NOT NULL AND p.seller_id = $id ";
+    $join = "LEFT JOIN `vendor_categories` c ON p.category_id = c.id WHERE p.id IS NOT NULL AND p.seller_id = $id ";
 
 
     $sql = "SELECT COUNT(p.id) as total FROM `products` p $join " . $where . "";

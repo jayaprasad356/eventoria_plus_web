@@ -3,6 +3,8 @@ include_once('../includes/functions.php');
 $function = new functions;
 include_once('../includes/custom-functions.php');
 $fn = new custom_functions;
+$seller_id = $_SESSION['seller_id'];
+
 ?>
 <?php
 if (isset($_GET['id'])) {
@@ -159,7 +161,7 @@ $res = $db->getResult();
                                     <select id='category' name="category" class='form-control'>
                                           <option value="">--select--</option>
                                             <?php
-                                            $sql = "SELECT * FROM `categories` WHERE status = 1";
+                                            $sql = "SELECT * FROM `vendor_categories` WHERE status=1 AND seller_id='$seller_id'";
                                             $db->sql($sql);
                                             $result = $db->getResult();
                                             foreach ($result as $value) {

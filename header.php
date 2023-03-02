@@ -175,6 +175,7 @@ $db->sql("SET NAMES 'utf8'");
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="categories.php"><i class="fa fa-sliders"></i> Manage Categories</a></li>
+                        <li><a href="vendor_categories.php"><i class="fa fa-sliders"></i> Vendor Categories</a></li>
                     </ul>
                 </li>
                 <li class="treeview">

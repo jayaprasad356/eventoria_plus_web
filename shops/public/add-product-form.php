@@ -9,10 +9,8 @@ $sql_query = "SELECT id, name FROM categories ORDER BY id ASC";
 $db->sql($sql_query);
 
 $res = $db->getResult();
-// $sql_query = "SELECT value FROM settings WHERE variable = 'Currency'";
-// $pincode_ids_exc = "";
-// $db->sql($sql_query);
-// $res_cur = $db->getResult();
+$seller_id = $_SESSION['seller_id'];
+
 
 if (isset($_POST['btnAdd'])) {
         $error = array();
@@ -160,7 +158,7 @@ if (isset($_POST['btnAdd'])) {
                                     <select id='category' name="category" class='form-control' required>
                                        <option value="">--Select--</option>
                                             <?php
-                                            $sql = "SELECT * FROM `categories`WHERE status=1";
+                                            $sql = "SELECT * FROM `vendor_categories` WHERE status=1 AND seller_id='$seller_id'";
                                             $db->sql($sql);
                                             $result = $db->getResult();
                                             foreach ($result as $value) {

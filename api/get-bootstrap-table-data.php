@@ -712,6 +712,81 @@ if (isset($_GET['table']) && $_GET['table'] == 'shops') {
 }
 
 
+//vendor categories table goes here
+if (isset($_GET['table']) && $_GET['table'] == 'vendor_categories') {
+
+    $offset = 0;
+    $limit = 10;
+    $sort = 'id';
+    $order = 'DESC';
+    $where = '';
+    if (isset($_GET['offset']))
+        $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
+    if (isset($_GET['limit']))
+        $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
+
+    if (isset($_GET['sort']))
+        $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
+    if (isset($_GET['order']))
+        $order = $db->escapeString($fn->xss_clean($_GET['order']));
+
+    if (isset($_GET['search']) && !empty($_GET['search'])) {
+        $search = $db->escapeString($fn->xss_clean($_GET['search']));
+        $where .= "AND c.name like '%" . $search . "%' OR s.name like '%" . $search . "%' OR s.shop_name like '%" . $search . "%'  ";
+    }
+    if (isset($_GET['sort'])){
+        $sort = $db->escapeString($_GET['sort']);
+
+    }
+    if (isset($_GET['order'])){
+        $order = $db->escapeString($_GET['order']);
+
+    }
+    $join = "LEFT JOIN `shops` s ON c.seller_id = s.id WHERE c.id IS NOT NULL ";
+
+    $sql = "SELECT COUNT(c.id) as total FROM `vendor_categories` c $join " . $where . "";
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
+
+    $sql = "SELECT c.id AS id,c.*,c.status AS status,c.name AS name,s.name AS seller_name,s.shop_name FROM `vendor_categories` c $join 
+        $where ORDER BY $sort $order LIMIT $offset, $limit"; 
+     $db->sql($sql);
+    $res = $db->getResult();
+
+    
+    $bulkData = array();
+    $bulkData['total'] = $total;
+    
+    $rows = array();
+    $tempRow = array();
+
+    foreach ($res as $row) {
+
+        // $operate = ' <a href="edit-category.php?id=' . $row['id'] . '"><i class="fa fa-edit"></i>Edit</a>';
+        $tempRow['id'] = $row['id'];
+        $tempRow['name'] = $row['name'];
+        $tempRow['seller_name'] = $row['seller_name'];
+        $tempRow['shop_name'] = $row['shop_name'];
+        if(!empty($row['image'])){
+            $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['name'] . "'><img src='" . $row['image'] . "' title='" . $row['name'] . "' height='50' /></a>";
+
+        }else{
+            $tempRow['image'] = 'No Image';
+
+        }
+        if ($row['status'] == 0)
+               $tempRow['status'] = "<p class='text text-danger'>Inactive</p>";
+        else if ($row['status'] == 1)
+              $tempRow['status'] = "<p class='text text-success'>Active</p>";                    
+        // $tempRow['operate'] = $operate;
+        $rows[] = $tempRow;
+    }
+    $bulkData['rows'] = $rows;
+    print_r(json_encode($bulkData));
+}
+
 //vendor order table goes here
 if (isset($_GET['table']) && $_GET['table'] == 'vendor_orders') {
     $offset = 0;

@@ -3,12 +3,14 @@ include_once('../includes/functions.php');
 $function = new functions;
 include_once('../includes/custom-functions.php');
 $fn = new custom_functions;
+$seller_id = $_SESSION['seller_id'];
+
 
 ?>
 <?php
 if (isset($_POST['btnAdd'])) {
 
-
+        $seller_id = $_SESSION['seller_id'];
         $name = $db->escapeString($fn->xss_clean($_POST['name']));
         
         // get image info
@@ -51,7 +53,7 @@ if (isset($_POST['btnAdd'])) {
 
             
            
-            $sql_query = "INSERT INTO categories (name,image,status)VALUES('$name','$upload_image',1)";
+            $sql_query = "INSERT INTO vendor_categories (seller_id,name,image,status) VALUES ('$seller_id','$name','$upload_image',1)";
             $db->sql($sql_query);
             $result = $db->getResult();
             if (!empty($result)) {
@@ -85,7 +87,6 @@ if (isset($_POST['btnAdd'])) {
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Add Category</h3>
-
                 </div><!-- /.box-header -->
                 <!-- form start -->
                 <form name="add_category" method="post" enctype="multipart/form-data">

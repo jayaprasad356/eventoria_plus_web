@@ -21,7 +21,7 @@ if (empty($_POST['user_id'])) {
 }
 
 $user_id = $db->escapeString($_POST['user_id']);
-$sql = "SELECT vo.id AS id,s.shop_name,p.pincode AS pincode,c.name AS category_name,p.name AS product_name,p.measurement,p.unit,p.product_image,p.image1,p.description,vo.quantity,vo.price AS price,vo.order_date,vo.status AS status FROM `vendor_orders` vo,`products` P,`shops` s,`categories` c WHERE vo.seller_id=s.id AND p.category_id=c.id AND vo.product_id=p.id AND vo.user_id='$user_id'";
+$sql = "SELECT vo.id AS id,s.shop_name,p.pincode AS pincode,c.name AS category_name,p.name AS product_name,p.measurement,p.unit,p.product_image,p.image1,p.description,vo.quantity,vo.price AS price,vo.order_date,vo.status AS status FROM `vendor_orders` vo,`products` P,`shops` s,`vendor_categories` c WHERE vo.seller_id=s.id AND p.category_id=c.id AND vo.product_id=p.id AND vo.user_id='$user_id'";
 $db->sql($sql);
 $res=$db->getResult();
 $num=$db->numRows($res);

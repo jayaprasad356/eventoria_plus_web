@@ -12,7 +12,7 @@ include_once('../includes/crud.php');
 $db = new Database();
 $db->connect();
 
-$sql = "SELECT *,p.id AS id,s.shop_name,p.pincode AS pincode,p.name AS product_name,c.name AS category_name FROM `products` P,`shops` s,`categories` c WHERE p.seller_id=s.id AND p.category_id=c.id AND p.status = 1";
+$sql = "SELECT *,p.id AS id,s.shop_name,p.pincode AS pincode,p.name AS product_name,c.name AS category_name FROM `products` P,`shops` s,`vendor_categories` c WHERE p.seller_id=s.id AND p.category_id=c.id AND p.status = 1";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
