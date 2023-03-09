@@ -76,6 +76,27 @@ if (isset($_POST['btnEdit'])) {
 
 			// check update result
 			if ($update_result == 1) {
+                for ($i = 0; $i < count($_POST['start_time']); $i++) {
+                    $slot_id = $db->escapeString($fn->xss_clean($_POST['product_variant_id'][$i]));
+                    $start_time = $db->escapeString($fn->xss_clean($_POST['start_time'][$i]));
+                    $end_time = $db->escapeString($fn->xss_clean($_POST['end_time'][$i]));
+                    $sql = "UPDATE shop_timeslots SET start_time='$start_time',end_time='$end_time' WHERE id = $slot_id";
+                    $db->sql($sql);
+
+                }
+                if (
+                    isset($_POST['insert_start_time']) && isset($_POST['insert_end_time'])
+                ) {
+                    for ($i = 0; $i < count($_POST['insert_start_time']); $i++) {
+                        $start_time = $db->escapeString($fn->xss_clean($_POST['insert_start_time'][$i]));
+                        $end_time = $db->escapeString($fn->xss_clean($_POST['insert_end_time'][$i]));
+                        $sql = "INSERT INTO shop_timeslots (shop_id,start_time,end_time) VALUES('$ID','$start_time','$end_time')";
+                        $db->sql($sql);
+
+                    }
+
+                }
+
 				$error['update_shop'] = " <section class='content-header'><span class='label label-success'>Shop updated Successfully</span></section>";
 			} else {
 				$error['update_shop'] = " <span class='label label-danger'>Failed update Shop</span>";
@@ -90,6 +111,10 @@ $data = array();
 $sql_query = "SELECT * FROM shops WHERE id =" . $ID;
 $db->sql($sql_query);
 $res = $db->getResult();
+
+$sql_query = "SELECT * FROM shop_timeslots WHERE shop_id =" . $ID;
+$db->sql($sql_query);
+$resslot = $db->getResult();
 
 if (isset($_POST['btnCancel'])) { ?>
 	<script>
@@ -226,6 +251,41 @@ if (isset($_POST['btnCancel'])) { ?>
 								</div>
 							</div>
 						</div>
+                        <br>
+                        <div id="variations">
+                        <?php
+                        $i=0;
+                        foreach ($resslot as $row) {
+                            ?>
+                            <div id="packate_div"  >
+                                <div class="row">
+                                   <input type="hidden" class="form-control" name="product_variant_id[]" id="product_variant_id" value='<?= $row['id']; ?>' />
+                                    <div class="col-md-3">
+                                        <div class="form-group packate_div">
+                                            <label for="exampleInputEmail1">Start Time</label> <i class="text-danger asterik">*</i>
+                                            <input type="time" class="form-control" name="start_time[]" value="<?php echo $row['start_time'] ?>" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group packate_div">
+                                            <label for="exampleInputEmail1">End Time</label> <i class="text-danger asterik">*</i>
+                                            <input type="time" class="form-control" name="end_time[]" value="<?php echo $row['end_time'] ?>" required />
+                                        </div>
+                                    </div>
+                                    <?php if ($i == 0) { ?>
+                                        <div class='col-md-1'>
+                                            <label>Variation</label>
+                                            <a id='add_packate_variation' title='Add variation of product' style='cursor: pointer;'><i class="fa fa-plus-square-o fa-2x"></i></a>
+                                        </div>
+                                    <?php } else { ?>
+                                        <div class="col-md-1" style="display: grid;">
+                                            <label>Remove</label>
+                                            <a class="remove_variation text-danger" data-id="data_delete" title="Remove variation of product" style="cursor: pointer;"><i class="fa fa-times fa-2x"></i></a>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        <?php $i++; } ?>           
 						
 					</div><!-- /.box-body -->
 
@@ -257,4 +317,52 @@ if (isset($_POST['btnCancel'])) { ?>
                 reader.readAsDataURL(input.files[0]);
             }
         }
+</script>
+
+<script>
+    $(document).ready(function () {
+        var max_fields = 7;
+        var wrapper = $("#packate_div");
+        var add_button = $("#add_packate_variation");
+
+        var x = 1;
+        $(add_button).click(function (e) {
+            e.preventDefault();
+            if (x < max_fields) {
+                x++;
+                $(wrapper).append('<div class="row"><div class="col-md-3"><div class="form-group"><label for="start_time">Start Time</label>' + '<input type="time" class="form-control" name="insert_start_time[]" required="" ></div></div>'+'<div class="col-md-3"><div class="form-group"><label for="end_time">End Time</label>' + '<input type="time" class="form-control" name="insert_end_time[]" required="" ></div></div>'+ '<div class="col-md-1" style="display: grid;"><label>Remove</label><a class="remove text-danger" style="cursor: pointer;"><i class="fa fa-times fa-2x"></i></a></div>'+'</div>'); //add input box
+            } else {
+                alert('You Reached the limits')
+            }
+        });
+
+        $(wrapper).on("click", ".remove", function (e) {
+            e.preventDefault();
+            $(this).closest('.row').remove();
+            x--;
+        })
+    });
+</script>
+<script>
+    $(document).on('click', '.remove_variation', function() {
+        if ($(this).data('id') == 'data_delete') {
+            if (confirm('Are you sure? Want to delete this row')) {
+                var id = $(this).closest('div.row').find("input[id='product_variant_id']").val();
+                $.ajax({
+                    url: 'public/db-operation.php',
+                    type: "post",
+                    data: 'id=' + id + '&delete_variant=1',
+                    success: function(result) {
+                        if (result) {
+                            location.reload();
+                        } else {
+                            alert("Variant not deleted!");
+                        }
+                    }
+                });
+            }
+        } else {
+            $(this).closest('.row').remove();
+        }
+    });
 </script>

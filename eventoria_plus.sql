@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 02, 2023 at 12:39 PM
+-- Generation Time: Mar 09, 2023 at 07:49 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -436,6 +436,28 @@ INSERT INTO `shops` (`id`, `name`, `shop_name`, `mobile`, `email`, `password`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `shop_timeslots`
+--
+
+CREATE TABLE `shop_timeslots` (
+  `id` int(11) NOT NULL,
+  `shop_id` int(11) DEFAULT NULL,
+  `start_time` text DEFAULT '',
+  `end_time` text DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `shop_timeslots`
+--
+
+INSERT INTO `shop_timeslots` (`id`, `shop_id`, `start_time`, `end_time`) VALUES
+(1, 1, '08:00', '12:00'),
+(2, 1, '13:00', '17:00'),
+(3, 1, '15:00', '16:20');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `slides`
 --
 
@@ -716,6 +738,12 @@ ALTER TABLE `shops`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `shop_timeslots`
+--
+ALTER TABLE `shop_timeslots`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `slides`
 --
 ALTER TABLE `slides`
@@ -844,6 +872,12 @@ ALTER TABLE `settings`
 --
 ALTER TABLE `shops`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `shop_timeslots`
+--
+ALTER TABLE `shop_timeslots`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `slides`

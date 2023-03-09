@@ -100,6 +100,23 @@ if (isset($_POST['btnAdd'])) {
             }
 
             if ($result == 1) {
+                $sql = "SELECT id FROM shops ORDER BY id DESC LIMIT 1";
+                $db->sql($sql);
+                $res = $db->getResult();
+                $shop_id = $res[0]['id'];
+                for ($i = 0; $i < count($_POST['start_time']); $i++) {
+    
+                    $start_time = $db->escapeString($fn->xss_clean($_POST['start_time'][$i]));
+                    $end_time = $db->escapeString($fn->xss_clean($_POST['end_time'][$i]));
+                    $sql = "INSERT INTO shop_timeslots (shop_id,start_time,end_time) VALUES('$shop_id','$start_time','$end_time')";
+                    $db->sql($sql);
+                    $timeslots_result = $db->getResult();
+                }
+                if (!empty($timeslots_result)) {
+                    $timeslots_result = 0;
+                } else {
+                    $timeslots_result = 1;
+                }
                 $error['add_shop'] = " <section class='content-header'><span class='label label-success'>Shop Added Successfully</span></section>";
             } else {
                 $error['add_shop'] = " <span class='label label-danger'>Failed add Shop</span>";
@@ -221,6 +238,30 @@ if (isset($_POST['btnAdd'])) {
                         <div class="form-group">
                             <img id="blah" src="#" alt="image" />
                         </div>
+                        <br>
+                        <div id="packate_div">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group packate_div">
+                                        <label for="exampleInputEmail1">Start Time</label> <i class="text-danger asterik">*</i>
+                                        <input type="time" class="form-control" name="start_time[]" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group packate_div">
+                                        <label for="exampleInputEmail1">End Time</label> <i class="text-danger asterik">*</i>
+                                        <input type="time" class="form-control" name="end_time[]" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label>Variation</label>
+                                    <a class="add_packate_variation" title="Add variation of product" style="cursor: pointer;"><i class="fa fa-plus-square-o fa-2x"></i></a>
+                                </div>
+                                <div id="variations">
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                   
                     <!-- /.box-body -->
@@ -287,3 +328,28 @@ if (isset($_POST['btnAdd'])) {
 } 
 </script>
 <?php $db->disconnect(); ?>
+<script>
+    $(document).ready(function () {
+        var max_fields = 8;
+        var wrapper = $("#packate_div");
+        var add_button = $(".add_packate_variation");
+
+        var x = 1;
+        $(add_button).click(function (e) {
+            e.preventDefault();
+            if (x < max_fields) {
+                x++;
+                $(wrapper).append('<div class="row"><div class="col-md-3"><div class="form-group"><label for="start_time">Start Time</label>' + '<input type="time" class="form-control" name="start_time[]" required="" ></div></div>'+'<div class="col-md-3"><div class="form-group"><label for="end_time">End Time</label>' + '<input type="time" class="form-control" name="end_time[]" required="" ></div></div>'+ '<div class="col-md-1" style="display: grid;"><label>Remove</label><a class="remove text-danger" style="cursor: pointer;"><i class="fa fa-times fa-2x"></i></a></div>'+'</div>'); //add input box
+            } else {
+                alert('You Reached the limits')
+            }
+        });
+
+        $(wrapper).on("click", ".remove", function (e) {
+            e.preventDefault();
+            $(this).closest('.row').remove();
+            x--;
+        })
+    });
+
+</script>
